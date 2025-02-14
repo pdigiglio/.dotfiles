@@ -1,0 +1,4 @@
+- link:
+    ~/.config/sioyek: config/sioyek
+    ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
+
