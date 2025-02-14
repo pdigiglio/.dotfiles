@@ -2,5 +2,5 @@
     ~/.config/sioyek: config/sioyek
     ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
     ~/.config/zsh: config/zsh
-    ~/.zprofile: config/zsh/zprofile
+    ~/.zshenv: config/zsh/zshenv
 
