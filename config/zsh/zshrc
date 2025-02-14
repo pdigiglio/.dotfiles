@@ -63,23 +63,5 @@ setopt INTERACTIVE_COMMENTS
 . "$zdot_dir/aliases.sh"
 . "$zdot_dir/env.sh"
 
-typeset -r zsh_synt_highlight="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-if [[ -f "$zsh_synt_highlight" ]]
-then
-	. "$zsh_synt_highlight"
-
-	# Set comment style to gray
-	ZSH_HIGHLIGHT_STYLES[comment]="fg=#a0a0a0"
-fi
-
-typeset -r zsh_autosuggestions="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-if [[ -f "$zsh_autosuggestions" ]]
-then
-	. "$zsh_autosuggestions"
-
-	# <C-Space> accepts suggestion.
-	bindkey '^ ' autosuggest-accept
-
-	# Set comment style to gray
-	#ZSH_HIGHLIGHT_STYLES[comment]="fg=#a0a0a0"
-fi
+. "$zdot_dir/syntax_highlighting.sh"
+. "$zdot_dir/autosuggestions.sh"
