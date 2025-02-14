@@ -1,3 +1,9 @@
+# Other packages you may want to install:
+#
+#  * zsh-completions
+#  * zsh-syntax-highlighting
+#
+
 typeset -r zdot_dir="$([[ -z ${ZDOTDIR+x} ]] && echo "$HOME" || echo "$ZDOTDIR")"
 
 # Lines configured by zsh-newuser-install
@@ -6,7 +12,12 @@ HISTSIZE=1000
 SAVEHIST=1000
 setopt autocd
 unsetopt beep
+
 bindkey -v
+
+# Set <Esc> delay to 0.01s. See zshparam(1).
+export KEYTIMEOUT=1
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 # zstyle :compinstall filename '/home/pdigiglio/.zshrc'
