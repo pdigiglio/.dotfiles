@@ -1,0 +1,16 @@
+-- Todo: add some magic for inline C comments:
+--
+-- /*<some text>*/
+
+--local surround = require("nvim-surround")
+--
+--local add_inline_comment = function()
+--end
+--
+--surround.buffer_setup({
+--    surrounds = {
+--        ["C"] = {
+--            add = inline_comment,
+--        } 
+--    }
+--})

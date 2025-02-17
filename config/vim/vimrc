@@ -1,0 +1,302 @@
+" TODO:
+" 'autoread' : vim vs neovim. Only seems to be useful in gui.
+" treesitter
+" lsp
+" dap
+" nnn
+
+" No Vi compatibiliby
+set nocompatible
+
+" Enable filetype plugins
+filetype plugin on
+
+" Always use syntax highlightning.
+syntax enable
+
+" Show line numbers.
+set number
+
+" Line numbers are relative to the position of my cursor.
+"
+" TODO A mapping to toggle relative numbers would be nice; in case I want to
+" have a quick look at what's the number of a line I am not currently on.
+"
+" Maybe something like <leader>rn
+set relativenumber
+
+" Always show the current position in the bottom right corner of the screen.
+set ruler
+
+" Set ruler format. Besides the defalult info, also display:
+"
+"  * Offset in the file.
+"  * Hex value of char under cursor.
+"
+" String explanation:
+"
+"  * Ruler width is 30 chars (%30).
+"  * Horizontal fill (%=).
+"  * Default-ruler line and col (%l,%c%V).
+"  * Offset (%o) and hex value of char under cursor (%B).
+"  * Percentage in the file (min and max width of 3: %-03.3P) 
+set rulerformat=%30(%=%l,%c%V\ [%o\|0x%B]\ %-03.3P%)
+
+" Show commands in the bottom right while they're still incomplete.
+set showcmd
+
+" Show my current mode (i.e. Insert, Visual, ...).
+set showmode
+
+" Search is case insensitive...
+set ignorecase
+
+" ... unless I use some capital letter in the pattern.
+set smartcase
+
+" Highlight matches while I am sill typing the search pattern.
+set incsearch
+
+" Highlight matches to the last search.
+set hlsearch
+
+" When splitting vertically, the new window is put on the right.
+set splitright
+
+" When splitting horizontally, the new window is put on below.
+set splitbelow
+
+" Never hide a buffer if I have unsaved changes to it.
+set nohidden
+
+" Make backspace work. Specify where (in insert mode) <BS> is allowed to
+" remove chars before the cursor position.
+"
+"  indent: allow deleting auto-indent tabs inserted by vim.
+"
+"  eol:    <BS> at the beginning of line goes to the previous one (and deletes
+"          the newline).
+"
+"  start:  ?? (I can't understand)
+set backspace=indent,eol,start
+
+" Show @@@ in the last line, if truncated, instead of hiding the whole line.
+"
+"  * truncate: the @@@ will be displayed at the beginning of the last line and
+"              the line will be empty
+"
+"  * lastline: the @@@ will be displayed at the end of line and the line and
+"              as much as possible of the last line will be displayed.
+set display=lastline
+
+" Scrolling works with screen lines, rather than text lines. This works best
+" if you also set 'display' to lastline.
+"
+" NOTE: this is still buggy. If you have a single line that doesn't fit the
+" window, as soon as you scroll down (Ctrl-e), you'll see a marker <<< on the
+" first screen line to signal there's text above but you won't see @@@ at the
+" end of the line to signal there's text below.
+set smoothscroll
+
+" Make Y consistent with D (d$) and C (c$).
+nmap Y y$
+
+" Allow mouse, if available.
+if has('mouse')
+    set mouse=a
+endif
+
+" This command displays the difference between a buffer (with pending edits)
+" and its unmodified version.
+"
+" Taken from defaults.vim.
+command DiffOrig
+            \ vert new
+            \ | set bt=nofile
+            \ | r ++edit #
+            \ | 0d_
+            \ | diffthis
+            \ | wincmd p
+            \ | diffthis
+
+
+" Vim interacts with X11/Wayland selections via the following registers:
+"
+"  '*' -> primary selection (i.e. middle mouse button)
+"  '+' -> clipboard selection (i.e. Ctrl-c/Ctrl-v)
+"
+" Here, I ask vim to use register '+' for all the operations that would
+" otherwise use the unnamed register. I use '+' instead of '*' because I can
+" paste the buffer content with Ctrl-v, ideally not touching the mouse.
+"
+" See: |quotestar|
+set clipboard=unnamedplus
+
+" Search down into subfolders.
+" Provides tab-completion for all file-related tasks.
+set path+=**
+
+" Highlight the current line
+set cursorline
+
+" If I have folds, { and } jump over them, rather then opening them.
+set foldopen-=block
+
+" Note: (nvim-specific)
+" Make sure to setup `mapleader` and `maplocalleader` before loading lazy.nvim
+" so that mappings are correct.
+let mapleader = " "
+let maplocalleader = "\\"
+
+" Configuration for netrw
+" =======================
+"
+" Most of this stuff is taken from:
+"
+" https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer
+" https://shapeshed.com/vim-netrw
+
+" Keep the current dir and the browsing dir synchronized.
+"let g:netrw_keepdir = 0
+
+" Set size (in % of screen) of netrw when it creates a split.
+let g:netrw_winsize = 25
+
+" Hide the banner (press "I" to toggle it).
+let g:netrw_banner = 0
+
+" Set the default view to tree.
+let g:netrw_liststyle = 3
+
+" Change the copy command.
+"let g:netrw_localcopydircmd = 'cp -r'
+
+" Highlight marked files as searches.
+"highlight! link netrwMarkFile Search
+
+" Don't load netrw
+" let g:loaded_netrw       = 1
+" let g:loaded_netrwPlugin = 1
+
+" Make sure the history file is kept in $XDG_STATE_HOME.
+let g:netrw_home = "~/.local/state/vim"
+
+" Mappings
+" ========
+"
+" When in diff mode, use CTRL-k and CTRL-j to jump to the previous and next
+" diff (respectively).
+
+" To see why the following line is necessary, ":help csupport-Ctrl-j"
+"let g:C_Ctrl_j = 'off'
+nnoremap <expr> <C-J> &diff ? ']c' : '<C-J>'
+nnoremap <expr> <C-K> &diff ? '[c' : '<C-K>'
+
+" Easily open and close tabs
+nnoremap <Leader>tn :tabnew<cr>
+nnoremap <Leader>tc :tabclose<cr>
+
+if !has('nvim')
+    " TODO: Undoing the following surroung requies 2 undos.
+
+    " Surround the selected visual text with (). Keep the old selection.
+    vnoremap <Leader>s( c()<ESC>Pvi(
+
+    " Surround the selected visual text with ''. Keep the old selection.
+    vnoremap <Leader>s' c''<ESC>Pvi'
+
+    " Surround the selected visual text with "". Keep the old selection.
+    vnoremap <Leader>s" c""<ESC>Pvi"
+
+    " Surround the selected visual text with C-style comment.
+    "
+    "   1. change
+    "   2. insert "/**/"
+    "   3. left
+    "   4. paste before
+    "   5. select previous visual
+    "   6. select next two chars (account for "/*")
+    "   7. go to other side
+    "   8. de-select first two chars
+    vnoremap <Leader>sc c/**/<ESC>hPgvlloll
+end
+
+" Functions
+" =========
+
+" Execute a Ex command `cmd` and display its output in a new buffer in the
+" current window.
+"
+" See: https://vim.fandom.com/wiki/Capture_ex_command_output
+function! BufRedir(cmd)
+    " Open new buffer in current window.
+    enew
+
+    " This buffer is not associated to any file.
+    setlocal buftype=nofile
+
+    " When  this buffer is no longer displayed in a window, wipe it from the
+    " buffer list.
+    setlocal bufhidden=wipe
+
+    setlocal noswapfile
+    setlocal nobuflisted
+    setlocal nomodified
+
+    pu=execute(a:cmd)
+endfunction
+command! -nargs=+ -complete=command BufRedir call BufRedir(<q-args>)
+
+"--
+
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No sound on errors
+set noerrorbells
+" Flash on errors
+set novisualbell
+
+set modeline
+
+filetype plugin indent on
+" Use spaces instead of tabs
+set expandtab
+
+" 1 tab == 4 spaces
+set tabstop=4
+
+" The number of spaces for >>, <<  or auto indent. If zero, the value of
+" 'tabstop' will be used.
+set shiftwidth=0
+
+" Always show the status line
+set laststatus=2
+
+" Set colorscheme.
+if !has('gui_running')
+    colorscheme torte
+else
+    colorscheme desert
+endif
+
+if !has('nvim')
+    " Keep undo/redo history for a file across sessions.
+    set undofile
+
+    " Make sure Vim stores these files in $XDG_STATE_HOME. This is consistent
+    " with wath Nvim does out of the box.
+    "
+    " TODO: Here, I hard-code $XDG_STATE_HOME to ~/.local/state. Fix this.
+    set undodir     =~/.local/state/vim/undo//
+    set directory   =~/.local/state/vim/swap//
+    set backupdir   =~/.local/state/vim/backup//
+    set viewdir     =~/.local/state/vim/view//
+    set viminfofile =~/.local/share/vim/viminfo
+
+    " Make sessions portable across Unix and MS-Windows.
+    set sessionoptions+=unix,slash
+endif
+

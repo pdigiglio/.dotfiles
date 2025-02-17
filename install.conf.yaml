@@ -4,4 +4,10 @@
     ~/.config/zsh: config/zsh
     ~/.zshenv: config/zsh/zshenv
     ~/.inputrc:
+    ~/.config/nvim:
+        path: config/nvim
+        create: true
+    ~/.config/vim:
+        path: config/vim
+        create: true
 
