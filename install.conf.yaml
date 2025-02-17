@@ -3,4 +3,5 @@
     ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
     ~/.config/zsh: config/zsh
     ~/.zshenv: config/zsh/zshenv
+    ~/.inputrc:
 
