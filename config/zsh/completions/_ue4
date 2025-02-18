@@ -1,0 +1,135 @@
+#compdef _ue4 ue4
+# https://blog.mads-hartmann.com/2017/08/06/writing-zsh-completion-scripts.html
+
+function _ue4 {
+    local -a subcommands=(
+      # Configuration-related commands
+      "setroot\\:'Sets an engine root path override that supercedes auto-detect'" # arg
+      "clearroot\\:'Removes any previously-specified engine root path override'"
+      "clearcache\\:'Clears any cached data that ue4cli has stored'"
+      # Engine-related commands
+      "root\\:'Print the path to the root directory of the Unreal Engine'"
+      "version\\:'Print the version string of the Unreal Engine (default format is \"full\")'"
+      "editor\\:'Run the editor without an Unreal project (useful for creating new projects)'" # arg
+      "build-target\\:'Build the specified target using UBT'" # arg
+      ## Descriptor-related commands
+      "run\\:'Run the editor for the Unreal project'" # arg
+      "gen\\:'Generate IDE project files for the Unreal project'" # arg
+      "build\\:'Build the Editor modules for the Unreal project or plugin'" # arg
+      "clean\\:'Clean build artifacts for the Unreal project or plugin'"
+      "test\\:'Run automation tests for the Unreal project'"
+      "package\\:'Package a build of the Unreal project or plugin in the current directory'"
+
+# Library-related commands
+# ------------------------
+# 
+# 	libs - List the supported third-party libs
+# 	cxxflags [--multiline] [--nodefaults] [LIBS] - Print compiler flags for building against libs
+# 	ldflags [--multiline] [--flagsonly] [--nodefaults] [LIBS] - Print linker flags for building against libs
+# 	cmakeflags [--multiline] [--nodefaults] [LIBS] - Print CMake flags for building against libs
+# 	includedirs [--nodefaults] [LIBS] - Print include directories for building against libs
+# 	libfiles [--nodefaults] [LIBS] - Print library files for building against libs
+# 	defines [--nodefaults] [LIBS] - Print preprocessor definitions for building against libs
+# 
+# 
+# Automation-related commands
+# ---------------------------
+# 	uat [ARGS] - Invoke RunUAT with the specified arguments
+    )
+
+    local line
+    _arguments -C \
+        "--help[Show help]" \
+        "1: :(($subcommands))" \
+        "*::arg:->args"
+
+    case $line[1] in
+        setroot)
+            _ue4_setroot
+        ;;
+        version)
+            _ue4_version
+        ;;
+    esac
+}
+
+function _ue4_setroot {
+    _arguments \
+        "1: :_files"
+}
+
+function _ue4_version {
+    _arguments \
+        "1: :(major minor patch full short)"
+}
+
+
+# Usage:
+# ue4 COMMAND [ARGS]
+# 
+# Configuration-related commands
+# ------------------------------
+# 
+# These commands control the configuration of ue4cli:
+# 
+# 	setroot <ROOTDIR> - Sets an engine root path override that supercedes auto-detect
+# 	clearroot - Removes any previously-specified engine root path override
+# 	clearcache - Clears any cached data that ue4cli has stored
+# 
+# 
+# Engine-related commands
+# -----------------------
+# 
+# These commands relate to the Unreal Engine itself:
+# 
+# 	root - Print the path to the root directory of the Unreal Engine
+# 	version [major|minor|patch|full|short] - Print the version string of the Unreal Engine (default format is "full")
+# 	editor [EXTRA ARGS] - Run the editor without an Unreal project (useful for creating new projects)
+# 	build-target <TARGET> [CONFIGURATION] - Build the specified target using UBT
+# 
+# 
+# Descriptor-related commands
+# ---------------------------
+# 
+# These commands relate to an individual Unreal project or plugin, and will look
+# for a .uproject or .uplugin file located in the current working directory
+# (Note that some commands only support projects, not plugins):
+# 
+# 	run [--debug] [EXTRA ARGS] - Run the editor for the Unreal project
+# 	gen [EXTRA ARGS] - Generate IDE project files for the Unreal project
+# 	build [CONFIGURATION] [TARGET] - Build the Editor modules for the Unreal project or plugin
+# 	clean - Clean build artifacts for the Unreal project or plugin
+# 	test [--withrhi] [--list] [--all] [--filter FILTER] TEST1 TEST2 TESTN [-- EXTRA ARGS] - Run automation tests for the Unreal project
+# 	package [PROJECT CONFIGURATION] [EXTRA UAT ARGS] - Package a build of the Unreal project or plugin in the current directory, storing the result in a subdirectory named "dist". Default configuration for projects is Shipping.
+# 
+# 
+# Library-related commands
+# ------------------------
+# 
+# These commands are for developers compiling modules that need to build against
+# UE4-bundled third-party libs for purposes of interoperability with the engine:
+# 
+# 	libs - List the supported third-party libs
+# 	cxxflags [--multiline] [--nodefaults] [LIBS] - Print compiler flags for building against libs
+# 	ldflags [--multiline] [--flagsonly] [--nodefaults] [LIBS] - Print linker flags for building against libs
+# 	cmakeflags [--multiline] [--nodefaults] [LIBS] - Print CMake flags for building against libs
+# 	includedirs [--nodefaults] [LIBS] - Print include directories for building against libs
+# 	libfiles [--nodefaults] [LIBS] - Print library files for building against libs
+# 	defines [--nodefaults] [LIBS] - Print preprocessor definitions for building against libs
+# 
+# 
+# Automation-related commands
+# ---------------------------
+# 
+# These commands relate to Unreal's automation system:
+# 
+# 	uat [ARGS] - Invoke RunUAT with the specified arguments
+# 
+# 
+# Commands defined by plugins
+# ---------------------------
+# 
+# These commands are defined by currently installed ue4cli plugins:
+# 
+# 	(No commands in this group)
+# 
