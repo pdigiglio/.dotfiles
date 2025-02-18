@@ -2,6 +2,7 @@
     ~/.config/sioyek: config/sioyek
     ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
     ~/.config/zsh: config/zsh
+    ~/.config/kitty: config/kitty
     ~/.zshenv: config/zsh/zshenv
     ~/.inputrc:
     ~/.config/nvim:
