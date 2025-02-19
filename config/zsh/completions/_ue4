@@ -3,38 +3,39 @@
 
 function _ue4 {
     local -a subcommands=(
-      # Configuration-related commands
-      "setroot\\:'Sets an engine root path override that supercedes auto-detect'" # arg
-      "clearroot\\:'Removes any previously-specified engine root path override'"
-      "clearcache\\:'Clears any cached data that ue4cli has stored'"
-      # Engine-related commands
-      "root\\:'Print the path to the root directory of the Unreal Engine'"
-      "version\\:'Print the version string of the Unreal Engine (default format is \"full\")'"
-      "editor\\:'Run the editor without an Unreal project (useful for creating new projects)'" # arg
-      "build-target\\:'Build the specified target using UBT'" # arg
-      ## Descriptor-related commands
-      "run\\:'Run the editor for the Unreal project'" # arg
-      "gen\\:'Generate IDE project files for the Unreal project'" # arg
-      "build\\:'Build the Editor modules for the Unreal project or plugin'" # arg
-      "clean\\:'Clean build artifacts for the Unreal project or plugin'"
-      "test\\:'Run automation tests for the Unreal project'"
-      "package\\:'Package a build of the Unreal project or plugin in the current directory'"
+    "help\\:'Show help'" # arg
+    # Configuration-related commands
+    "setroot\\:'Set an engine root path override that supercedes auto-detect'" # arg
+    "clearroot\\:'Remove any previously-specified engine root path override'"
+    "clearcache\\:'Clear any cached data that ue4cli has stored'"
+    # Engine-related commands
+    "root\\:'Print the path to the root directory of the Unreal Engine'"
+    "version\\:'Print the version string of the Unreal Engine (default: \"full\")'"
+    "editor\\:'Run the editor without an Unreal project'" # arg
+    "build-target\\:'Build the specified target using UBT'" # arg
+    ## Descriptor-related commands
+    "run\\:'Run the editor for the Unreal project'" # arg
+    "gen\\:'Generate IDE project files for the Unreal project'" # arg
+    "build\\:'Build the Editor modules for the Unreal project or plugin'" # arg
+    "clean\\:'Clean build artifacts for the Unreal project or plugin'"
+    "test\\:'Run automation tests for the Unreal project'"
+    "package\\:'Package a build of the Unreal project or plugin in the current directory'"
 
-# Library-related commands
-# ------------------------
-# 
-# 	libs - List the supported third-party libs
-# 	cxxflags [--multiline] [--nodefaults] [LIBS] - Print compiler flags for building against libs
-# 	ldflags [--multiline] [--flagsonly] [--nodefaults] [LIBS] - Print linker flags for building against libs
-# 	cmakeflags [--multiline] [--nodefaults] [LIBS] - Print CMake flags for building against libs
-# 	includedirs [--nodefaults] [LIBS] - Print include directories for building against libs
-# 	libfiles [--nodefaults] [LIBS] - Print library files for building against libs
-# 	defines [--nodefaults] [LIBS] - Print preprocessor definitions for building against libs
-# 
-# 
-# Automation-related commands
-# ---------------------------
-# 	uat [ARGS] - Invoke RunUAT with the specified arguments
+    # Library-related commands
+    # ------------------------
+    # 
+    "libs\\:'List the supported third-party libs'"
+    "cxxflags\\:'Print compiler flags for building against libs'" # args
+    "ldflags\\:'Print linker flags for building against libs'" # args
+    "cmakeflags\\:'Print CMake flags for building against libs'" # args
+    "includedirs\\:'Print include directories for building against libs'" # args
+    "libfiles\\:'Print library files for building against libs'" # args
+    "defines\\:'Print preprocessor definitions for building against libs'" # args
+
+    # 
+    # Automation-related commands
+    # ---------------------------
+    "uat\\:'Invoke RunUAT with the specified arguments'" # args
     )
 
     local line
@@ -46,6 +47,9 @@ function _ue4 {
     case $line[1] in
         setroot)
             _ue4_setroot
+        ;;
+        build)
+            _ue4_build
         ;;
         version)
             _ue4_version
@@ -61,6 +65,45 @@ function _ue4_setroot {
 function _ue4_version {
     _arguments \
         "1: :(major minor patch full short)"
+}
+
+function _ue4_build {
+    _arguments \
+        "-Help[Show help]" \
+        "-Verbose[Increase output verbosity]" \
+        "-VeryVerbose[Increase output verbosity more]" \
+        "-Log[Specify a log file location (default: Engine/Programs/UnrealBuildTool/Log.txt)]" \
+        "-TraceWrites[Trace writes requested to the specified file]" \
+        "-Timestamps[Include timestamps in the log]" \
+        "-FromMsBuild[Format messages for msbuild]" \
+        "-SuppressSDKWarnings[Missing SDKs error verbosity level will be reduced from warning to log]" \
+        "-Progress[Write progress messages in a format that can be parsed by other programs]" \
+        "-NoMutex[Allow more than one instance of the program to run at once]" \
+        "-WaitMutex[Wait for another instance to finish and then start, rather than aborting immediately]" \
+        "-RemoteIni[Remote tool ini directory]" \
+        "-Clean[Clean build products. Equivalent to -Mode=Clean]" \
+        "-ProjectFiles[Generate project files based on IDE preference. Equivalent to -Mode=GenerateProjectFiles]" \
+        "-ProjectFileFormat=[Generate project files in specified format. May be used multiple times.]" \
+        "-Makefile[Generate Linux Makefile]" \
+        "-CMakefile[Generate project files for CMake]" \
+        "-QMakefile[Generate project files for QMake]" \
+        "-KDevelopfile[Generate project files for KDevelop]" \
+        "-CodeliteFiles[Generate project files for Codelite]" \
+        "-XCodeProjectFiles[Generate project files for XCode]" \
+        "-EddieProjectFiles[Generate project files for Eddie]" \
+        "-VSCode[Generate project files for Visual Studio Code]" \
+        "-VSMac[Generate project files for Visual Studio Mac]" \
+        "-CLion[Generate project files for CLion]" \
+        "-Rider[Generate project files for Rider]" \
+        "*::args:->args"
+
+    # TODO:
+            #  -Mode=               :  Select tool mode. One of the following (default tool mode is "Build"):
+            #                            AggregateClangTimingInfo, AggregateParsedTimingInfo, Analyze, ApplePostBuildSync, Build, 
+            #                            ClRepro, Clean, Deploy, Execute, FixIncludePaths, GenerateClangDatabase, GenerateProjectFiles, 
+            #                            IOSPostBuildSync, IWYU, InlineGeneratedCpps, JsonExport, PVSGather, ParseMsvcTimingInfo, 
+            #                            PipInstall, PrintBuildGraphInfo, ProfileUnitySizes, Query, QueryTargets, Server, SetupPlatforms, 
+            #                            Test, UnrealHeaderTool, ValidatePlatforms, WriteDocumentation, WriteMetadata
 }
 
 
