@@ -15,7 +15,7 @@ function _ue4 {
     "build-target\\:'Build the specified target using UBT'" # arg
     ## Descriptor-related commands
     "run\\:'Run the editor for the Unreal project'" # arg
-    "gen\\:'Generate IDE project files for the Unreal project'" # arg
+    "gen\\:'Generate IDE project files for the Unreal project'"
     "build\\:'Build the Editor modules for the Unreal project or plugin'" # arg
     "clean\\:'Clean build artifacts for the Unreal project or plugin'"
     "test\\:'Run automation tests for the Unreal project'"
@@ -51,6 +51,12 @@ function _ue4 {
         build)
             _ue4_build
         ;;
+        run)
+            _ue4_run
+        ;;
+        gen)
+            _ue4_gen
+        ;;
         version)
             _ue4_version
         ;;
@@ -67,25 +73,27 @@ function _ue4_version {
         "1: :(major minor patch full short)"
 }
 
-function _ue4_build {
+function _ue4_run {
     _arguments \
-        "-Help[Show help]" \
-        "-Verbose[Increase output verbosity]" \
-        "-VeryVerbose[Increase output verbosity more]" \
-        "-Log[Specify a log file location (default: Engine/Programs/UnrealBuildTool/Log.txt)]" \
-        "-TraceWrites[Trace writes requested to the specified file]" \
-        "-Timestamps[Include timestamps in the log]" \
-        "-FromMsBuild[Format messages for msbuild]" \
-        "-SuppressSDKWarnings[Missing SDKs error verbosity level will be reduced from warning to log]" \
-        "-Progress[Write progress messages in a format that can be parsed by other programs]" \
-        "-NoMutex[Allow more than one instance of the program to run at once]" \
-        "-WaitMutex[Wait for another instance to finish and then start, rather than aborting immediately]" \
-        "-RemoteIni[Remote tool ini directory]" \
-        "-Clean[Clean build products. Equivalent to -Mode=Clean]" \
-        "-ProjectFiles[Generate project files based on IDE preference. Equivalent to -Mode=GenerateProjectFiles]" \
-        "-ProjectFileFormat=[Generate project files in specified format. May be used multiple times.]" \
-        "-Makefile[Generate Linux Makefile]" \
+        "--debug[]" \
+        "*::arg:->args"
+}
+
+function _ue4_gen {
+    local line
+
+    # NOTE:
+    # '-M' is an option to fucking `arguments_`. Don't swap "-CMakefile" with
+    # "-Makefile" below; otherwise "-M" will be interpreted as an option to
+    # `arguments_` and you'll get:
+    #
+    # _describe:compadd:114: unknown match specification character `a'
+    #
+    # It took me way too much to figure this out.
+    #
+    _arguments -C \
         "-CMakefile[Generate project files for CMake]" \
+        "-Makefile[Generate Linux Makefile]" \
         "-QMakefile[Generate project files for QMake]" \
         "-KDevelopfile[Generate project files for KDevelop]" \
         "-CodeliteFiles[Generate project files for Codelite]" \
@@ -95,16 +103,39 @@ function _ue4_build {
         "-VSMac[Generate project files for Visual Studio Mac]" \
         "-CLion[Generate project files for CLion]" \
         "-Rider[Generate project files for Rider]" \
-        "*::args:->args"
+        "*::arg:->args"
 
-    # TODO:
-            #  -Mode=               :  Select tool mode. One of the following (default tool mode is "Build"):
-            #                            AggregateClangTimingInfo, AggregateParsedTimingInfo, Analyze, ApplePostBuildSync, Build, 
-            #                            ClRepro, Clean, Deploy, Execute, FixIncludePaths, GenerateClangDatabase, GenerateProjectFiles, 
-            #                            IOSPostBuildSync, IWYU, InlineGeneratedCpps, JsonExport, PVSGather, ParseMsvcTimingInfo, 
-            #                            PipInstall, PrintBuildGraphInfo, ProfileUnitySizes, Query, QueryTargets, Server, SetupPlatforms, 
-            #                            Test, UnrealHeaderTool, ValidatePlatforms, WriteDocumentation, WriteMetadata
+    # The above arguments may be passed several times:
+    [ "$line[1]" != "" ] && _ue4_gen
 }
+
+function _ue4_build {
+}
+
+# function _ue4_build {
+#     _arguments -C \
+#         "-Help[Show help]" \
+#         "-Verbose[Increase output verbosity]" \
+#         "-VeryVerbose[Increase output verbosity more]" \
+#         "-Log[Specify a log file location (default: Engine/Programs/UnrealBuildTool/Log.txt)]" \
+#         "-TraceWrites[Trace writes requested to the specified file]" \
+#         "-Timestamps[Include timestamps in the log]" \
+#         "-FromMsBuild[Format messages for msbuild]" \
+#         "-SuppressSDKWarnings[Missing SDKs error verbosity level will be reduced from warning to log]" \
+#         "-Progress[Write progress messages in a format that can be parsed by other programs]" \
+#         "-NoMutex[Allow more than one instance of the program to run at once]" \
+#         "-WaitMutex[Wait for another instance to finish and then start, rather than aborting immediately]" \
+#         "-RemoteIni[Remote tool ini directory]" \
+#         "*::args:->args"
+#
+#     # TODO:
+#             #  -Mode=               :  Select tool mode. One of the following (default tool mode is "Build"):
+#             #                            AggregateClangTimingInfo, AggregateParsedTimingInfo, Analyze, ApplePostBuildSync, Build, 
+#             #                            ClRepro, Clean, Deploy, Execute, FixIncludePaths, GenerateClangDatabase, GenerateProjectFiles, 
+#             #                            IOSPostBuildSync, IWYU, InlineGeneratedCpps, JsonExport, PVSGather, ParseMsvcTimingInfo, 
+#             #                            PipInstall, PrintBuildGraphInfo, ProfileUnitySizes, Query, QueryTargets, Server, SetupPlatforms, 
+#             #                            Test, UnrealHeaderTool, ValidatePlatforms, WriteDocumentation, WriteMetadata
+# }
 
 
 # Usage:
