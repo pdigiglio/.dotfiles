@@ -3,6 +3,7 @@
     ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
     ~/.config/zsh: config/zsh
     ~/.config/kitty: config/kitty
+    ~/.config/pacman: config/pacman
     ~/.zshenv: config/zsh/zshenv
     ~/.inputrc:
     ~/.config/nvim:
