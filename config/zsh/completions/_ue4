@@ -54,6 +54,9 @@ function _ue4 {
         run)
             _ue4_run
         ;;
+        test)
+            _ue4_test
+        ;;
         gen)
             _ue4_gen
         ;;
@@ -129,6 +132,22 @@ function _ue4_build {
         "1: :(($configurations))" \
         "2: :(($targets))" \
         "*::arg:->args"
+}
+
+function _ue4_test {
+    local -a filters=(
+        "Engine\\:''"
+        "Smoke\\:''"
+        "Stress\\:''"
+        "Perf\\:''"
+        "Product\\:'Tests specific to your project and its plugins'"
+    )
+
+    _arguments \
+        "--list[Print the list of available tests]" \
+        "--all[Run all of the available tests (including engine-wide tests)]" \
+        "--filter[Run tests match the specified filter]: :(($filters))" \
+        "--withrhi[Run tests with rendering enabled]" \
 }
 
 # Usage:
