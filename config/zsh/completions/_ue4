@@ -1,5 +1,17 @@
 #compdef _ue4 ue4
-# https://blog.mads-hartmann.com/2017/08/06/writing-zsh-completion-scripts.html
+
+#
+# Completion for ue4 (https://docs.adamrehn.com/ue4cli/overview/introduction-to-ue4cli)
+# ------------------ 
+#
+# Author: Paolo Di Giglio (GitHub: pdigiglio)
+#         https://github.com/pdigiglio/.dotfiles/blob/master/config/zsh/completions/_ue4
+#
+# Version: 0.1.0
+#
+# Starting point to write completion files:
+#  * https://blog.mads-hartmann.com/2017/08/06/writing-zsh-completion-scripts.html
+#
 
 function _ue4 {
     local -a subcommands=(
@@ -9,32 +21,26 @@ function _ue4 {
         "clearroot\\:'Remove any previously-specified engine root path override'"
         "clearcache\\:'Clear any cached data that ue4cli has stored'"
         # Engine-related commands
-        "root\\:'Print the path to the root directory of the Unreal Engine'"
-        "version\\:'Print the version string of the Unreal Engine (default: \"full\")'"
-        "editor\\:'Run the editor without an Unreal project'" # arg
         "build-target\\:'Build the specified target using UBT'" # arg
-        ## Descriptor-related commands
-        "run\\:'Run the editor for the Unreal project'" # arg
-        "gen\\:'Generate IDE project files for the Unreal project'"
-        "build\\:'Build the Editor modules for the Unreal project or plugin'" # arg
+        "editor\\:'Run the editor without an Unreal project'" # arg
+        "root\\:'Print the path to the root directory of the Unreal Engine'"
+        "version\\:'Print the version of the Unreal Engine (default: \"full\")'"
+        # Descriptor-related commands
+        "build\\:'Build the Editor modules for the Unreal project or plugin'"
         "clean\\:'Clean build artifacts for the Unreal project or plugin'"
+        "gen\\:'Generate IDE project files for the Unreal project'"
+        "package\\:'Package a build of the Unreal project or plugin in the current directory'" # arg
+        "run\\:'Run the editor for the Unreal project'" # arg
         "test\\:'Run automation tests for the Unreal project'"
-        "package\\:'Package a build of the Unreal project or plugin in the current directory'"
-
         # Library-related commands
-        # ------------------------
-        # 
+        "cmakeflags\\:'Print CMake flags for building against libs'"
+        "cxxflags\\:'Print compiler flags for building against libs'"
+        "ldflags\\:'Print linker flags for building against libs'"
+        "includedirs\\:'Print include directories for building against libs'"
+        "libfiles\\:'Print library files for building against libs'"
+        "defines\\:'Print preprocessor definitions for building against libs'"
         "libs\\:'List the supported third-party libs'"
-        "cxxflags\\:'Print compiler flags for building against libs'" # args
-        "ldflags\\:'Print linker flags for building against libs'" # args
-        "cmakeflags\\:'Print CMake flags for building against libs'" # args
-        "includedirs\\:'Print include directories for building against libs'" # args
-        "libfiles\\:'Print library files for building against libs'" # args
-        "defines\\:'Print preprocessor definitions for building against libs'" # args
-
-        # 
         # Automation-related commands
-        # ---------------------------
         "uat\\:'Invoke RunUAT with the specified arguments'" # args
     )
 
@@ -59,6 +65,24 @@ function _ue4 {
         ;;
         gen)
             _ue4_gen
+        ;;
+        cmakeflags)
+            _ue4_cmakeflags
+        ;;
+        cxxflags)
+            _ue4_cxxflags 
+        ;;
+        defines)
+            _ue4_defines 
+        ;;
+        includedirs)
+            _ue4_includedirs 
+        ;;
+        ldflags)
+            _ue4_ldflags 
+        ;;
+        libfiles)
+            _ue4_libfiles 
         ;;
         version)
             _ue4_version
@@ -150,75 +174,81 @@ function _ue4_test {
         "--withrhi[Run tests with rendering enabled]" \
 }
 
-# Usage:
-# ue4 COMMAND [ARGS]
-# 
-# Configuration-related commands
-# ------------------------------
-# 
-# These commands control the configuration of ue4cli:
-# 
-# 	setroot <ROOTDIR> - Sets an engine root path override that supercedes auto-detect
-# 	clearroot - Removes any previously-specified engine root path override
-# 	clearcache - Clears any cached data that ue4cli has stored
-# 
-# 
-# Engine-related commands
-# -----------------------
-# 
-# These commands relate to the Unreal Engine itself:
-# 
-# 	root - Print the path to the root directory of the Unreal Engine
-# 	version [major|minor|patch|full|short] - Print the version string of the Unreal Engine (default format is "full")
-# 	editor [EXTRA ARGS] - Run the editor without an Unreal project (useful for creating new projects)
-# 	build-target <TARGET> [CONFIGURATION] - Build the specified target using UBT
-# 
-# 
-# Descriptor-related commands
-# ---------------------------
-# 
-# These commands relate to an individual Unreal project or plugin, and will look
-# for a .uproject or .uplugin file located in the current working directory
-# (Note that some commands only support projects, not plugins):
-# 
-# 	run [--debug] [EXTRA ARGS] - Run the editor for the Unreal project
-# 	gen [EXTRA ARGS] - Generate IDE project files for the Unreal project
-# 	build [CONFIGURATION] [TARGET] - Build the Editor modules for the Unreal project or plugin
-# 	clean - Clean build artifacts for the Unreal project or plugin
-# 	test [--withrhi] [--list] [--all] [--filter FILTER] TEST1 TEST2 TESTN [-- EXTRA ARGS] - Run automation tests for the Unreal project
-# 	package [PROJECT CONFIGURATION] [EXTRA UAT ARGS] - Package a build of the Unreal project or plugin in the current directory, storing the result in a subdirectory named "dist". Default configuration for projects is Shipping.
-# 
-# 
-# Library-related commands
-# ------------------------
-# 
-# These commands are for developers compiling modules that need to build against
-# UE4-bundled third-party libs for purposes of interoperability with the engine:
-# 
-# 	libs - List the supported third-party libs
-# 	cxxflags [--multiline] [--nodefaults] [LIBS] - Print compiler flags for building against libs
-# 	ldflags [--multiline] [--flagsonly] [--nodefaults] [LIBS] - Print linker flags for building against libs
-# 	cmakeflags [--multiline] [--nodefaults] [LIBS] - Print CMake flags for building against libs
-# 	includedirs [--nodefaults] [LIBS] - Print include directories for building against libs
-# 	libfiles [--nodefaults] [LIBS] - Print library files for building against libs
-# 	defines [--nodefaults] [LIBS] - Print preprocessor definitions for building against libs
-# 
-# 
-# Automation-related commands
-# ---------------------------
-# 
-# These commands relate to Unreal's automation system:
-# 
-# 	uat [ARGS] - Invoke RunUAT with the specified arguments
-# 
-# 
-# Commands defined by plugins
-# ---------------------------
-# 
-# These commands are defined by currently installed ue4cli plugins:
-# 
-# 	(No commands in this group)
-# 
+function _ue4_cmakeflags {
+    # TODO:
+    #  1. The options should come before the libs.
+    #  2. Cache the libs.
+    #  3. Avoid copy-paste.
 
-# There's no zsh parser for treesitter yet.
+    local -a libs=($(ue4 libs 2> /dev/null))
+    _arguments \
+        "--multiline[Print each flag on a separate line]" \
+        "--nodefaults[Omit details for building against libc++ (Linux only)]" \
+        "1: :(($libs))"
+}
+
+function _ue4_cxxflags {
+    # TODO:
+    #  1. The options should come before the libs.
+    #  2. Cache the libs.
+    #  3. Avoid copy-paste.
+
+    local -a libs=($(ue4 libs 2> /dev/null))
+    _arguments \
+        "--multiline[Print each flag on a separate line]" \
+        "--nodefaults[Omit details for building against libc++ (Linux only)]" \
+        "1: :(($libs))"
+}
+
+function _ue4_defines {
+    # TODO:
+    #  1. The options should come before the libs.
+    #  2. Cache the libs.
+    #  3. Avoid copy-paste.
+
+    local -a libs=($(ue4 libs 2> /dev/null))
+    _arguments \
+        "--nodefaults[Omit details for building against libc++ (Linux only)]" \
+        "1: :(($libs))"
+}
+
+function _ue4_includedirs {
+    # TODO:
+    #  1. The options should come before the libs.
+    #  2. Cache the libs.
+    #  3. Avoid copy-paste.
+
+    local -a libs=($(ue4 libs 2> /dev/null))
+    _arguments \
+        "--nodefaults[Omit details for building against libc++ (Linux only)]" \
+        "1: :(($libs))"
+}
+
+function _ue4_ldflags {
+    # TODO:
+    #  1. The options should come before the libs.
+    #  2. Cache the libs.
+    #  3. Avoid copy-paste.
+
+    local -a libs=($(ue4 libs 2> /dev/null))
+    _arguments \
+        "--multiline[Print each flag on a separate line]" \
+        "--flagsonly[Print the linker flags only (omit library names)]" \
+        "--nodefaults[Omit details for building against libc++ (Linux only)]" \
+        "1: :(($libs))"
+}
+
+function _ue4_libfiles {
+    # TODO:
+    #  1. The options should come before the libs.
+    #  2. Cache the libs.
+    #  3. Avoid copy-paste.
+
+    local -a libs=($(ue4 libs 2> /dev/null))
+    _arguments \
+        "--nodefaults[Omit details for building against libc++ (Linux only)]" \
+        "1: :(($libs))"
+}
+
+# NOTE: There's no zsh parser for treesitter yet.
 # vim: set filetype=zsh foldmethod=indent:
