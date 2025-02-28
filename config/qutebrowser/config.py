@@ -8,6 +8,10 @@
 def set_config_py_opts():
     c.auto_save.session = True
 
+    # I keep hitting "co" by mistake. Unbind it and explicity use :tab-only if
+    # and when I need it. (Which is rare).
+    config.unbind('co')
+
 
 def set_opts():
     # Set low-priority custom options.
