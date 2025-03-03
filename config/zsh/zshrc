@@ -1,73 +1,26 @@
-# Other packages you may want to install:
-#
-#  * zsh-autosuggestions
-#  * zsh-completions
-#  * zsh-syntax-highlighting
-#
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-typeset -r zdot_dir="$([[ -z ${ZDOTDIR+x} ]] && echo "$HOME" || echo "$ZDOTDIR")"
 
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.local/state/zsh/histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd
-unsetopt beep
-
-bindkey -v
-
-# Set <Esc> delay to 0.01s. See zshparam(1).
-export KEYTIMEOUT=1
-
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-# zstyle :compinstall filename '/home/pdigiglio/.zshrc'
-zstyle :compinstall filename '$zdot_dir/.zshrc'
-
-# Arrow-driven completion
-zstyle ':completion:*' menu select
-
-# Case-insensitive path completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-autoload -Uz compinit
-
-# Add my custom completions. Do this before calling compinit.
-fpath=("$zdot_dir/completions" $fpath)
-compinit
-# End of lines added by compinstall
+# -- Actually load my configs (excluding the prompt settings).
+typeset -r zdot_dir="${ZDOTDIR:-$HOME}"
+. "$zdot_dir/zshrc_impl.zsh"
 
 # -- Prompt
+typeset -r p10k_theme="/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme"
+if [[ -f "$p10k_theme" ]]
+then
+    . "$p10k_theme"
+    
+    # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+    typeset -r p10k_cfg="$zdot_dir/.p10k.zsh"
+    [[ -f "$p10k_cfg" ]] && . "$p10k_cfg"
 
-# - Enable VCS information
-# See:
-
-# Load version control information
-autoload -Uz vcs_info
-precmd() { vcs_info }
-
-# Format the vcs_info_msg_0_ variable
-zstyle ':vcs_info:git:*' formats '(%F{yellow}%b%f) '
-
-# Set up the prompt (with git branch name)
-setopt PROMPT_SUBST
-# -
-
-# PROMPT='%F{#c0c0c0}%n%f@%F{#008000}%m%f %F{#800080}%B%~%b%f %# '
-# PROMPT='%F{#c0c0c0}%n%f@%F{#008000}%m%f %F{#800080}%B%~%b%f (${vcs_info_msg_0_}) %# '
-PROMPT='%F{#009070}%~%f ${vcs_info_msg_0_}%# '
-RPROMPT='[%F{yellow}%?%f]'
-
-# -- Allow '#' to comment lines in interactive shell.
-setopt INTERACTIVE_COMMENTS
-
-# --
-
-
-. "$zdot_dir/aliases.sh"
-. "$zdot_dir/env.sh"
-. "$zdot_dir/gpg.sh"
-
-. "$zdot_dir/run_help.sh"
-. "$zdot_dir/syntax_highlighting.sh"
-. "$zdot_dir/autosuggestions.sh"
+else
+    # Fallback self-made prompt
+    . "$zdot_dir/prompt.sh"
+fi
