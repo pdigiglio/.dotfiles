@@ -7,7 +7,11 @@
 # Author: Paolo Di Giglio (GitHub: pdigiglio)
 #         https://github.com/pdigiglio/.dotfiles/blob/master/config/zsh/completions/_ue4
 #
-# Version: 0.1.0
+# Version: 0.1.1
+#
+# Changelog:
+#   v0.1.1 - Add completion for "uat" subcommand
+#   v0.1.0 - Initial release
 #
 # Starting point to write completion files:
 #  * https://blog.mads-hartmann.com/2017/08/06/writing-zsh-completion-scripts.html
@@ -87,8 +91,21 @@ function _ue4 {
         version)
             _ue4_version
         ;;
+        uat)
+            _ue4_uat
+        ;;
     esac
 }
+
+# TODO: gen/build commands expect you to be in a project/plugin folder. Use
+# this function to check it before completing.
+# function cwd_contains_project_or_plugin {
+#     local proj_or_plug=(*.{uproject,uplugin}(N))
+#
+#     # Set the exit code to the exit code of checking is the string is not
+#     # empty.
+#     [ -n "$proj_or_plug" ]
+# }
 
 function _ue4_setroot {
     _arguments \
@@ -248,6 +265,31 @@ function _ue4_libfiles {
     _arguments \
         "--nodefaults[Omit details for building against libc++ (Linux only)]" \
         "1: :(($libs))"
+}
+
+function _ue4_uat {
+
+    local line
+    _arguments -C \
+        "-Verbose[Enable verbose logging]" \
+        "-VeryVerbose[Enable very verbose logging]" \
+        "-Submit[Allow UAT command to submit changes]" \
+        "-NoSubmit[Prevent any submit attempts]" \
+        "-NoP4[Disable Perforce functionality (default if not run on build machine)]" \
+        "-P4[Enable Perforce functionality (default if run on build machine)]" \
+        "-Help[Display help]" \
+        "-List[List all available commands]" \
+        "-NoKill[Do not kill any spawned processes on exit]" \
+        "-Compile[Force all script modules to be compiled]" \
+        "-NoCompile[Do not compile script modules: run with what is up to date]" \
+        "-IgnoreBuildRecords[Ignore build records to determine up-to-date script modules]" \
+        "-UseLocalBuildStorage[Use local storage for your root build storage (for local testing)]" \
+        "-WaitForDebugger[Wait for debugger to attach; breaks once attached]" \
+        "-WaitForStdStreams[Time (ms) to wait for std streams in child processes to close]" \
+        "*::arg:->args"
+
+    # The above arguments may be passed several times:
+    [ "$line[1]" != "" ] && _ue4_uat
 }
 
 # NOTE: There's no zsh parser for treesitter yet.
