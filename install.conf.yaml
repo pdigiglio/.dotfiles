@@ -5,7 +5,7 @@
     ~/.config/kitty: config/kitty
     ~/.config/pacman: config/pacman
     ~/.zshenv: config/zsh/zshenv
-    ~/.inputrc:
+    ~/.config/readline: config/readline
     ~/.config/nvim:
         path: config/nvim
         create: true
