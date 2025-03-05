@@ -6,6 +6,7 @@
     ~/.config/pacman: config/pacman
     ~/.zshenv: config/zsh/zshenv
     ~/.config/readline: config/readline
+    ~/.config/task: config/task
     ~/.config/nvim:
         path: config/nvim
         create: true
