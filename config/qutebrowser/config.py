@@ -14,21 +14,36 @@
 # TODO:
 #  
 #  * Check if file picker installed, otherwise use default.
-#  * If mpv installed, use it to play videos (also audio only)
+#  * Check if mpv installed, otherwise display a message on ',v' and ',a'
+#  * Fetch login data from `pass`
 #
 
+leader = ','
 terminal = 'kitty'
 editor   = 'nvim'
 editor_command     = [terminal, editor, '-f', '{file}', '-c', 'normal {line}G{column0}l']
 single_file_picker = [terminal, 'yazi', '--chooser-file', '{}']
 multi_file_picker  = single_file_picker
 
-def set_config_py_opts():
-    c.auto_save.session = True
 
+def set_bindingd():
     # I keep hitting "co" by mistake. Unbind it and explicity use :tab-only if
     # and when I need it. (Which is rare).
     config.unbind('co')
+
+    # Play a video with mpv.
+    # See also:  https://www.reddit.com/r/archlinux/comments/5m2os3/mpv_is_it_possible_to_change_video_quality_while
+    config.bind(f'{leader}v', 'spawn mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]" {url}')
+
+    # Play audio-only with mpv. 
+    # You can also force a window with `--force-window`
+    config.bind(f'{leader}a', 'spawn kitty mpv --ytdl-format="bestaudio" {url}')
+
+
+def set_config_py_opts():
+    set_bindingd()
+
+    c.auto_save.session = True
 
     # Require a confirmation before quitting the application.
     # Type: ConfirmQuit
