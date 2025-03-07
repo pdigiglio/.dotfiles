@@ -1,0 +1,5 @@
+# Config file for editline.
+# See: man 5 editrc
+
+# Vi bindings
+bind -v

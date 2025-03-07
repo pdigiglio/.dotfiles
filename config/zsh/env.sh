@@ -16,3 +16,4 @@ export PATH
 export PYTHON_BASIC_REPL=1
 
 export INPUTRC="${XDG_CONFIG_HOME}/readline/inputrc"
+export EDITRC="${XDG_CONFIG_HOME}/editline/editrc"
