@@ -10,7 +10,9 @@ function utility_exists() {
 # Make sure user-defined aliases work when using sudo.
 # See: https://stackoverflow.com/q/37209913
 alias sudo='sudo '
-alias ls='ls --color=auto --hyperlink=auto '
+
+# Use LS_COLORS to highlight orphan symlinks in red.
+alias ls='LS_COLORS="or=31" ls --color=auto --hyperlink=auto '
 alias grep="grep --color=auto "
 #alias vim="nvim "
 
