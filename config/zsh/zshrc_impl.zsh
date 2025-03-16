@@ -54,11 +54,12 @@ setopt INTERACTIVE_COMMENTS
 
 # --
 
-. "$zdot_dir/aliases.sh"
 . "$zdot_dir/env.sh"
 
+. "$zdot_dir/aliases.sh"
 . "$zdot_dir/autosuggestions.sh"
 . "$zdot_dir/cdr.sh"
+. "$zdot_dir/fzf.zsh"
 . "$zdot_dir/gpg.sh"
 . "$zdot_dir/run_help.sh"
 . "$zdot_dir/syntax_highlighting.sh"
