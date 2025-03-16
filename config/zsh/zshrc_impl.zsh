@@ -23,6 +23,13 @@ unsetopt beep
 
 bindkey -v
 
+# I don't feel the need for visual line selection. Use 'V' to edit the cmd line
+# in an editor instance.
+# See: https://unix.stackexchange.com/a/6622
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'V' edit-command-line
+
 # Set <Esc> delay to 0.01s. See zshparam(1).
 export KEYTIMEOUT=1
 
