@@ -8,6 +8,7 @@
     ~/.config/readline: config/readline
     ~/.config/editline: config/editline
     ~/.config/task: config/task
+    ~/.config/chromium-flags.conf: ./config/chromium-flags.conf
     ~/.config/nvim:
         path: config/nvim
         create: true
