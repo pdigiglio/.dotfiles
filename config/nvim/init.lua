@@ -110,6 +110,33 @@ end
 
 config_lsp()
 
+-- Use LSP-based semantic analysis.
+-- Move the cursor on an identifier and use `:Inspect` to check its tokens.
+-- See: ttps://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
+local on_lsp_token_update = function(args)
+    local token = args.data.token
+    if token.type ~= "variable" then return end
+    
+    local modifiers = token.modifiers
+    if not (modifiers.globalScope or modifiers.fileScope)
+    then
+        return
+    end
+
+    local global_hl = modifiers.readonly and 'ConstGlobalVarHL' or 'MutableGlobalVarHL'
+    vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, global_hl)
+end
+
+vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg = 'LightCyan' })
+vim.api.nvim_set_hl(0, '@lsp.type.property',  { italic = true })
+
+-- underdotted: make it obvious writing to this var is dangerous.
+vim.api.nvim_set_hl(0, 'MutableGlobalVarHL',  { bold = true, underdotted = true })
+vim.api.nvim_set_hl(0, 'ConstGlobalVarHL',    { bold = true })
+vim.api.nvim_create_autocmd('LspTokenUpdate', { callback = on_lsp_token_update })
+
+
+
 -- Omnicomplete will display a preview window with the documentation of the
 -- item curently selecting in the menu. The preview windows would remain open
 -- without the followind autocommand.
