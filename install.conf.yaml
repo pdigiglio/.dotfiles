@@ -17,4 +17,10 @@
         path: config/vim
         create: true
     ~/.local/bin/tw: local/bin/tw.sh
+    ~/.config/hypr/:
+        path: config/hypr
+        create: true
+    ~/.config/waybar/:
+        path: config/waybar
+        create: true
 
