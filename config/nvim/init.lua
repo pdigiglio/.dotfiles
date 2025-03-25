@@ -145,10 +145,13 @@ vim.api.nvim_create_autocmd('LspTokenUpdate', { callback = on_lsp_token_update }
 -- vim.opt.completeopt = "menu,preview,noinsert"
 
 -- Fold with treesitter.
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldmethod = "expr"
+-- The following is deprecated:
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- Use this instead:
+-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -- Don't automatically fold on entry.
-vim.opt.foldenable = false
+-- vim.opt.foldenable = false
 
 -- Share my Vim config with Neovim.
 -- Note: set these AGAIN at the end of the file.
