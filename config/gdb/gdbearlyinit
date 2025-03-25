@@ -1,0 +1,2 @@
+# Do not print the introductory and copyright messages.
+set startup-quietly on
