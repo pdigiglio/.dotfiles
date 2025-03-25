@@ -256,6 +256,10 @@ set mat=2
 
 " No sound on errors
 set noerrorbells
+
+" Disable the bell for all the events.
+set belloff=all
+
 " Flash on errors
 set novisualbell
 
