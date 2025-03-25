@@ -33,11 +33,15 @@ def set_bindingd():
 
     # Play a video with mpv.
     # See also:  https://www.reddit.com/r/archlinux/comments/5m2os3/mpv_is_it_possible_to_change_video_quality_while
-    config.bind(f'{leader}v', 'spawn mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]" {url}')
+    mpv_video = 'mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]"'
+    config.bind(f'{leader}v', f'spawn {mpv_video} {{url}}')
+    config.bind(f';v', f'hint links spawn --detach {mpv_video} {{hint-url}}')
 
     # Play audio-only with mpv. 
     # You can also force a window with `--force-window`
-    config.bind(f'{leader}a', 'spawn kitty mpv --ytdl-format="bestaudio" {url}')
+    mpv_audio = 'kitty mpv --ytdl-format="bestaudio"'
+    config.bind(f'{leader}a', f'spawn {mpv_audio} {{url}}')
+    config.bind(f';a', f'hint links spawn --detach {mpv_audio} {{hint-url}}')
 
 
 def set_config_py_opts():
