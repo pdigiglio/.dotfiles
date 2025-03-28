@@ -17,6 +17,40 @@
 #  * https://blog.mads-hartmann.com/2017/08/06/writing-zsh-completion-scripts.html
 #
 
+# FAQ:
+#  * Why do I need a '$' when setting IFS (input field separator)?
+#    > https://stackoverflow.com/a/4128305
+#    
+
+# Get the possible UE configurations (with desctiptions).
+# function get_ue_configurations() {
+#     typeset -r ifs="\n"
+#     typeset -r debug="Debug\\:'Build engine and game in debug'"
+#     typeset -r debug_game="DebugGame\\:'Build game in debug'"
+#     typeset -r development="Development\\:'Enable almost all engine and game optimizations'"
+#     typeset -r shipping="Shipping\\:'Optimal performance. Strip console cmds, stats, profiling tools'"
+#     typeset -r test="Test\\:'Same as Shipping. Keep some console cmds, stats, and profiling tools'"
+#     echo "$debug$ifs$debug_game$ifs$development$ifs$shipping$ifs$test$ifs"
+# }
+
+# Check if an elemnt is in an array
+# @param $1    The element to look for
+# @param $n... The array elements.
+function elem_in_array {
+    local -r needle="$1"
+    shift # Consume first arg
+
+    while (( $# != 0 ))
+    do
+        local elem="$1"
+        [[ "$needle" == "$elem" ]] && return 0 # needle found
+        shift
+    done
+
+    # Nothing found
+    return 1
+}
+
 function _ue4 {
     local -a subcommands=(
         "help\\:'Show help'"
@@ -60,6 +94,9 @@ function _ue4 {
         ;;
         build)
             _ue4_build
+        ;;
+        package)
+            _ue4_package
         ;;
         run)
             _ue4_run
@@ -173,6 +210,44 @@ function _ue4_build {
         "1: :(($configurations))" \
         "2: :(($targets))" \
         "*::arg:->args"
+}
+
+function _ue4_package_plugin {
+    # XXX: - file completion doesn't work.
+    #      - only allow completing folers in -Package
+    local line
+    _arguments -C \
+        "-Plugin[The plugin file]: :_files" \
+        "-Package[The folder to store the built plugin]: :_files" \
+        "*::arg:->args"
+
+    [ -n "$line[1]" ] && _ue4_package_plugin
+}
+
+function _ue4_package_project {
+    local line
+    _arguments -C \
+        "-Project[The project file]: :_files" \
+        "-ArchiveDirectory[The folder to store the built project]: :_files" \
+        "*::arg:->args"
+
+    [ -n "$line[1]" ] && _ue4_package_project
+}
+
+function _ue4_package {
+    local -ar configurations=(Debug DebugGame Development Shipping Test)
+
+    local line
+    _arguments -C \
+        "1: :(($configurations))" \
+        "*::arg:->args"
+
+    if elem_in_array "$line[1]" "${configurations[@]}" 
+    then
+        _ue4_package_project 
+    else
+        _ue4_package_plugin
+    fi
 }
 
 function _ue4_test {
