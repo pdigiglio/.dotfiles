@@ -11,6 +11,8 @@
 #
 #  * fc to open the last command in your editor.
 #    (See: https://itnext.io/the-zsh-shell-tricks-i-wish-id-known-earlier-ae99e91c53c2)
+#
+#  * https://thevaluable.dev/zsh-install-configure-mouseless/
 
 # $zdot_dir defined in wrapping zshrc file.
 
