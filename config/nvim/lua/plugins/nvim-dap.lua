@@ -27,12 +27,19 @@ end
 
 local setup_gdb = function()
     local dap = require("dap")
+    require("dap.ext.vscode").load_launchjs()
 
     -- @requires@ gdb (>= 14.0)
     dap.adapters.gdb = {
         type = "executable",
         command = "gdb",
         args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+    }
+
+    dap.adapters.lldb = {
+        type = "executable",
+        command = "/usr/bin/lldb-dap",
+        -- args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
     }
 
     local program = function()
@@ -48,7 +55,7 @@ local setup_gdb = function()
 
     local dap_configs = {
         {
-            name = "Launch",
+            name = "[gdb] launch",
             type = "gdb",
             request = "launch",
             program = program,
@@ -57,7 +64,7 @@ local setup_gdb = function()
             externalConsole = true,
         },
         {
-            name = "Select and attach to process",
+            name = "[gdb] attach",
             type = "gdb",
             request = "attach",
             program = program,
@@ -71,8 +78,30 @@ local setup_gdb = function()
         --     request = 'attach',
         --     target = 'localhost:1234',
         --     program = program,
-        --     cwd = '${workspaceFolder}'
+        --     cwd = '${workspaceFolder}',
+        --     externalConsole = true
         -- },
+        {
+            name = '[lldb] launch',
+            type = 'lldb',
+            request = 'launch',
+            program = program,
+            cwd = '${workspaceFolder}',
+            runInTerminal = true,
+            stopOnEntry = false,
+            args = {}
+        },
+        {
+            name = '[lldb] attach',
+            type = 'lldb',
+            request = "attach",
+            -- program = program,
+            pid = pid,
+            cwd = '${workspaceFolder}',
+            runInTerminal = true,
+            stopOnEntry = false,
+            args = {}
+        },
     }
 
     dap.configurations.c = dap_configs
