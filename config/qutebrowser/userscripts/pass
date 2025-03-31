@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+# python \
+#     -m debugpy \
+#     --listen localhost:5678 \
+#     --wait-for-client \
+    /usr/share/qutebrowser/userscripts/qute-pass \
+    --unfiltered \
+    --dmenu-invocation='wofi --dmenu'
+

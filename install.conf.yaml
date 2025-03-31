@@ -1,6 +1,7 @@
 - link:
     ~/.config/sioyek: config/sioyek
     ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
+    ~/.config/qutebrowser/userscripts: config/qutebrowser/userscripts
     ~/.config/zsh: config/zsh
     ~/.config/kitty: config/kitty
     ~/.config/pacman: config/pacman

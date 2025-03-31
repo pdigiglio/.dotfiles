@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# See: qute://help/userscripts.html
+
+
+# python \
+#     -m debugpy \
+#     --listen localhost:5678 \
+#     --wait-for-client \
+#     /usr/share/qutebrowser/userscripts/qute-pass \
+#     --unfiltered \
+#     --dmenu-invocation='wofi --dmenu'
+
+
+typeset -r ytdl_video_format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]"
+typeset -r ytdl_audio_format="bestaudio"
+
+typeset ytdl_format="$ytdl_video_format"
+typeset -i close_tab=1
+while getopts "avc" opt
+do
+    case $opt in
+        v)
+            ytdl_format="$ytdl_video_format"
+            ;;
+
+        a)
+            ytdl_format="$ytdl_audio_format"
+            ;;
+
+        c)
+            close_tab=1
+            ;;
+    esac
+done
+
+
+if (( $close_tab != 0 ))
+then
+    cat >> $QUTE_FIFO <<EOF
+    set --temp tabs.last_close close
+    tab-close
+    set tabs.last_close ignore
+EOF
+fi
+
+mpv --ytdl-format="$ytdl_format" "$QUTE_URL"
+
+# TODO: I can't seem to pass arguments with hint
+#
+# hint links userscript open_with_mpv
+
+
+
+    # mpv_video = 'mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]"'
+    # config.bind(f'v', f'spawn {mpv_video} {{url}}')
+    # config.bind(f';v', f'hint links spawn --detach {mpv_video} {{hint-url}}')
