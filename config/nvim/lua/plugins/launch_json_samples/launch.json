@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name" : "codelldb|Launch #appname#",
+            "type" : "codelldb",
+            "request" : "launch",
+            "program" : "#program#",
+            "args" : [ "#args#" ],
+            "preRunCommands" : [ "command source ~/.lldbinit" ],
+            "cwd" : "${workspaceFolder}",
+            "terminal" : "external",
+            "stopOnEntry" : false
+        },
+        {
+            "name" : "lldb|Launch #appname#",
+            "type" : "lldb",
+            "request" : "launch",
+            "program" : "#program#",
+            "args" : [ "#args#" ],
+            "cwd" : "${workspaceFolder}",
+            "terminal" : "external",
+            "stopOnEntry" : false
+        },
+        {
+            "name" : "gdb|Launch #appname#",
+            "type" : "gdb",
+            "request" : "launch",
+            "program" : "#program#",
+            "args" : [ "#args#" ],
+            "cwd" : "${workspaceFolder}",
+            "runInTerminal" : false,
+            "stopOnEntry" : false
+        }
+    ]
+}
+
+
