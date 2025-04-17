@@ -1,0 +1,83 @@
+# General LLDB config file.
+
+# Tips
+# ----
+#
+# Get help about a setting:
+#
+# (lldb) settings list <setting>
+#
+#
+# Source this file from a debugging session (useful to ensure this file is
+# sourced when using LLDB through a DAP):
+#
+# (lldb) command source <file>
+#
+# Set language with:
+#
+# (lldb) settings set target.language c++20
+#
+# (lldb) expression -T / --show-type
+# (lldb) expression -P / --ptr-depth <count>
+# (lldb) expression -O / --object-description
+# (lldb) expression -d / --dynamic-type
+#
+#      -A ( --show-all-children )
+#           Ignore the upper bound on the number of children to show.
+
+#      -D <count> ( --depth <count> )
+#           Set the max recurse depth when dumping aggregate types (default is
+#           infinity).
+#
+# History files are in ~/.lldb. The path appears to be hardcoded in
+# Editline.cpp.
+# See: https://discourse.llvm.org/t/how-to-preserve-command-history/55130
+
+# The strategy to use when settings breakpoints by file and line.
+#
+# Values: never, always, headers.
+#
+# Breakpoint locations can end up being inlined by the compiler, so that a
+# compile unit 'a.c' might contain an inlined function from another source
+# file. Usually this is limited to breakpoint locations from inlined functions
+# from header or other include files, or more accurately non-implementation
+# source files. Sometimes code might #include implementation files and cause
+# inlined breakpoint locations in inlined implementation files. Always checking
+# for inlined breakpoint locations can be expensive (memory and time), so if
+# you have a project with many headers and find that setting breakpoints is
+# slow, then you can change this setting to headers. This setting allows you to
+# control exactly which strategy is used when setting file and line
+# breakpoints.
+settings set target.inline-breakpoint-strategy headers
+
+# They don't seem to do anything.
+# settings set show-autosuggestion             true
+# settings set show-autosuggestion-ansi-prefix ${ansi.italic}
+# settings set show-autosuggestion-ansi-suffix ${ansi.normal}
+
+# Should printed values be shown as their dynamic value.
+#
+# Values: no-dynamic-values, run-target, no-run-target.
+settings set target.prefer-dynamic-value run-target
+
+# Enable on demand symbol loading in LLDB.
+#
+# Values: true, false.
+#
+# LLDB will load debug info on demand for each module based on various
+# conditions (e.g. matched breakpoint, resolved stack frame addresses and
+# matched global variables/function symbols in symbol table) to improve
+# performance. Please refer to docs/use/ondemand.rst for details.
+#
+# See also: https://lldb.llvm.org/use/ondemand.html
+settings set symbols.load-on-demand true
+
+# If true, blank lines will be printed between between REPL submissions.
+settings set interpreter.space-repl-prompts true
+
+command script import ~/AUR/ue5-zuru/src/unreal-engine-dc/Engine/Extras/LLDBDataFormatters/UEDataFormatters.py
+command script import ~/.config/lldb/formatters/vector_formatter.py
+
+# Remember to prefix lldb with PYTHONPATH 
+# Still does not work.
+# command script import ~/.local/share/pipx/venvs/voltron/lib/python3.13/site-packages/voltron/entry.py
