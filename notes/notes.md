@@ -2,6 +2,164 @@
 
 Some notes about my Arch setup. Look for `[issue]` to see all the pending issues.
 
+## Tips 
+
+### How to tell which distro you're running
+
+Try with:
+
+```sh
+cat /etc/*release
+```
+
+You may also get lucky and find some info in
+
+```sh
+/etc/issue
+```
+
+which is used by `agetty`:
+
+```sh
+# This may not work.
+# E.g. it works on v2.41 but not on v2.30.
+agetty --show-issue
+```
+
+
+## `git`
+
+ * List all tags matching a pattern:
+   ```sh
+   git tag --list 'v1.*'
+   ```
+
+
+## `top`
+
+Shortcut | Function 
+:-       | :-------
+`x`      | Highlight current sort column
+`<`      | Sort by column on the left to current column [^top-less-than]
+`>`      | Sort by column on the right to current column
+
+See also <https://www.redhat.com/en/blog/customize-top-command>.
+
+[^top-less-than]: <https://superuser.com/a/398870>
+
+## `lldb`
+
+https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb/
+
+For a cheatsheet, see also: <https://gist.github.com/alanzeino/82713016fd6229ea43a8>
+
+Script collection (and reference to a book): <https://github.com/DerekSelander/LLDB?tab=readme-ov-file>
+
+lldbinit <https://github.com/gdbinit/lldbinit/tree/master?tab=readme-ov-file>
+
+DAP configuration: <https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.lldb-dap>
+
+Retrieve template args of formatters: <https://discourse.llvm.org/t/lldb-sbapi-questions/55899>
+ 
+[issue] Why can I not execute expression involving `this`? <https://bugs.llvm.org/show_bug.cgi?id=41237>
+[issue] Reverse debugging?
+[issue] Hide local vars that are not yet defined? <https://discourse.llvm.org/t/hiding-local-variables-not-defined-yet/58025>
+
+
+### Skip code
+
+```
+thread jump --by <line-count>
+th j -b <line-count>
+```
+
+or 
+
+```
+thread jump --line <line-count>
+```
+
+See: <https://blog.eidinger.info/skip-code-during-debugging-in-xcode>
+
+
+### Show actual pointer type
+
+```
+frame variable -d run-target pObject
+```
+
+or
+
+```
+expr -d run-target -- pObject
+```
+
+
+See: <https://stackoverflow.com/a/14350239>
+
+### Print pointer as array
+
+```
+parray <count> addr
+
+```
+
+See: <https://stackoverflow.com/questions/7062173/view-array-in-lldb-equivalent-of-gdbs-operator-in-xcode-4-1>
+
+### Redirect output to file
+
+```
+session save <out-file>
+```
+
+See: <https://stackoverflow.com/a/73872850>
+
+
+## `nvim`
+
+Resurce (about what?): <https://lyz-code.github.io/blue-book/vim_keymaps/>
+
+To use LSP for semantical highlighting: <https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316>
+
+Working with C#: <https://aaronbos.dev/posts/csharp-dotnet-neovim>
+
+
+## GNUPlot
+
+##### "Pass" args to a script
+
+There appears to be no way to pass cmd-line args to GNUPlot scripts.
+[This](https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2)
+post suggests using _here files_ or env vars for this purpose. The flow with
+env vars is the following:
+
+```sh
+export GNUPLOT_TITLE="title"
+gnuplot script.plt
+```
+
+You then access those vars within the script via a call to
+[`system`](http://gnuplot.info/docs_5.5/loc2100.html):
+
+```plt
+# File: script.plt
+plot_title = system("echo $GNUPLOT_TITLE")
+set title plot_title . " (scale 1:120 cm)"
+# ...
+```
+
+Also, see [this](http://gnuplot.info/docs/loc3111.html) page for some
+documentation on user-defined variables and functions within GNUPlot scripts.
+
+
+##### Set equal scale on _x_ and _y_
+
+```
+set size ratio -1
+```
+
+See: <https://stackoverflow.com/a/27546936>
+
 ## Getting rid of XWayland
 
 ### Electron
