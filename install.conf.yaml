@@ -5,12 +5,16 @@
     ~/.config/zsh: config/zsh
     ~/.config/kitty: config/kitty
     ~/.config/pacman: config/pacman
+    ~/.config/procps: config/procps
     ~/.zshenv: config/zsh/zshenv
     ~/.config/readline: config/readline
     ~/.config/editline: config/editline
     ~/.config/gdb: config/gdb
     ~/.config/task: config/task
-    ~/.config/chromium-flags.conf: ./config/chromium-flags.conf
+    ~/.config/lldb: config/lldb
+    ~/.lldbinit: config/lldb/lldbinit
+    ~/.config/chromium-flags.conf: config/chromium-flags.conf
+    ~/.config/Unreal Engine: config/Unreal Engine
     ~/.config/nvim:
         path: config/nvim
         create: true
