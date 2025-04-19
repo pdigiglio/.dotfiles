@@ -71,4 +71,8 @@ setopt INTERACTIVE_COMMENTS
 . "$zdot_dir/fzf.zsh"
 . "$zdot_dir/gpg.sh"
 . "$zdot_dir/run_help.sh"
+
+# This file sources and sets up "zsh-syntax-highlighting". Source it last, as
+# explained in:
+# https://github.com/zsh-users/zsh-syntax-highlighting?tab=readme-ov-file#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file
 . "$zdot_dir/syntax_highlighting.sh"
