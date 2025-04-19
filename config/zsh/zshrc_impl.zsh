@@ -40,22 +40,6 @@ export KEYTIMEOUT=1
 # zstyle :compinstall filename '/home/pdigiglio/.zshrc'
 zstyle :compinstall filename '$zdot_dir/.zshrc'
 
-# Arrow-driven completion
-zstyle ':completion:*' menu select
-
-# Case-insensitive path completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-autoload -Uz compinit
-
-# Add my custom completions. Do this before calling compinit.
-fpath=("$zdot_dir/completions" $fpath)
-compinit
-
-# Complete to the longest unambiguous prefix and show completion menu (if still
-# ambiguous). See: https://unix.stackexchange.com/a/295712
-setopt nolistambiguous
-
 # End of lines added by compinstall
 
 # -- Allow '#' to comment lines in interactive shell.
@@ -68,6 +52,7 @@ setopt INTERACTIVE_COMMENTS
 . "$zdot_dir/aliases.sh"
 . "$zdot_dir/autosuggestions.sh"
 . "$zdot_dir/cdr.sh"
+. "$zdot_dir/completion.zsh"
 . "$zdot_dir/fzf.zsh"
 . "$zdot_dir/gpg.sh"
 . "$zdot_dir/run_help.sh"
