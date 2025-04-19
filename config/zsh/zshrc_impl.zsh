@@ -13,13 +13,32 @@
 #    (See: https://itnext.io/the-zsh-shell-tricks-i-wish-id-known-earlier-ae99e91c53c2)
 #
 #  * https://thevaluable.dev/zsh-install-configure-mouseless/
+#
+#  * Options (i.e. `setopt`) are described at: man 1 zshoptions. They're case
+#  insensitive and underscores are ignored.
 
 # $zdot_dir defined in wrapping zshrc file.
 
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.local/state/zsh/histfile
+# See: man zshall
+HISTFILE="$XDG_STATE_HOME/zsh/histfile"
 HISTSIZE=1000
 SAVEHIST=1000
+
+# Do not enter command lines into the history list if they are duplicates of
+# the previous event.
+setopt HIST_IGNORE_DUPS
+
+# Remove command lines from the history list when the first character on the
+# line is a space, or when one of the expanded aliases contains a leading
+# space.
+# 
+# Note that the command lingers in the internal history until the next command
+# is entered before it vanishes, allowing you to briefly reuse or edit the
+# line. If you want to make it vanish right away without entering another
+# command, type a space and press return.
+setopt HIST_IGNORE_SPACE
+
 setopt autocd
 unsetopt beep
 
