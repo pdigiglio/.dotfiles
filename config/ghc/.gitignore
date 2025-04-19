@@ -1,0 +1,4 @@
+# GHCi puts this here due to a bug.
+# More info in ghci.conf.
+ghci_history
+

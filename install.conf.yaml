@@ -12,6 +12,7 @@
     ~/.config/gdb: config/gdb
     ~/.config/task: config/task
     ~/.config/lldb: config/lldb
+    ~/.config/ghc: config/ghc
     ~/.lldbinit: config/lldb/lldbinit
     ~/.config/chromium-flags.conf: config/chromium-flags.conf
     ~/.config/Unreal Engine: config/Unreal Engine
