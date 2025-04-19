@@ -1,3 +1,18 @@
+# Make sure to remove dead links in the following folders (if they point within
+# this folder).
+- clean: [ '~' ]
+- clean:
+    ~/.config:
+      # Look for dead links in subfolders too (default: false)
+      recursive: true
+
+- defaults:
+    link:
+      # Create parent directories to the link as needed (default: false)
+      create: true
+      # Remove old target if it's a symlink (default: false)
+      relink: true
+
 - link:
     ~/.config/sioyek: config/sioyek
     ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
