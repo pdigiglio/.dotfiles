@@ -1,0 +1,15 @@
+# vim: set syntax=yaml:
+
+# This file sets key bindings in GHCi. See:
+#
+# https://downloads.haskell.org/ghc/latest/docs/users_guide/ghci.html?highlight=haskeline#the-haskeline-file
+#
+# and 
+#
+# https://github.com/haskell/haskeline/wiki/UserPreferences
+#
+# NOTE: This file is not YAML. Setting YAML syntax highlighting is eye-pleasing
+# enough.
+
+editMode: Vi
+historyDuplicates: IgnoreConsecutive
