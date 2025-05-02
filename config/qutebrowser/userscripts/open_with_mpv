@@ -1,57 +1,146 @@
 #!/bin/sh
 
 # See: qute://help/userscripts.html
+#
+# NOTE: Passing command line arguments to script doesn't seem to be supported.
+# So, in config.py I'll call various scripts which just delegate playing a
+# video/audio to this one.
+# 
+# Possible improvements:
+#
+#  * https://www.reddit.com/r/archlinux/comments/5m2os3/mpv_is_it_possible_to_change_video_quality_while
+#
+#  * You can also force a window with `--force-window` (if you need it wile
+#  playing audio)
+#
+#  * Start kitty with split window on alsamixer in audio mode.
+# 
+#  * Integrate with playerctl
 
 
-# python \
-#     -m debugpy \
-#     --listen localhost:5678 \
-#     --wait-for-client \
-#     /usr/share/qutebrowser/userscripts/qute-pass \
-#     --unfiltered \
-#     --dmenu-invocation='wofi --dmenu'
+# The maximum video resolution.
+typeset -r max_video_height="720"
 
+# Whether to play audio (0) or video (1).
+typeset -i play_format=0
 
-typeset -r ytdl_video_format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]"
-typeset -r ytdl_audio_format="bestaudio"
+# Whether to close the qutebrowser tab (1) or not (0).
+typeset -i close_tab=0
 
-typeset ytdl_format="$ytdl_video_format"
-typeset -i close_tab=1
-while getopts "avc" opt
-do
-    case $opt in
-        v)
-            ytdl_format="$ytdl_video_format"
-            ;;
+# Ask qutebrowser to close the current tab, by writing the commands in
+# `$QUTE_FIFO`.
+function close_tab() {
+    if ![ -p "$QUTE_FIFO"]
+    then
+        echo "\$QUTE_FIFO (i.e. '$QUTE_FIFO') is not a named pipe (FIFO)." > /dev/stderr
+        return 1
+    fi
 
-        a)
-            ytdl_format="$ytdl_audio_format"
-            ;;
-
-        c)
-            close_tab=1
-            ;;
-    esac
-done
-
-
-if (( $close_tab != 0 ))
-then
     cat >> $QUTE_FIFO <<EOF
     set --temp tabs.last_close close
     tab-close
     set tabs.last_close ignore
 EOF
-fi
+}
 
-mpv --ytdl-format="$ytdl_format" "$QUTE_URL"
+function play_video_with_mpv() {
+    typeset -r url="$1"
+    mpv --ytdl-format="bestvideo[ext=mp4][height<=?${max_video_height}]+bestaudio[ext=m4a]" "$url"
+}
 
-# TODO: I can't seem to pass arguments with hint
-#
-# hint links userscript open_with_mpv
+function play_audio_with_mpv() {
+    typeset -r url="$1"
+    kitty mpv --ytdl-format="bestaudio" "$url"
+}
 
+# Parse the cmd line args and populate global vars `ytdl_format` and
+# `close_tab`.
+function parse_cmd_line_args() {
 
+    # Make sure OPTIND is local to this function. So that `getopts` parses the
+    # function parameters. 
+    #
+    # See: https://stackoverflow.com/a/16655341
+    local OPTIND
+    while getopts "avc" opt
+    do
+        case $opt in
+            v)
+                play_format=1
+                ;;
 
-    # mpv_video = 'mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]"'
-    # config.bind(f'v', f'spawn {mpv_video} {{url}}')
-    # config.bind(f';v', f'hint links spawn --detach {mpv_video} {{hint-url}}')
+            a)
+                play_format=0
+                ;;
+
+            c)
+                close_tab=1
+                ;;
+        esac
+    done
+}
+
+function main_impl() {
+    parse_cmd_line_args "$@"
+
+    # NOTE: I need to ask to close the tab _before_ I run `mpv`. Otherwise, the
+    # tab will be closed _after_ the instance of `mpv` gets closed.
+    (( $close_tab != 0 )) && close_tab
+
+    if [ -z "$QUTE_URL" ]
+    then
+        echo "\$QUTE_URL is empty. Nothing to play." > /dev/stderr
+        return 1
+    fi
+
+    if (( $play_format == 0 ))
+    then    
+        play_audio_with_mpv "$QUTE_URL"
+    else
+        play_video_with_mpv "$QUTE_URL"
+    fi
+
+    # Play the URL.
+    # play_with_mpv "$ytdl_format"
+}
+
+function main() {
+
+    # Try and understand what to do based on the name I was invoked with. The
+    # idea is that I have some symbolic links lying aroundand I can be invoked
+    # though those.
+    # 
+    # WHY: I need this because there's no way to pass cmd-line args to
+    # Qutebrowser's userscripts.
+    #
+    # I got this idea from Android's toybox, which uses the same technique to
+    # provide many GNU commands and ships with a single executable.
+    typeset -r my_filename="$0"
+    typeset -r my_basename="$(basename "$my_filename")"
+    typeset -r my_parent_path="$(dirname "$my_filename")"
+
+    case "$my_basename" in
+        'play_audio_externally')
+            main_impl -a
+            ;;
+
+        'play_audio_externally_and_close_tab')
+            main_impl -a -c
+            ;;
+
+        'play_video_externally')
+            main_impl -v
+            ;;
+
+        'play_video_externally_and_close_tab')
+            main_impl -v -c
+            ;;
+
+        *)
+            # Fallback: no custom behavior.
+            main_impl "$@"
+            ;;
+    esac
+}
+
+main "$@"
