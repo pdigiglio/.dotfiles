@@ -28,3 +28,24 @@ EOF
         cut --fields 1 --delimiter ' ' |
         sort --unique
 }
+
+# Browse the installed packages with `fzf`
+# See: https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
+function browse_installed_packages() {
+    typeset -r preview_cmd='pacman --query --info --list {}'
+    pacman --query --quiet |
+        fzf \
+        --preview "$preview_cmd" \
+        --layout=reverse \
+        --bind "enter:execute( $preview_cmd | less )"
+}
+
+# Browse all the packages (even uninstalled) with `fzf`
+# See: https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
+function browse_all_packages() {
+    typeset -r preview_cmd="yay --sync --info {}"
+    yay --sync --list --quiet |
+        fzf \
+        --preview "$preview_cmd" \
+        --layout=reverse
+}
