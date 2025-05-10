@@ -5,6 +5,8 @@
 # NOTE: Passing command line arguments to script doesn't seem to be supported.
 # So, in config.py I'll call various scripts which just delegate playing a
 # video/audio to this one.
+#
+# To control mpv via playerctl/mpris, install package mpv-mpris.
 # 
 # Possible improvements:
 #
@@ -14,8 +16,6 @@
 #  playing audio)
 #
 #  * Start kitty with split window on alsamixer in audio mode.
-# 
-#  * Integrate with playerctl
 
 
 # The maximum video resolution.
