@@ -73,7 +73,7 @@ setopt INTERACTIVE_COMMENTS
 . "$zdot_dir/cdr.sh"
 . "$zdot_dir/completion.zsh"
 . "$zdot_dir/fzf.zsh"
-. "$zdot_dir/gpg.sh"
+. "$zdot_dir/gpg.zsh"
 . "$zdot_dir/run_help.sh"
 
 # This file sources and sets up "zsh-syntax-highlighting". Source it last, as
