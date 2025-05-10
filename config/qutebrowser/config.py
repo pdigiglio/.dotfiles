@@ -26,26 +26,26 @@ single_file_picker = [terminal, 'yazi', '--chooser-file', '{}']
 multi_file_picker  = single_file_picker
 
 
-def set_bindingd():
+def set_bindings():
     # I keep hitting "co" by mistake. Unbind it and explicity use :tab-only if
     # and when I need it. (Which is rare).
     config.unbind('co')
 
     # Play a video with mpv.
-    # See also:  https://www.reddit.com/r/archlinux/comments/5m2os3/mpv_is_it_possible_to_change_video_quality_while
-    mpv_video = 'mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]"'
-    config.bind(f'{leader}v', f'spawn {mpv_video} {{url}}')
-    config.bind(f';v', f'hint links spawn --detach {mpv_video} {{hint-url}}')
+    play_video_userscript = 'play_video_externally'
+    config.bind(f'{leader}v', f'spawn --userscript {play_video_userscript}')
+    config.bind(f';v', f'hint links userscript {play_video_userscript}')
+    config.bind(f';V', f'hint links userscript {play_video_userscript}_and_close_tab')
 
     # Play audio-only with mpv. 
-    # You can also force a window with `--force-window`
-    mpv_audio = 'kitty mpv --ytdl-format="bestaudio"'
-    config.bind(f'{leader}a', f'spawn {mpv_audio} {{url}}')
-    config.bind(f';a', f'hint links spawn --detach {mpv_audio} {{hint-url}}')
+    play_audio_userscript = 'play_audio_externally'
+    config.bind(f'{leader}a', f'spawn --userscript {play_audio_userscript}')
+    config.bind(f';a', f'hint links userscript {play_audio_userscript}')
+    config.bind(f';A', f'hint links userscript {play_audio_userscript}_and_close_tab')
 
 
 def set_config_py_opts():
-    set_bindingd()
+    set_bindings()
 
     c.auto_save.session = True
 
