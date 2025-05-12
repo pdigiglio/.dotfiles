@@ -69,6 +69,23 @@ set splitbelow
 " Never hide a buffer if I have unsaved changes to it.
 set nohidden
 
+" Ignore case when completing file and directory names in cmdline mode.
+set wildignorecase
+
+" Change the way completion works in cmdline mode.
+" 
+"  * The first <Tab> will insert the longest prefix and open a selection menu,
+"  without selecting the first entry.
+"
+"  * Subsequent <Tab>s will select entries from the menu.
+"
+" NOTE: While completing:
+"  <C-E>: stop completion and go back to originally typed text
+"  <C-Y>: stop completion and accept current selection
+"
+" To get an idea on how you may get auto-completion, see |compl-autocomplete|.
+set wildmode=longest:full,full
+
 " Make backspace work. Specify where (in insert mode) <BS> is allowed to
 " remove chars before the cursor position.
 "
