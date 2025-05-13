@@ -86,6 +86,9 @@ set wildignorecase
 " To get an idea on how you may get auto-completion, see |compl-autocomplete|.
 set wildmode=longest:full,full
 
+" Change the way completion works in insert mode.
+set completeopt=longest,menu,popup
+
 " Make backspace work. Specify where (in insert mode) <BS> is allowed to
 " remove chars before the cursor position.
 "
