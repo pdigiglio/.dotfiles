@@ -354,4 +354,5 @@ sudo chown -R $USER:$USER /mnt/extreme-ssd
 ```
 
 Note that mount option `users` allows every user to mount the disk (not only
-_root_) but it _does not_ give user permissions to the disk.
+_root_) but it _does not_ give user permissions to the disk. See
+[here](https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with_user_permission/).
