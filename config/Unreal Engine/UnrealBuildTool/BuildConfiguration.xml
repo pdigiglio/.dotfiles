@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration xmlns="https://www.unrealengine.com/BuildConfiguration">
+    <BuildConfiguration>
+        <!--
+            Disable UBA, as it's not supported on platforms other than Windows,
+            in UE 5.5.x. See:
+            https://dev.epicgames.com/documentation/en-us/unreal-engine/horde-unreal-build-accelerator-and-remote-compilation-tutorial-for-unreal-engine
+        -->
+        <bAllowUBAExecutor>false</bAllowUBAExecutor>
+        <bAllowUBALocalExecutor>false</bAllowUBALocalExecutor>
+
+        <!--<bTuneDebugInfoForLLDB>true</bTuneDebugInfoForLLDB>-->
+
+    </BuildConfiguration>
+</Configuration>
