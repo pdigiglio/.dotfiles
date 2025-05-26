@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Configuration xmlns="https://www.unrealengine.com/BuildConfiguration">
+    <!--
+        Options are documented here:
+        https://dev.epicgames.com/documentation/en-us/unreal-engine/build-configuration-for-unreal-engine#uebuildconfiguration
+    -->
     <BuildConfiguration>
         <!--
             Disable UBA, as it's not supported on platforms other than Windows,
@@ -8,8 +12,12 @@
         -->
         <bAllowUBAExecutor>false</bAllowUBAExecutor>
         <bAllowUBALocalExecutor>false</bAllowUBALocalExecutor>
-
-        <!--<bTuneDebugInfoForLLDB>true</bTuneDebugInfoForLLDB>-->
-
     </BuildConfiguration>
+
+    <ParallelExecutor>
+        <!-- Whether to show compilation times along with worst offenders or not. -->
+        <bShowCompilationTimes>true</bShowCompilationTimes>
+        <!-- Whether to show compilation times for each executed action. -->
+        <bShowPerActionCompilationTimes>true</bShowPerActionCompilationTimes>
+    </ParallelExecutor>
 </Configuration>
