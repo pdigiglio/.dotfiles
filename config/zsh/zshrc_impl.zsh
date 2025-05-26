@@ -64,6 +64,15 @@ zstyle :compinstall filename '$zdot_dir/.zshrc'
 # -- Allow '#' to comment lines in interactive shell.
 setopt INTERACTIVE_COMMENTS
 
+# By default, zsh will still own the processes it runs in backgrouns. So
+# exiting the shell will terminate the background child processes. I don't like
+# this behavior.
+#
+# NOTE: you can also disown background processes with &! or &|.
+#
+# See: https://stackoverflow.com/a/33735937
+setopt NO_HUP
+
 # --
 
 . "$zdot_dir/env.sh"
