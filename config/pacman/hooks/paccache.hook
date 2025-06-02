@@ -1,0 +1,22 @@
+# Only keep the last and second-last version of each package after an upgrade.
+# The second last is useful in case of bugs introduced in the latest version of
+# a package.
+#
+
+#
+# To make this hook effective:
+#
+#  * Copy it in /etc/pacman.d/hooks (or whatever HookDir in pacman.conf is).
+#  * Make sure the filename has extension .hook.
+#
+
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/paccache --keep 2 --remove'
+
+# vim: set syntax=conf:
