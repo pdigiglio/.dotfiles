@@ -17,6 +17,6 @@ Target = *
 
 [Action]
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/paccache --keep 2 --remove'
+Exec = /bin/sh -c '/usr/bin/paccache --verbose --keep 2 --remove'
 
 # vim: set syntax=conf:
