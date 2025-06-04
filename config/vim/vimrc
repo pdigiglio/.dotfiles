@@ -121,6 +121,10 @@ set smoothscroll
 " Make Y consistent with D (d$) and C (c$).
 nmap Y y$
 
+" Quick way to copy the full path of the current file. I use register '+'
+" because I set 'unnamedplus'.
+nmap y% :let @+ = expand("%:p")<CR>
+
 " Allow mouse, if available.
 if has('mouse')
     set mouse=a
