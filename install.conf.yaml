@@ -46,3 +46,9 @@
         path: config/waybar
         create: true
 
+- create:
+    # Ensure directories for vim exist. See vimrc.
+    - ~/.local/state/vim/swap
+    - ~/.local/state/vim/backup
+    - ~/.local/state/vim/view
+    - ~/.local/share/vim
