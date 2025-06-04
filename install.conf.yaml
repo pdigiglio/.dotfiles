@@ -27,7 +27,7 @@
     ~/.config/gdb: config/gdb
     ~/.config/task: config/task
     ~/.config/lldb: config/lldb
-    ~/.config/ghc: config/ghc
+    ~/.config/ghc/ghci.conf: config/ghc/ghci.conf
     ~/.lldbinit: config/lldb/lldbinit
     ~/.haskeline:
     ~/.config/chromium-flags.conf: config/chromium-flags.conf
@@ -52,3 +52,5 @@
     - ~/.local/state/vim/backup
     - ~/.local/state/vim/view
     - ~/.local/share/vim
+    # 
+    - ~/.config/ghc
