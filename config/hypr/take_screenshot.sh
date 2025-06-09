@@ -43,7 +43,7 @@ typeset -r nid_file="$(get_nid_file)"
 #
 # Params:
 #  $1 The info about the active window.
-#  $2 The property to extract.
+#  $2 The property to extract (it must be either "size" or "at").
 #
 # The active-window info is assumed to be obtained from:
 #
@@ -79,7 +79,7 @@ function get_active_window_property()
     typeset -r param="$2"
 
     echo "$active_window_info" \
-        | grep --extended-regexp "${param}:[[:space:]]+[[:digit:]]+,[[:digit:]]+" \
+        | grep --extended-regexp "${param}:[[:space:]]+[-+0-9]+,[-+0-9]+" \
         | cut --fields=2 --delimiter=':' \
         | tr --delete "[:blank:]"
 }
