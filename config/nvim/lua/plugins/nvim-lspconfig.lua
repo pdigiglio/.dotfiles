@@ -16,6 +16,15 @@
 
 -- Highlight refs to item under the cursor if I don't move for 'updatetime'.
 local highlight_refs = function(args)
+    local client_id = args.data.client_id
+    local client = assert(vim.lsp.get_client_by_id(client_id))
+
+    local capability = "textDocument/documentHighlight"
+    if not client:supports_method(capability) then
+        vim.print("Client '" .. client.name .. "' has no support for '" .. capability .. "'")
+        return
+    end
+
     local bufnr = args.buf
 
     local augroup = "LspDocumentHighlight"
