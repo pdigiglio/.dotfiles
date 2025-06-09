@@ -3,17 +3,17 @@
 # NOTE: leave an empty space after the definition of this list.
 topics= \
 	notes.md \
-	tips.md \
-	git.md \
-	ssh.md \
-	top.md \
-	unreal_engine.md \
-	clang.md \
-	lldb.md \
-	nvim.md \
-	gnuplot.md \
-	getting_rid_of_xwayland.md \
-	troubleshooting.md \
+	topics/tips.md \
+	topics/git.md \
+	topics/ssh.md \
+	topics/top.md \
+	topics/unreal_engine.md \
+	topics/clang.md \
+	topics/lldb.md \
+	topics/nvim.md \
+	topics/gnuplot.md \
+	topics/getting_rid_of_xwayland.md \
+	topics/troubleshooting.md \
 
 doc/notes.html: $(topics) Makefile
 	mkdir -p doc
