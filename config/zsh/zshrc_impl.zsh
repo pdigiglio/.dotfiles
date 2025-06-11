@@ -19,6 +19,26 @@
 
 # $zdot_dir defined in wrapping zshrc file.
 
+
+# --
+# Set vi-like bindings for the command line.
+#
+# NOTE: I set this early because this wouls discard any previous `bindkey`
+# command 
+bindkey -v
+
+# I don't feel the need for visual line selection. Use 'V' to edit the cmd line
+# in an editor instance.
+#
+# See: https://unix.stackexchange.com/a/6622
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'V' edit-command-line
+
+# Set <Esc> delay to 0.01s. See zshparam(1).
+export KEYTIMEOUT=1
+# --
+
 # Lines configured by zsh-newuser-install
 # See: man zshall
 HISTFILE="$XDG_STATE_HOME/zsh/histfile"
@@ -39,20 +59,25 @@ setopt HIST_IGNORE_DUPS
 # command, type a space and press return.
 setopt HIST_IGNORE_SPACE
 
+# <Up> and <Down> give me the prev/last command that starts with what I typed
+# in the command line. Very useful with autosuggestion plugin.
+#
+# To get the key code for special keys:
+#
+#  * Open a terminal
+#  * Press Ctrl-V
+#  * Press the key
+#
+# The key code will be displayed on the command line.
+#
+# See: https://stackoverflow.com/a/14041933
+#
+# The thread also mentions the '!<pattern>' and '!?<pattern>' tricks.
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
 setopt autocd
 unsetopt beep
-
-bindkey -v
-
-# I don't feel the need for visual line selection. Use 'V' to edit the cmd line
-# in an editor instance.
-# See: https://unix.stackexchange.com/a/6622
-autoload -z edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd 'V' edit-command-line
-
-# Set <Esc> delay to 0.01s. See zshparam(1).
-export KEYTIMEOUT=1
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
