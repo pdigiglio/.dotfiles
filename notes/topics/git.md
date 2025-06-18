@@ -1,4 +1,3 @@
-
 ## `git`
 
  * List all tags matching a pattern:
@@ -11,3 +10,17 @@
    # In .git/hooks/post-checkout
    git submodule update --init --recursive
    ```
+
+### Multiple accounts
+
+If you want to use a specific account for a repository, set it like this:
+
+
+```gitconfig
+# In <repo_path>/.git/config
+[user]
+    name  = <name>
+    email = <email>
+
+# ...
+```
