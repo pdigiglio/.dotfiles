@@ -87,8 +87,8 @@ local lsp_server_setups = {
 
 local config_lsp = function()
     -- Add additional capabilities supported by nvim-cmp
-    local cmp_lsp = require("cmp_nvim_lsp")
-    local capabilities = cmp_lsp and cmp_lsp.default_capabilities() or nil
+    -- local cmp_lsp = require("cmp_nvim_lsp")
+    -- local capabilities = cmp_lsp and cmp_lsp.default_capabilities() or nil
 
     for _, server in pairs(lsp_servers) do
         local lsp_server = lsp[server]
@@ -97,10 +97,10 @@ local config_lsp = function()
             opts = {}
         end
 
-        if capabilities then
-            opts.capabilities = capabilities
-            -- vim.print(opts)
-        end
+        -- if capabilities then
+        --     opts.capabilities = capabilities
+        --     -- vim.print(opts)
+        -- end
 
         lsp_server.setup(opts)
     end
