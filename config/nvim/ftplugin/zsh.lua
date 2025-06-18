@@ -1,0 +1,17 @@
+-- -- vim: set ft=lua:
+-- local use_bash_treesitter_parser = function ()
+--     local parsers = require("nvim-treesitter.parsers")
+--     if not parsers then
+--         return
+--     end
+--
+--     local parser_config = parsers.get_parser_configs()
+--     if not parser_config then
+--         return
+--     end
+--
+--     parser_config.zsh.filetype_to_parsername = "bash"
+-- end
+--
+-- -- echo "ciao"
+-- use_bash_treesitter_parser()

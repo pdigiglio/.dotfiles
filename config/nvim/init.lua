@@ -116,7 +116,7 @@ config_lsp()
 local on_lsp_token_update = function(args)
     local token = args.data.token
     if token.type ~= "variable" then return end
-    
+
     local modifiers = token.modifiers
     if not (modifiers.globalScope or modifiers.fileScope)
     then
@@ -129,6 +129,7 @@ end
 
 vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg = 'LightCyan' })
 vim.api.nvim_set_hl(0, '@lsp.type.property',  { italic = true })
+-- vim.api.nvim_set_hl(0, '@function.call',  { fg = '' })
 
 -- underdotted: make it obvious writing to this var is dangerous.
 vim.api.nvim_set_hl(0, 'MutableGlobalVarHL',  { bold = true, underdotted = true })
@@ -145,13 +146,14 @@ vim.api.nvim_create_autocmd('LspTokenUpdate', { callback = on_lsp_token_update }
 -- vim.opt.completeopt = "menu,preview,noinsert"
 
 -- Fold with treesitter.
--- vim.opt.foldmethod = "expr"
+vim.opt.foldmethod = "expr"
 -- The following is deprecated:
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- Use this instead:
--- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -- Don't automatically fold on entry.
--- vim.opt.foldenable = false
+vim.opt.foldenable = false
+vim.opt.foldcolumn = "auto:4"
 
 -- Share my Vim config with Neovim.
 -- Note: set these AGAIN at the end of the file.

@@ -127,6 +127,9 @@ local config = function()
     local au_name = "LspAttach"
     local au_group = vim.api.nvim_create_augroup(au_name .. "Group", { clear = true })
     vim.api.nvim_create_autocmd(au_name, { group = au_group, callback = on_attach })
+
+    -- Disable loggins. Prevent ~/.local/sate/nvim/lsp.log becoming too large.
+    vim.lsp.set_log_level('off')
 end
 
 return {
