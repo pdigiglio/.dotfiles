@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# See: qute://help/userscripts.html
+#
+# Pipe the HTML source of a web page through the `less` pager.
+
+function main() {
+    typeset -r in_file="$QUTE_TEXT"
+    [ -f "$in_file" ] && kitty zsh -c "less -R '$in_file'"
+}
+
+main "$@"

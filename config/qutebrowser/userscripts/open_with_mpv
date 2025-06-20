@@ -17,6 +17,7 @@
 #
 #  * Start kitty with split window on alsamixer in audio mode.
 
+. $XDG_CONFIG_HOME/qutebrowser/userscripts/utils.sh
 
 # The maximum video resolution.
 typeset -r max_video_height="720"
@@ -26,22 +27,6 @@ typeset -i play_format=0
 
 # Whether to close the qutebrowser tab (1) or not (0).
 typeset -i close_tab=0
-
-# Ask qutebrowser to close the current tab, by writing the commands in
-# `$QUTE_FIFO`.
-function close_tab() {
-    if ![ -p "$QUTE_FIFO"]
-    then
-        echo "\$QUTE_FIFO (i.e. '$QUTE_FIFO') is not a named pipe (FIFO)." > /dev/stderr
-        return 1
-    fi
-
-    cat >> $QUTE_FIFO <<EOF
-    set --temp tabs.last_close close
-    tab-close
-    set tabs.last_close ignore
-EOF
-}
 
 function play_video_with_mpv() {
     typeset -r url="$1"

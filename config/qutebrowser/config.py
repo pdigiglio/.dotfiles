@@ -18,7 +18,9 @@
 #  * Fetch login data from `pass`
 #
 
-leader = ','
+cmd_leader = ','
+hint_leader = ';'
+
 terminal = 'kitty'
 editor   = 'nvim'
 editor_command     = [terminal, editor, '-f', '{file}', '-c', 'normal {line}G{column0}l']
@@ -33,15 +35,20 @@ def set_bindings():
 
     # Play a video with mpv.
     play_video_userscript = 'play_video_externally'
-    config.bind(f'{leader}v', f'spawn --userscript {play_video_userscript}')
-    config.bind(f';v', f'hint links userscript {play_video_userscript}')
-    config.bind(f';V', f'hint links userscript {play_video_userscript}_and_close_tab')
+    config.bind(f'{cmd_leader}v', f'spawn --userscript {play_video_userscript}')
+    config.bind(f'{hint_leader}v', f'hint links userscript {play_video_userscript}')
+    config.bind(f'{hint_leader}V', f'hint links userscript {play_video_userscript}_and_close_tab')
 
     # Play audio-only with mpv. 
     play_audio_userscript = 'play_audio_externally'
-    config.bind(f'{leader}a', f'spawn --userscript {play_audio_userscript}')
-    config.bind(f';a', f'hint links userscript {play_audio_userscript}')
-    config.bind(f';A', f'hint links userscript {play_audio_userscript}_and_close_tab')
+    config.bind(f'{cmd_leader}a', f'spawn --userscript {play_audio_userscript}')
+    config.bind(f'{hint_leader}a', f'hint links userscript {play_audio_userscript}')
+    config.bind(f'{hint_leader}A', f'hint links userscript {play_audio_userscript}_and_close_tab')
+
+    # Pipe the page text through the `less` pager
+    display_in_pager_userscript = 'display_in_pager'
+    config.bind(f'{cmd_leader}l', f'spawn --userscript {display_in_pager_userscript}')
+    # config.bind(f'{hint_leader}l', f'hint links userscript {display_in_pager_userscript}')
 
 
 def set_config_py_opts():
