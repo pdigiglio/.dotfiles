@@ -1,0 +1,40 @@
+name: Generate HTML from *.md notes
+
+on:
+  push:
+    branches:
+      - master
+      - actions
+
+jobs:
+  Linux:
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install pandoc
+      uses: pandoc/actions/setup@main
+
+    - name: Verify
+      run: pandoc --version
+
+    # Checks-out your repository under $GITHUB_WORKSPACE.
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Generate HTML
+      run: |
+       cd "$GITHUB_WORKSPACE"/notes
+       make doc/index.html
+
+    # - name: Upload static files
+    #   uses: actions/upload-pages-artifact@v3
+    #   with:
+    #     path: ./notes/doc
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./notes/doc

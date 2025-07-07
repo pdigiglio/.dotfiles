@@ -26,5 +26,8 @@ doc/notes.html: $(topics) Makefile
 		$(topics) \
 		-o doc/notes.html
 
+doc/index.html: doc/notes.html
+	mv doc/notes.html doc/index.html
+
 clean: 
 	rm -rvf doc/*
