@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Notes</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Notes</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#tips" id="toc-tips">Tips</a>
+<ul>
+<li><a href="#how-to-tell-which-distro-youre-running"
+id="toc-how-to-tell-which-distro-youre-running">How to tell which distro
+you’re running</a></li>
+</ul></li>
+<li><a href="#git" id="toc-git"><code>git</code></a>
+<ul>
+<li><a href="#multiple-accounts" id="toc-multiple-accounts">Multiple
+accounts</a></li>
+</ul></li>
+<li><a href="#ssh" id="toc-ssh">ssh</a>
+<ul>
+<li><a href="#check-key-password" id="toc-check-key-password">Check key
+password</a></li>
+</ul></li>
+<li><a href="#top" id="toc-top"><code>top</code></a>
+<ul>
+<li><a href="#interactive-usage" id="toc-interactive-usage">Interactive
+usage</a></li>
+<li><a href="#memory-usage" id="toc-memory-usage">Memory Usage</a></li>
+</ul></li>
+<li><a href="#unreal-engine" id="toc-unreal-engine">Unreal Engine</a>
+<ul>
+<li><a href="#unity-vs-non-unity-builds"
+id="toc-unity-vs-non-unity-builds">unity vs non-unity builds</a></li>
+</ul></li>
+<li><a href="#clang" id="toc-clang">Clang</a>
+<ul>
+<li><a href="#dump-memory-layout" id="toc-dump-memory-layout">Dump
+memory layout</a></li>
+</ul></li>
+<li><a href="#lldb" id="toc-lldb"><code>lldb</code></a>
+<ul>
+<li><a href="#skip-code" id="toc-skip-code">Skip code</a></li>
+<li><a href="#show-actual-pointer-type"
+id="toc-show-actual-pointer-type">Show actual pointer type</a></li>
+<li><a href="#print-pointer-as-array"
+id="toc-print-pointer-as-array">Print pointer as array</a></li>
+<li><a href="#redirect-output-to-file"
+id="toc-redirect-output-to-file">Redirect output to file</a></li>
+<li><a href="#store-expression-results"
+id="toc-store-expression-results">Store expression results</a></li>
+</ul></li>
+<li><a href="#nvim" id="toc-nvim"><code>nvim</code></a></li>
+<li><a href="#gnuplot" id="toc-gnuplot">GNUPlot</a></li>
+<li><a href="#getting-rid-of-xwayland"
+id="toc-getting-rid-of-xwayland">Getting rid of XWayland</a>
+<ul>
+<li><a href="#electron" id="toc-electron">Electron</a></li>
+<li><a href="#jetbrains-rider" id="toc-jetbrains-rider">JetBrains
+(Rider)</a></li>
+</ul></li>
+<li><a href="#troubleshooting"
+id="toc-troubleshooting">Troubleshooting</a>
+<ul>
+<li><a
+href="#libva-error-usrlibdrinvidia_drv_video.so-init-failed-with-amdnvidia"
+id="toc-libva-error-usrlibdrinvidia_drv_video.so-init-failed-with-amdnvidia">libva
+error: /usr/lib/dri/nvidia_drv_video.so init failed with
+AMD/nvidia</a></li>
+<li><a href="#asian-fonts" id="toc-asian-fonts">Asian fonts</a></li>
+<li><a href="#mount-btrfs-disk-and-give-it-user-permissions"
+id="toc-mount-btrfs-disk-and-give-it-user-permissions">Mount
+<code>btrfs</code> disk and give it user permissions</a></li>
+</ul></li>
+</ul>
+</nav>
+<hr />
+<p>Some notes about my Arch setup. Look for <code>[issue]</code> to see
+all the pending issues.</p>
+<h2 id="tips">Tips</h2>
+<h3 id="how-to-tell-which-distro-youre-running">How to tell which distro
+you’re running</h3>
+<p>Try with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/<span class="pp">*</span>release</span></code></pre></div>
+<p>You may also get lucky and find some info in</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/etc/issue</span></span></code></pre></div>
+<p>which is used by <code>agetty</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This may not work.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># E.g. it works on v2.41 but not on v2.30.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">agetty</span> <span class="at">--show-issue</span></span></code></pre></div>
+<h2 id="git"><code>git</code></h2>
+<ul>
+<li><p>List all tags matching a pattern:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div></li>
+<li><p>To update submodules after every branch switch, append this:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div></li>
+</ul>
+<h3 id="multiple-accounts">Multiple accounts</h3>
+<p>If you want to use a specific account for a repository, set it like
+this:</p>
+<pre class="gitconfig"><code># In &lt;repo_path&gt;/.git/config
+[user]
+    name  = &lt;name&gt;
+    email = &lt;email&gt;
+
+# ...</code></pre>
+<h2 id="ssh">ssh</h2>
+<h3 id="check-key-password">Check key password</h3>
+<p>To check if a password unlocks the private key, try and change it
+with:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<p>This will ask the current password, first. When promped for the new
+password, type two mismatching ones so that it doesn’t get changed.</p>
+<h2 id="top"><code>top</code></h2>
+<p>The config file for <code>top</code> is stored in:</p>
+<pre><code>~/.config/procps/toprc</code></pre>
+<h3 id="interactive-usage">Interactive usage</h3>
+<p>Commands that operate on a process (e.g. <code>k</code>), will target
+the first entry in the task window.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Shortcut</th>
+<th style="text-align: left;">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>y</code></td>
+<td style="text-align: left;">Highlight running tasks (i.e. process with
+status <code>R</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x</code></td>
+<td style="text-align: left;">Highlight current sort column</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>z</code></td>
+<td style="text-align: left;">Toggle color/monochrome</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&lt;</code></td>
+<td style="text-align: left;">Sort by column on the left to current
+column <a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&gt;</code></td>
+<td style="text-align: left;">Sort by column on the right to current
+column</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>?</code></td>
+<td style="text-align: left;">Show help for interactive commands</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>E</code></td>
+<td style="text-align: left;">Change summary memory scale</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>e</code></td>
+<td style="text-align: left;">Change task memory scale</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>m</code></td>
+<td style="text-align: left;">Cycle through memory display modes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>k</code></td>
+<td style="text-align: left;">Kill process</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Suppress fields whose value is 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>c</code></td>
+<td style="text-align: left;">Toggle command line</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>1</code></td>
+<td style="text-align: left;">Toggle single/multiple CPU view</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>t</code></td>
+<td style="text-align: left;">Cycle through CPU display modes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>i</code></td>
+<td style="text-align: left;">Toggle idle processes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Z</code></td>
+<td style="text-align: left;">Configure colorscheme</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>W</code></td>
+<td style="text-align: left;">Write configuration file</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>o</code></td>
+<td style="text-align: left;">Add case-insensitive filter
+(e.g. <code>COMMAND=x</code> for comands <em>containing</em> “x”)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>O</code></td>
+<td style="text-align: left;">Add case-sensitive filter</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>^O</code></td>
+<td style="text-align: left;">Show current filters</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>=</code></td>
+<td style="text-align: left;">Reset filters</td>
+</tr>
+</tbody>
+</table>
+<p>See also <a
+href="https://www.redhat.com/en/blog/customize-top-command"
+class="uri">https://www.redhat.com/en/blog/customize-top-command</a>.</p>
+<h3 id="memory-usage">Memory Usage</h3>
+<p>(See more in section <code>2c. MEMORY Usage</code> of
+<code>man top</code>).</p>
+<p>Memory usage is displayed the summary area. It consists of two lines
+whose values are read (or evaluated) from <code>/proc/meminfo</code> as
+follows (source fields in parenthesis):</p>
+<pre><code>Line 1 reflects physical memory, classified as:
+    total          ( MemTotal )
+    free           ( MemFree )
+    used           ( MemTotal - MemAvailable )
+    buff/cache     ( Buffers + Cached + SReclaimable )
+
+Line 2 reflects mostly virtual memory, classified as:
+    total          ( SwapTotal )
+    free           ( SwapFree )
+    used           ( SwapTotal - SwapFree )
+    avail          ( MemAvailable, which is physical memory )</code></pre>
+<p>The <code>avail</code> field is an estimation of physical memory
+available for starting new applications, without swapping. Unlike the
+<code>free</code> field, it attempts to account for readily reclaimable
+page cache and memory slabs.</p>
+<p>In the alternate memory display modes, two abbreviated summary lines
+are shown consisting of these elements:</p>
+<pre><code>           a    b          c
+GiB Mem : 18.7/15.738   [ ... ]
+GiB Swap:  0.0/7.999    [ ... ]</code></pre>
+<p>Where:</p>
+<ol type="a">
+<li>is the percentage used;</li>
+<li>is the total available;</li>
+<li>is one of two visual graphs of those representations.</li>
+</ol>
+<p>For the physical memory, the percentage represents the
+<code>total</code> minus the estimated <code>avail</code>. The graph is
+divided between the non-cached portion of <code>used</code> and any
+remaining memory not otherwise accounted for by <code>avail</code>.</p>
+<h2 id="unreal-engine">Unreal Engine</h2>
+<h3 id="unity-vs-non-unity-builds">unity vs non-unity builds</h3>
+<p>See a discussion and how to setup one build type or another at this
+link:</p>
+<p><a
+href="https://forums.unrealengine.com/t/how-to-compile-in-non-unity-mode/94863"
+class="uri">https://forums.unrealengine.com/t/how-to-compile-in-non-unity-mode/94863</a></p>
+<h2 id="clang">Clang</h2>
+<h3 id="dump-memory-layout">Dump memory layout</h3>
+<p>You can dump the memory layout of a <code>struct</code> or
+<code>class</code> with <code>clang</code>. See</p>
+<p><a
+href="https://eli.thegreenplace.net/2012/12/17/dumping-a-c-objects-memory-layout-with-clang"
+class="uri">https://eli.thegreenplace.net/2012/12/17/dumping-a-c-objects-memory-layout-with-clang</a></p>
+<h2 id="lldb"><code>lldb</code></h2>
+<p>https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb/</p>
+<p>For a cheatsheet, see also: <a
+href="https://gist.github.com/alanzeino/82713016fd6229ea43a8"
+class="uri">https://gist.github.com/alanzeino/82713016fd6229ea43a8</a></p>
+<p>Script collection (and reference to a book): <a
+href="https://github.com/DerekSelander/LLDB?tab=readme-ov-file"
+class="uri">https://github.com/DerekSelander/LLDB?tab=readme-ov-file</a></p>
+<p>lldbinit <a
+href="https://github.com/gdbinit/lldbinit/tree/master?tab=readme-ov-file"
+class="uri">https://github.com/gdbinit/lldbinit/tree/master?tab=readme-ov-file</a></p>
+<p>DAP configuration: <a
+href="https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.lldb-dap"
+class="uri">https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.lldb-dap</a></p>
+<p>Retrieve template args of formatters: <a
+href="https://discourse.llvm.org/t/lldb-sbapi-questions/55899"
+class="uri">https://discourse.llvm.org/t/lldb-sbapi-questions/55899</a></p>
+<p>[issue] Why can I not execute expression involving <code>this</code>?
+<a href="https://bugs.llvm.org/show_bug.cgi?id=41237"
+class="uri">https://bugs.llvm.org/show_bug.cgi?id=41237</a> [issue]
+Reverse debugging? [issue] Hide local vars that are not yet defined? <a
+href="https://discourse.llvm.org/t/hiding-local-variables-not-defined-yet/58025"
+class="uri">https://discourse.llvm.org/t/hiding-local-variables-not-defined-yet/58025</a></p>
+<h3 id="skip-code">Skip code</h3>
+<pre><code>thread jump --by &lt;line-count&gt;
+th j -b &lt;line-count&gt;</code></pre>
+<p>or</p>
+<pre><code>thread jump --line &lt;line-count&gt;</code></pre>
+<p>See: <a
+href="https://blog.eidinger.info/skip-code-during-debugging-in-xcode"
+class="uri">https://blog.eidinger.info/skip-code-during-debugging-in-xcode</a></p>
+<h3 id="show-actual-pointer-type">Show actual pointer type</h3>
+<pre><code>frame variable -d run-target pObject</code></pre>
+<p>or</p>
+<pre><code>expr -d run-target -- pObject</code></pre>
+<p>See: <a href="https://stackoverflow.com/a/14350239"
+class="uri">https://stackoverflow.com/a/14350239</a></p>
+<h3 id="print-pointer-as-array">Print pointer as array</h3>
+<pre><code>parray &lt;count&gt; addr
+</code></pre>
+<p>See: <a
+href="https://stackoverflow.com/questions/7062173/view-array-in-lldb-equivalent-of-gdbs-operator-in-xcode-4-1"
+class="uri">https://stackoverflow.com/questions/7062173/view-array-in-lldb-equivalent-of-gdbs-operator-in-xcode-4-1</a></p>
+<h3 id="redirect-output-to-file">Redirect output to file</h3>
+<pre><code>session save &lt;out-file&gt;</code></pre>
+<p>See: <a href="https://stackoverflow.com/a/73872850"
+class="uri">https://stackoverflow.com/a/73872850</a></p>
+<h3 id="store-expression-results">Store expression results</h3>
+<pre><code>expression auto $name = expr</code></pre>
+<p>Then you can use <code>$name</code> in subsequent prompts.</p>
+<h2 id="nvim"><code>nvim</code></h2>
+<p>Resurce (about what?): <a
+href="https://lyz-code.github.io/blue-book/vim_keymaps/"
+class="uri">https://lyz-code.github.io/blue-book/vim_keymaps/</a></p>
+<p>To use LSP for semantical highlighting: <a
+href="https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316"
+class="uri">https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316</a></p>
+<p>Working with C#: <a
+href="https://aaronbos.dev/posts/csharp-dotnet-neovim"
+class="uri">https://aaronbos.dev/posts/csharp-dotnet-neovim</a></p>
+<h2 id="gnuplot">GNUPlot</h2>
+<h5 id="pass-args-to-a-script">“Pass” args to a script</h5>
+<p>There appears to be no way to pass cmd-line args to GNUPlot scripts.
+<a
+href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
+post suggests using <em>here files</em> or env vars for this purpose.
+The flow with env vars is the following:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<p>You then access those vars within the script via a call to <a
+href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
+<pre class="plt"><code># File: script.plt
+plot_title = system(&quot;echo $GNUPLOT_TITLE&quot;)
+set title plot_title . &quot; (scale 1:120 cm)&quot;
+# ...</code></pre>
+<p>Also, see <a href="http://gnuplot.info/docs/loc3111.html">this</a>
+page for some documentation on user-defined variables and functions
+within GNUPlot scripts.</p>
+<h5 id="set-equal-scale-on-x-and-y">Set equal scale on <em>x</em> and
+<em>y</em></h5>
+<pre><code>set size ratio -1</code></pre>
+<p>See: <a href="https://stackoverflow.com/a/27546936"
+class="uri">https://stackoverflow.com/a/27546936</a></p>
+<h2 id="getting-rid-of-xwayland">Getting rid of XWayland</h2>
+<h3 id="electron">Electron</h3>
+<p>Set environment variable <a
+href="https://www.electronjs.org/docs/latest/api/environment-variables#electron_ozone_platform_hint-linux"><code>ELECTRON_OZONE_PLATFORM_HINT</code></a>
+to <code>wayland</code> or <code>auto</code>.</p>
+<h4 id="teams-for-linux"><a
+href="https://github.com/IsmaelMartinez/teams-for-linux"><code>teams-for-linux</code></a></h4>
+<p>When starting <code>teams-for-linux</code> (v1.12.7) at Hyprland
+startup, no tray icon appears in Waybar. Setting
+<code>--trayIconEnabled</code> did not help. Invoking it with a delay
+seems to do the trick:</p>
+<pre><code># File: ~/.config/hypr/hyprland.conf
+exec-once = sleep 1 &amp;&amp; teams-for-linux</code></pre>
+<h4 id="chromium">Chromium</h4>
+<p>Chromium doesn’t seem to care about
+<code>ELECTRON_OZONE_PLATFORM_HINT</code>. Run it with the following
+flag:</p>
+<pre><code>--ozone-platform-hint=auto</code></pre>
+<p>If this flag doesn’t seem to have any effect, close <em>all</em> the
+chromium instances and re-launch it. You can also set this flag in</p>
+<pre><code>~/.config/chromium-flags.conf</code></pre>
+<p>See <a href="https://wiki.archlinux.org/title/Chromium">Arch
+Wiki</a>.</p>
+<h3 id="jetbrains-rider">JetBrains (Rider)</h3>
+<p>Run with the following flags (more info <a
+href="https://blog.jetbrains.com/platform/2024/07/wayland-support-preview-in-2024-2/">here</a>):</p>
+<pre><code>-Dawt.toolkit.name=WLToolkit</code></pre>
+<p>I tried this but I can’t see the mouse cursor while hovering on
+Rider’s window (see <a
+href="https://youtrack.jetbrains.com/issue/JBR-8223/Pure-Wayland-on-Arch-Hyprland-no-cursor">JBR-8223</a>).
+<a
+href="https://youtrack.jetbrains.com/issue/JBR-8223/Pure-Wayland-on-Arch-Hyprland-no-cursor#focus=Comments-27-11649983.0-0">This</a>
+comment suggests a workaraund:</p>
+<pre><code># File: ~/.config/hypr/hyprland.conf
+cursor {
+  # Both 1 and 2 seem to work. It makes no sense because 2 should be the
+  # default value.
+  no_hardware_cursors = 2
+}</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3
+id="libva-error-usrlibdrinvidia_drv_video.so-init-failed-with-amdnvidia">libva
+error: /usr/lib/dri/nvidia_drv_video.so init failed with AMD/nvidia</h3>
+<p>[issue] Apparently, no solution. See <a
+href="https://github.com/elFarto/nvidia-vaapi-driver/issues/160">here</a>.</p>
+<h3 id="asian-fonts">Asian fonts</h3>
+<p>Just install any of the fonts that are recommended here
+(e.g. <code>noto-fonts-cjk</code> is fine):</p>
+<p><a
+href="https://wiki.archlinux.org/title/Fonts#Chinese,_Japanese,_Korean,_Vietnamese"
+class="uri">https://wiki.archlinux.org/title/Fonts#Chinese,_Japanese,_Korean,_Vietnamese</a></p>
+<p>And Chromium/Kitty will pick them up on the next session.</p>
+<h3 id="mount-btrfs-disk-and-give-it-user-permissions">Mount
+<code>btrfs</code> disk and give it user permissions</h3>
+<p>Mount options like <code>uid</code> and <code>gid</code> are ignored
+by <code>btrfs</code>. Assuming the following line in <code>fstab</code>
+exists for the device:</p>
+<pre><code># fstab
+UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
+<p>You have to mount the disk and give it user permissions:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<p>Note that mount option <code>users</code> allows every user to mount
+the disk (not only <em>root</em>) but it <em>does not</em> give user
+permissions to the disk. See <a
+href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with_user_permission/">here</a>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://superuser.com/a/398870"
+class="uri">https://superuser.com/a/398870</a><a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
