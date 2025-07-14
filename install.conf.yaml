@@ -54,3 +54,8 @@
     - ~/.local/share/vim
     # 
     - ~/.config/ghc
+
+- shell:
+  -
+    description: Downloading 'fzf-git.sh'
+    command: curl "https://raw.githubusercontent.com/junegunn/fzf-git.sh/refs/heads/main/fzf-git.sh" -o "$PWD"/config/zsh/fzf-git.sh
