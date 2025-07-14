@@ -1,5 +1,7 @@
 ## GNUPlot
 
+A book on GNUPlot 5 can be found [here](https://alogus.com/g5script/content_index).
+
 ##### "Pass" args to a script
 
 There appears to be no way to pass cmd-line args to GNUPlot scripts.
