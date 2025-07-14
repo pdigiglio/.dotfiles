@@ -89,7 +89,7 @@ zstyle :compinstall filename '$zdot_dir/.zshrc'
 # -- Allow '#' to comment lines in interactive shell.
 setopt INTERACTIVE_COMMENTS
 
-# By default, zsh will still own the processes it runs in backgrouns. So
+# By default, zsh will still own the processes it runs in background. So
 # exiting the shell will terminate the background child processes. I don't like
 # this behavior.
 #
@@ -101,6 +101,7 @@ setopt NO_HUP
 # --
 
 . "$zdot_dir/env.sh"
+. "$zdot_dir/utils.sh"
 
 . "$zdot_dir/aliases.sh"
 . "$zdot_dir/autosuggestions.sh"
@@ -109,6 +110,9 @@ setopt NO_HUP
 . "$zdot_dir/fzf.zsh"
 . "$zdot_dir/gpg.zsh"
 . "$zdot_dir/run_help.sh"
+
+
+. "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
 
 # This file sources and sets up "zsh-syntax-highlighting". Source it last, as
 # explained in:
