@@ -17,7 +17,7 @@
         "custom/media"
     ],
     "modules-center": [
-        "sway/window"
+        "hyprland/window"
     ],
     "modules-right": [
         "mpd",
@@ -35,7 +35,7 @@
         "battery#bat2",
         "clock",
         "tray",
-        "custom/power"
+        // "custom/power"
     ],
     // Modules configuration
     //"sway/workspaces": {
