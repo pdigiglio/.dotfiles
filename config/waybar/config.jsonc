@@ -34,7 +34,7 @@
         "battery",
         "battery#bat2",
         "clock",
-        "tray",
+        "tray"
         // "custom/power"
     ],
     // Modules configuration
@@ -42,18 +42,31 @@
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
+        // "all-outputs": false,
         "warp-on-scroll": false,
         "format": "{name}: {icon}",
-        //"format-icons": {
-        //    "1": "",
-        //    "2": "",
-        //    "3": "",
-        //    "4": "",
-        //    "5": "",
-        //    "urgent": "",
-        //    "focused": "",
-        //    "default": ""
-        //}
+        // Look for iconst at: https://fontawesome.com/v4/icons/
+        "format-icons": {
+            "1": "",
+            // "2": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            // "5": "",
+            "6": "",
+            "8": "",
+            // "8": "",
+            // "8": "",
+            
+            //    "2": "",
+            //    "3": "",
+            //    "4": "",
+            //    "5": "",
+            // "urgent": "",
+            // "focused": "",
+            // "default": ""
+        }
     },
     "keyboard-state": {
         "numlock": true,
