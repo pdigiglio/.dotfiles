@@ -1,5 +1,5 @@
 # Aliases for Unreal Engine
-. "$zdot_dir"/utils.sh
+. "$ZDOTDIR/utils.sh"
 
 # The code below depends on the existence of ue4.
 utility_exists ue4 || return 0
