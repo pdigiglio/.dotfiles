@@ -125,6 +125,10 @@ button:hover {
 }
 
 #clock {
+    background-color: transparent;
+}
+
+#clock:hover {
     background-color: #64727D;
 }
 
