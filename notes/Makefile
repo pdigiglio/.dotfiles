@@ -1,4 +1,15 @@
+# Useful vars:
+#
+#  $< First prerequisite
+#  $^ All prerequisites
+#  $? All prerequisites newer than target
+#  $@ Targetname.
+
 .PHONY: clean
+
+target_dir=doc
+html=$(target_dir)/notes.html
+css=pandoc.css
 
 # NOTE: leave an empty space after the definition of this list.
 topics= \
@@ -15,19 +26,23 @@ topics= \
 	topics/getting_rid_of_xwayland.md \
 	topics/troubleshooting.md \
 
-doc/notes.html: $(topics) Makefile
-	mkdir -p doc
+$(html): $(topics) $(css) Makefile
+	mkdir -p $(target_dir)
 	pandoc \
-		-f markdown \
-		-t html \
+		--from markdown \
+		--to html \
 		--standalone \
-		--metadata title="Notes" \
 		--toc \
+		--metadata title="Notes about Arch config" \
+		--highlight-style=tango \
+		--css $(css) \
 		$(topics) \
-		-o doc/notes.html
+		-o $@
+	cp $(css) $(target_dir)
 
-doc/index.html: doc/notes.html
-	mv doc/notes.html doc/index.html
+
+$(target_dir)/index.html: $(html)
+	mv $(html) $@
 
 clean: 
-	rm -rvf doc/*
+	rm -rvf $(target_dir)/*
