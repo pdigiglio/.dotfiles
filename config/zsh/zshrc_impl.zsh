@@ -59,6 +59,20 @@ setopt HIST_IGNORE_DUPS
 # command, type a space and press return.
 setopt HIST_IGNORE_SPACE
 
+# This option:
+#
+#  - imports new commands from the history file,
+#  - causes your typed commands to be appended to the history file (this is
+#  like specifying INC_APPEND_HISTORY)
+#
+# The history lines are also output with timestamps ala EXTENDED_HISTORY.
+#
+# By default, history movement commands visit the imported lines and the local
+# lines. You can toggle this with the set-local-history zle binding. It is also
+# possible to create a zle widget that will make some commands ignore imported
+# commands, and some include them.
+setopt SHARE_HISTORY
+
 # <Up> and <Down> give me the prev/last command that starts with what I typed
 # in the command line. Very useful with autosuggestion plugin.
 #
