@@ -105,6 +105,8 @@ button:hover {
 #mpd {
     padding: 0 10px;
     color: #ffffff;
+    margin-bottom: 2px;
+    border-radius: 0 0 10px 10px;
 }
 
 #window,
