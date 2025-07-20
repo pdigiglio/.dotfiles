@@ -17,9 +17,6 @@
 #  * Options (i.e. `setopt`) are described at: man 1 zshoptions. They're case
 #  insensitive and underscores are ignored.
 
-# $zdot_dir defined in wrapping zshrc file.
-
-
 # --
 # Set vi-like bindings for the command line.
 #
@@ -96,7 +93,7 @@ unsetopt beep
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 # zstyle :compinstall filename '/home/pdigiglio/.zshrc'
-zstyle :compinstall filename '$zdot_dir/.zshrc'
+zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 
 # End of lines added by compinstall
 
@@ -114,16 +111,16 @@ setopt NO_HUP
 
 # --
 
-. "$zdot_dir/env.sh"
-. "$zdot_dir/utils.sh"
+. "$ZDOTDIR/env.sh"
+. "$ZDOTDIR/utils.sh"
 
-. "$zdot_dir/aliases.sh"
-. "$zdot_dir/autosuggestions.sh"
-. "$zdot_dir/cdr.sh"
-. "$zdot_dir/completion.zsh"
-. "$zdot_dir/fzf.zsh"
-. "$zdot_dir/gpg.zsh"
-. "$zdot_dir/run_help.sh"
+. "$ZDOTDIR/aliases.sh"
+. "$ZDOTDIR/autosuggestions.sh"
+. "$ZDOTDIR/cdr.sh"
+. "$ZDOTDIR/completion.zsh"
+. "$ZDOTDIR/fzf.zsh"
+. "$ZDOTDIR/gpg.zsh"
+. "$ZDOTDIR/run_help.sh"
 
 
 . "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
@@ -131,4 +128,4 @@ setopt NO_HUP
 # This file sources and sets up "zsh-syntax-highlighting". Source it last, as
 # explained in:
 # https://github.com/zsh-users/zsh-syntax-highlighting?tab=readme-ov-file#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file
-. "$zdot_dir/syntax_highlighting.sh"
+. "$ZDOTDIR/syntax_highlighting.sh"

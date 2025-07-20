@@ -1,4 +1,4 @@
-. "$zdot_dir"/utils.sh
+. "$ZDOTDIR/utils.sh"
 
 # Check if fzf is installed
 utility_exists fzf || return

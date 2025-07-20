@@ -1,4 +1,4 @@
-. "$zdot_dir"/utils.sh
+. "$ZDOTDIR/utils.sh"
 
 # Make sure user-defined aliases work when using sudo.
 # See: https://stackoverflow.com/q/37209913
