@@ -7,7 +7,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 autoload -Uz compinit
 
 # Add my custom completions. Do this before calling compinit.
-fpath=("$zdot_dir/completions" $fpath)
+fpath=("$ZDOTDIR/completions" $fpath)
 
 typeset -r zsh_cache_dir="$XDG_CACHE_HOME"/zsh
 mkdir --parents "$zsh_cache_dir"

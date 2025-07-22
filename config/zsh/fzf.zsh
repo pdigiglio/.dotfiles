@@ -12,10 +12,10 @@ bindkey -M vicmd '/' fzf-history-widget
 bindkey -M vicmd '?' fzf-history-widget
 
 # Check if the fzf/git integration is available.
-if [ -f "$zdot_dir/fzf-git.sh" ]
+if [ -f "$ZDOTDIR/fzf-git.sh" ]
 then
     # Source the file.
-    . "$zdot_dir/fzf-git.sh"
+    . "$ZDOTDIR/fzf-git.sh"
 
     # As I have KEYTIMEOUT=1, the default keybindings (i.e. <C-g><C-b> for
     # branches) won't work. I remap them here:
