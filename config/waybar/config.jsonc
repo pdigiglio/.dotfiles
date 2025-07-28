@@ -20,8 +20,8 @@
         "hyprland/window"
     ],
     "modules-right": [
-        "mpris",
         "mpd",
+        "mpris",
         "idle_inhibitor",
         "pulseaudio",
         "network",
