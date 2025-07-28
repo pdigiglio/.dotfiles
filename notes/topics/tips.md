@@ -50,3 +50,15 @@ Wiki](https://wiki.archlinux.org/title/Systemd-timesyncd#Enable_and_start) and
 on [System Time](https://wiki.archlinux.org/title/System_time).
 
 
+### Preserve colors when redirecting program output
+
+Some commands have an option for this; e.g. `ls --color=always`. Otherwise,
+prepend `unbuffer` to the command:
+
+```sh
+#                   v "auto", not "always"
+unbuffer ls --color=auto | less -R
+```
+
+On Arch, install `extra/expect`. Also note that `alias`es won't be executed by
+`unbuffer`. See [here](https://superuser.com/a/751809).

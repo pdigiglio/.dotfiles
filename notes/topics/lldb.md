@@ -1,6 +1,7 @@
 ## `lldb`
 
-https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb/
+Expression evaluator with support for NatVis: <https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb>
+Another expression evaluator: <https://llvm.org/devmtg/2025-06/slides/quick-talk/lebedev-lldb.pdf>
 
 For a cheatsheet, see also: <https://gist.github.com/alanzeino/82713016fd6229ea43a8>
 
