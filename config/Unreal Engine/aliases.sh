@@ -13,3 +13,13 @@ function get_unreal_engine_path() {
 typeset -r unreal_engine_path="$(get_unreal_engine_path)"
 alias UnrealEditor-Linux-DebugGame="\"$unreal_engine_path\"/UnrealEditor-Linux-DebugGame "
 
+# TODO: Either create an alias (like so) or a symlink in ~/.local/bin. With the
+# symlink, the usage message will not contain the real path of the script. Try:
+#
+# ```sh
+# ue_test -h
+# ```
+#
+# and check.
+alias ue_test="sh \"$HOME/.config/Unreal Engine\"/utils/ue_test.sh "
+
