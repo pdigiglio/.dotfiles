@@ -14,7 +14,7 @@ local set_keymaps = function()
 
 
     local toggle_logpoint = function()
-        local log_msg = vim.fn.input('Log point message: ') 
+        local log_msg = vim.fn.input('Log point message: ')
         dap.toggle_breakpoint(nil, nil, log_msg)
     end
     vim.keymap.set('n', '<F7>', dap.list_breakpoints)
@@ -46,7 +46,7 @@ local set_keymaps = function()
     dap.listeners.before.event_exited[plugin]     = function() dap.repl.close() end
 end
 
-adapters = {
+local adapters = {
     -- @requires@ gdb (>= 14.0)
     ['gdb'] = {
         type = 'executable',
