@@ -111,8 +111,17 @@ when redirecting program output</a></li>
 </ul></li>
 <li><a href="#git" id="toc-git"><code>git</code></a>
 <ul>
+<li><a href="#list-all-tags-matching-a-pattern"
+id="toc-list-all-tags-matching-a-pattern">List all tags matching a
+pattern</a></li>
+<li><a href="#update-submodules-after-every-branch-switch"
+id="toc-update-submodules-after-every-branch-switch">Update submodules
+after every branch switch</a></li>
 <li><a href="#multiple-accounts" id="toc-multiple-accounts">Multiple
 accounts</a></li>
+<li><a href="#check-if-remote-branch-has-been-deleted"
+id="toc-check-if-remote-branch-has-been-deleted">Check if remote branch
+has been deleted</a></li>
 </ul></li>
 <li><a href="#ssh" id="toc-ssh">ssh</a>
 <ul>
@@ -217,15 +226,14 @@ e.g. <code>ls --color=always</code>. Otherwise, prepend
 <code>alias</code>es won’t be executed by <code>unbuffer</code>. See <a
 href="https://superuser.com/a/751809">here</a>.</p>
 <h2 id="git"><code>git</code></h2>
-<ul>
-<li><p>List all tags matching a pattern:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div></li>
-<li><p>To update submodules after every branch switch, append this:</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div></li>
-</ul>
+<h3 id="list-all-tags-matching-a-pattern">List all tags matching a
+pattern</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
+<h3 id="update-submodules-after-every-branch-switch">Update submodules
+after every branch switch</h3>
+<p>Append this to <code>.git/hooks/post-checkout</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
 <h3 id="multiple-accounts">Multiple accounts</h3>
 <p>If you want to use a specific account for a repository, set it like
 this:</p>
@@ -235,11 +243,27 @@ this:</p>
     email = &lt;email&gt;
 
 # ...</code></pre>
+<h3 id="check-if-remote-branch-has-been-deleted">Check if remote branch
+has been deleted</h3>
+<p>First, update the remote refs:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
+<p>Then get info about the branches:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
+<p>The output will look like this:</p>
+<pre><code>* master        abcdebf3d17 [behind 581] some commit message
+  topic-branch  fghilb32370 [gone] Some other commit message
+  [...]</code></pre>
+<p>You see the remote <code>topic-branch</code> was tracking has gone.
+See also <a
+href="https://www.erikschierboom.com/2020/02/17/cleaning-up-local-git-branches-deleted-on-a-remote/">this</a>
+blog post.</p>
 <h2 id="ssh">ssh</h2>
 <h3 id="check-key-password">Check key password</h3>
 <p>To check if a password unlocks the private key, try and change it
 with:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
 <p>This will ask the current password, first. When promped for the new
 password, type two mismatching ones so that it doesn’t get changed.</p>
 <h2 id="top"><code>top</code></h2>
@@ -481,9 +505,9 @@ href="https://alogus.com/g5script/content_index">here</a>.</p>
 href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
 post suggests using <em>here files</em> or env vars for this purpose.
 The flow with env vars is the following:</p>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
 <p>You then access those vars within the script via a call to <a
 href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
 <pre class="plt"><code># File: script.plt
@@ -558,9 +582,9 @@ exists for the device:</p>
 <pre><code># fstab
 UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
 <p>You have to mount the disk and give it user permissions:</p>
-<div class="sourceCode" id="cb29"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
 <p>Note that mount option <code>users</code> allows every user to mount
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
