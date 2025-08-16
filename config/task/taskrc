@@ -1,3 +1,5 @@
+# vim: set ft=conf:
+
 # Data location is in XDG_DATA_HOME
 data.location=~/.local/share/task
 
@@ -14,11 +16,14 @@ hooks.location=~/.config/task/hooks
 #include dark-green-256.theme
 #include dark-blue-256.theme
 #include dark-violets-256.theme
-#include dark-yellow-green.theme
+include dark-yellow-green.theme
 #include dark-gray-256.theme
 #include dark-gray-blue-256.theme
 #include solarized-dark-256.theme
 #include solarized-light-256.theme
 #include no-color.theme
 
-# vim: set ft=conf:
+# Configure taskwarrior-tui
+include ~/.config/task/taskwarrior-tui
+
+news.version=3.4.1
