@@ -177,6 +177,9 @@ AMD/nvidia</a></li>
 <li><a href="#mount-btrfs-disk-and-give-it-user-permissions"
 id="toc-mount-btrfs-disk-and-give-it-user-permissions">Mount
 <code>btrfs</code> disk and give it user permissions</a></li>
+<li><a href="#high-cpu-usage-from-irq9-acpi"
+id="toc-high-cpu-usage-from-irq9-acpi">High CPU usage from
+<code>irq/9-acpi</code></a></li>
 </ul></li>
 </ul>
 </nav>
@@ -607,6 +610,27 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb32-1"><a href="#
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
 href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with_user_permission/">here</a>.</p>
+<h3 id="high-cpu-usage-from-irq9-acpi">High CPU usage from
+<code>irq/9-acpi</code></h3>
+<p>Check the interrupts in
+<code>/sys/firmware/acpi/interrupts</code>:</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
+<p>And look for a big number. Then mask it:</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
+<p>I found the solution <a
+href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">here</a>.</p>
+<p><strong><em>Questions:</em></strong></p>
+<ul>
+<li><p>Why does this happen?</p></li>
+<li><p>How can I know <code>gpe17</code> is related to
+<code>irq/9-acpi</code>?</p></li>
+</ul>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
