@@ -1,13 +1,61 @@
 #!/bin/bash
 
-. "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
-
 # For info about the UE commands below, see:
 # https://stackoverflow.com/a/35339200
 
-function filter_test_names()
+# Source the alias file to import `UnrealEditor-Linux-DebugGame`.
+. "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
+
+function in_file_or_stdin()
 {
     typeset -r in_file="$1"
+
+    if [[ -f "$in_file" ]]
+    then
+        echo "$in_file"
+    elif [[ -z "$in_file" ]] || [[ "$in_file" == "-" ]]
+    then
+        echo "/dev/stdin"
+    else
+        echo "No such file '$in_file'" > /dev/stderr
+        exit 1
+    fi
+}
+
+# @brief Find UE projects (*.uproject) in a given folder
+# @param 1 The folder to look into.
+function find_uprojects_in_folder()
+{
+    typeset -r folder="$1"
+    find "$folder" \
+        -maxdepth 1 \
+        -iname "*.uproject"
+}
+
+# @brief Find a default UE project in the current folder.
+#
+# There must be only one file *.uproject, otherwise the function will return an
+# empty string.
+function get_default_project()
+{
+    typeset -r folder="."
+    typeset -ri default_project_count=$(find_uprojects_in_folder "$folder" | wc -l)
+    (( default_project_count != 1 )) && echo "" || find_uprojects_in_folder  "$folder"
+}
+
+# @brief Return the input project string or a default one.
+# @param 1 A (possibly empty) project string
+function project_or_default()
+{
+    typeset -r project="$1"
+    [[ -n "$project" ]] && echo "$project" || get_default_project
+}
+
+# @brief Filter the names of the tests from the output of `list_test`.
+# @param 1 The input stream.
+function filter_test_names()
+{
+    typeset -r in_file="$(in_file_or_stdin "$1")"
     
     # --silent: don't print lines that don't match the pattern
     sed --silent \
@@ -15,6 +63,8 @@ function filter_test_names()
         "$in_file"
 }
 
+# @brief List the names of the test for a given *.uproject.
+# @param 1 The full path of the UE project.
 function list_tests()
 {
     typeset -r project_full_path="$1"
@@ -28,6 +78,9 @@ function list_tests()
         -nosound 
 }
 
+# @brief Run a test.
+# @param 1 The project full path.
+# @param 2 The test name.
 function run_test()
 {
     typeset -r proj_full_path="$1"
@@ -43,21 +96,27 @@ function run_test()
         -nosound
 }
 
+# @brief Print the usage of this command.
 function usage()
 {
     cat <<EOF
-Usage: $0 -p <project> [...]
+USAGE: $0 [-p <project>] [...]
 
-Options:
-
- -p <project>  The Unreal Engine project
- -l            List tests and exit (default action)
- -r <test>     Run the given test
- -h            Show this help and exit.
+OPTIONS:
+  -p <project>  The Unreal Engine project.
+                If omitted, the script looks for a *.uproject in the CWD.
+ 
+  -l            List tests and exit (default action).
+ 
+  -r <test>     Run the given test.
+ 
+  -h            Show this help and exit.
 EOF
 }
 
-
+# @brief The main function. Parse and validate the command line args; select
+# the appropriate script behavior.
+# @param ... The command line arguments.
 function main()
 {
     typeset project=""
@@ -93,9 +152,10 @@ function main()
         esac
     done
 
-    if [[ -z "$project" ]]
+    project="$(project_or_default "$project")"
+    if [[ -z "$project" ]] || ! stat "$project" > /dev/null 
     then
-        echo "Project file (-p) is mandatory." > /dev/stderr
+        echo "Missing project file (-p)." > /dev/stderr
         error=1
     fi
 
@@ -111,16 +171,12 @@ function main()
         exit 0
     fi
 
-    stat "$project" > /dev/null || exit 1
-
     typeset -r project_full_path="$(realpath "$project")"
 
     if (( list ))
     then
-        list_tests "$project_full_path" | filter_test_names /dev/stdin
-    fi
-
-    if [[ -n "$test_name" ]]
+        list_tests "$project_full_path" 2>/dev/null | filter_test_names
+    elif [[ -n "$test_name" ]]
     then
         run_test "$project_full_path" "$test_name"
     fi
