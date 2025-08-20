@@ -22,4 +22,5 @@ alias UnrealEditor-Linux-DebugGame="\"$unreal_engine_path\"/UnrealEditor-Linux-D
 #
 # and check.
 alias ue_test="sh \"$HOME/.config/Unreal Engine\"/utils/ue_test.sh "
+alias ue_gen_compile_commands="sh \"$HOME/.config/Unreal Engine\"/utils/ue_gen_compile_commands.sh "
 
