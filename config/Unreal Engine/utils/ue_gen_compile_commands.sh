@@ -88,6 +88,8 @@ function generate_lsp_compile_commands()
     stash_installed_build_txt 
     ue4 gen -VSCode -WaitMutex -DisableUnity -NoPCH -NoLink &> "$log_file"
     restore_installed_build_txt 
+    # Reset the trap to default.
+    trap - SIGINT
 
     # At this point, ue4 should have created the .vscode folder.
     typeset -r compile_cmds_json=compile_commands.json
