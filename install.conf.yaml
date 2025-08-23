@@ -14,37 +14,37 @@
       relink: true
 
 - link:
-    ~/.config/sioyek: config/sioyek
-    ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
-    ~/.config/qutebrowser/userscripts: config/qutebrowser/userscripts
-    ~/.config/zsh: config/zsh
-    ~/.config/kitty: config/kitty
-    ~/.config/pacman: config/pacman
-    ~/.config/procps: config/procps
-    ~/.zshenv: config/zsh/zshenv
-    ~/.config/readline: config/readline
     ~/.config/editline: config/editline
     ~/.config/gdb: config/gdb
-    ~/.config/task: config/task
-    ~/.config/lldb: config/lldb
     ~/.config/ghc/ghci.conf: config/ghc/ghci.conf
-    ~/.lldbinit: config/lldb/lldbinit
-    ~/.haskeline:
-    ~/.config/chromium-flags.conf: config/chromium-flags.conf
-    ~/.config/Unreal Engine: config/Unreal Engine
+    ~/.config/hypr:
+        path: config/hypr
+        create: true
+    ~/.config/kitty: config/kitty
+    ~/.config/lldb: config/lldb
     ~/.config/nvim:
         path: config/nvim
         create: true
+    ~/.config/Unreal Engine: config/Unreal Engine
+    ~/.config/chromium-flags.conf: config/chromium-flags.conf
+    ~/.config/pacman: config/pacman
+    ~/.config/procps: config/procps
+    ~/.config/qutebrowser/config.py: config/qutebrowser/config.py
+    ~/.config/qutebrowser/userscripts: config/qutebrowser/userscripts
+    ~/.config/readline: config/readline
+    ~/.config/sioyek: config/sioyek
+    ~/.config/task: config/task
     ~/.config/vim:
         path: config/vim
         create: true
-    ~/.local/bin/tw: local/bin/tw.sh
-    ~/.config/hypr/:
-        path: config/hypr
-        create: true
-    ~/.config/waybar/:
+    ~/.config/waybar:
         path: config/waybar
         create: true
+    ~/.config/zsh: config/zsh
+    ~/.haskeline:
+    ~/.lldbinit: config/lldb/lldbinit
+    ~/.zshenv: config/zsh/zshenv
+    ~/.local/bin/tw: local/bin/tw.sh
 
 - create:
     # Ensure directories for vim exist. See vimrc.
