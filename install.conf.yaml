@@ -14,6 +14,7 @@
       relink: true
 
 - link:
+    ~/.config/dunst: config/dunst
     ~/.config/editline: config/editline
     ~/.config/gdb: config/gdb
     ~/.config/ghc/ghci.conf: config/ghc/ghci.conf
