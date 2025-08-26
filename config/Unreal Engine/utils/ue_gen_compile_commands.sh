@@ -16,6 +16,14 @@ typeset -r engine_root_path="$(ue4 root 2> /dev/null)"
 typeset -r installed_build_txt_path="$engine_root_path/Engine/Build/InstalledBuild.txt"
 typeset -r installed_build_txt_disabled_path="$engine_root_path/Engine/Build/InstalledBuild.txt.$$"
 
+function log_step()
+{
+    typeset -r yellow="\e[1;33m"
+    typeset -r reset="\e[0m"
+    echo -en " ${yellow}>${reset} "
+    echo "${@}"
+}
+
 # Look for *.gch files and prefix them with "-include-pch" so that the output
 # of this command can be used as compilation flags.
 function get_gch_compile_flags()
@@ -33,11 +41,15 @@ function get_gch_compile_flags()
 # Print additional compile flags for clangd to stdout.
 function get_additional_compile_flags()
 {
+    # See all Clang flags here:
+    # https://releases.llvm.org/18.1.0/tools/clang/docs/DiagnosticsReference.html
     cat <<EOF
 -Wall
 -Wconversion
 -Wextra
 -Wpedantic
+-Wshadow-all
+-Wno-shadow-uncaptured-local
 -std=c++20
 EOF
 }
@@ -79,7 +91,7 @@ function patch_compile_commands_json()
         "$sed_str" "$compile_cmds_json"
 }
 
-function generate_lsp_compile_commands()
+function generate_lsp_compile_commands_impl()
 {
     typeset -r log_file="/dev/null"
 
@@ -103,11 +115,23 @@ function generate_lsp_compile_commands()
     patch_compile_commands_json "$compile_cmds_json"
 }
 
+function generate_lsp_compile_commands()
+{
+    log_step "Generating compile_commands.json ..."
+    time generate_lsp_compile_commands_impl
+}
+
 # Generate a tag DB for Engine and project source files with ctags.
 function generate_tags {
-    echo "Generating ctags"
-    ctags -R --c++-kinds=+p --fields=+iaS --extras=+q --languages=C++ "$engine_root_path/Engine/Source"
-    ctags -R Source
+    log_step "Generating ctags ..."
+    typeset -r folders=("$engine_root_path/Engine/Source" "./Source")
+    time ctags \
+        --recurse \
+        --kinds-C++=+p \
+        --fields=+iaS \
+        --extras=+q \
+        --languages=C++ \
+        "${folders[@]}"
 }
 
 
