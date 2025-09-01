@@ -18,5 +18,5 @@ alias UnrealEditor-Linux-DebugGame="\"$(get_unreal_engine_binary_path)\"/UnrealE
 # and check.
 alias ue_test="sh \"$XDG_CONFIG_HOME/Unreal Engine\"/utils/ue_test.sh "
 alias ue_gen_compile_commands="sh \"$XDG_CONFIG_HOME/Unreal Engine\"/utils/ue_gen_compile_commands.sh "
-alias ue_gen_launch_json="sh \"$XDG_CONFIG_HOME/Unreal Engine\"/templates/patch.sh "
+alias ue_gen_launch_json="sh \"$XDG_CONFIG_HOME/Unreal Engine\"/utils/ue_gen_launch_json.sh "
 
