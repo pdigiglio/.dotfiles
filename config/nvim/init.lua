@@ -115,25 +115,59 @@ config_lsp()
 -- See: ttps://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
 local on_lsp_token_update = function(args)
     local token = args.data.token
-    if token.type ~= "variable" then return end
-
-    local modifiers = token.modifiers
-    if not (modifiers.globalScope or modifiers.fileScope)
+    if token.type == "variable"
     then
-        return
+        local modifiers = token.modifiers
+        if (modifiers.globalScope or modifiers.fileScope)
+        then
+            local hl = modifiers.readonly and 'ConstGlobalVarHL' or 'MutableGlobalVarHL'
+            vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, hl)
+        elseif modifiers.functionScope then
+            local hl = modifiers.readonly and 'LocalConstParamVarHL' or 'LocalParamVarHL'
+            vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, hl)
+        end
+    elseif token.type == "parameter"
+    then
+        vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, 'FunctionParamVarHL')
+    -- elseif token.type == "variable" and token.mod
+    --     then
+    --     local modifiers = token.modifiers
+    --     local global_hl = modifiers.readonly and 'LocalConstParamVarHL' or 'LocalParamVarHL'
+    --     vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, global_hl)
+    -- elseif token.type == "function.call"
+    -- then
+    --     local global_hl = 'MutableGlobalVarHL'
+    --     vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, global_hl)
     end
-
-    local global_hl = modifiers.readonly and 'ConstGlobalVarHL' or 'MutableGlobalVarHL'
-    vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, global_hl)
 end
 
-vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg = 'LightCyan' })
+-- p
+--     Semantic Tokens                                                                                                     
+--   - @lsp.type.variable.cpp links to Identifier   priority: 125                                                      
+--   - @lsp.mod.declaration.cpp links to @lsp   priority: 126                                                          
+--   - @lsp.mod.definition.cpp links to @lsp   priority: 126                                                           
+--   - @lsp.mod.functionScope.cpp links to @lsp   priority: 126                                                        
+--   - @lsp.mod.readonly.cpp links to @lsp   priority: 126                                                             
+--   - @lsp.typemod.variable.declaration.cpp links to @lsp   priority: 127                                             
+--   - @lsp.typemod.variable.definition.cpp links to @lsp   priority: 127                                              
+--   - @lsp.typemod.variable.functionScope.cpp links to @lsp   priority: 127                                           
+--   - @lsp.typemod.variable.readonly.cpp links to @lsp   priority: 127
+
+-- See :help gui-colors
+-- vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg = 'LightCyan' })
 vim.api.nvim_set_hl(0, '@lsp.type.property',  { italic = true })
--- vim.api.nvim_set_hl(0, '@function.call',  { fg = '' })
+-- vim.api.nvim_set_hl(0, '@lsp.type.function.cpp', { fg = 'LightBlue' })
+-- vim.api.nvim_set_hl(0, '@lsp.type.function.cpp', { fg = 'LightBlue' })
+-- vim.api.nvim_set_hl(0, '@lsp.type.method.cpp', { fg = 'LightBlue' })
+-- vim.api.nvim_set_hl(0, '@lsp.type.function.cpp', { fg = 'Cyan' })
 
 -- underdotted: make it obvious writing to this var is dangerous.
 vim.api.nvim_set_hl(0, 'MutableGlobalVarHL',  { bold = true, underdotted = true })
 vim.api.nvim_set_hl(0, 'ConstGlobalVarHL',    { bold = true })
+vim.api.nvim_set_hl(0, 'FunctionParamVarHL',  { fg = 'LightCyan' })
+vim.api.nvim_set_hl(0, 'LocalConstParamVarHL',  { fg = 'LightBlue' })
+vim.api.nvim_set_hl(0, 'LocalParamVarHL',       { fg = 'LightBlue', underdotted = true })
+-- @lsp.type.parameter.cpp
 vim.api.nvim_create_autocmd('LspTokenUpdate', { callback = on_lsp_token_update })
 
 
