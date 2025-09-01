@@ -49,10 +49,18 @@
 
 - create:
     # Ensure directories for vim exist. See vimrc.
-    - ~/.local/state/vim/swap
     - ~/.local/state/vim/backup
+    - ~/.local/state/vim/swap
+    - ~/.local/state/vim/undo
     - ~/.local/state/vim/view
     - ~/.local/share/vim
+
+    # Ensure directories for nvim exist.
+    - ~/.local/state/nvim/backup
+    - ~/.local/state/nvim/swap
+    - ~/.local/state/nvim/undo
+    - ~/.local/state/nvim/view
+
     # 
     - ~/.config/ghc
 

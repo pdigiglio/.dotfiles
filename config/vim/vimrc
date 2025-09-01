@@ -310,10 +310,10 @@ else
     colorscheme desert
 endif
 
-if !has('nvim')
-    " Keep undo/redo history for a file across sessions.
-    set undofile
+" Keep undo/redo history for a file across sessions.
+set undofile
 
+if !has('nvim')
     " Make sure Vim stores these files in $XDG_STATE_HOME. This is consistent
     " with wath Nvim does out of the box.
     "
