@@ -1,0 +1,78 @@
+// vim: set ft=json:
+// 
+// Whole-line comments (like this) will be removed.
+//
+// Available placeholders:
+//  ##PROJECT_BASENAME##
+//  ##PROJECT_FULL_PATH##
+//  ##EDITOR_FULL_PATH##
+//  ##LLDB_INIT_FULL_PATH##
+//  ##TEST_CASE_NAME##
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name" : "codelldb|Launch ##PROJECT_BASENAME##",
+            "type" : "codelldb",
+            "request" : "launch",
+            "program" : "##EDITOR_FULL_PATH##",
+            "args" : [
+                "-Project=##PROJECT_FULL_PATH##",
+                "-StdOut",
+                "-FullStdOutLogOutput"
+            ],
+            "preRunCommands" : [ "command source ##LLDB_INIT_FULL_PATH##" ],
+            "cwd" : "${workspaceFolder}",
+            "terminal" : "external",
+            "stopOnEntry" : false
+        },
+        {
+            "name" : "codelldb|Launch Test: ##TEST_CASE_NAME##",
+            "type" : "codelldb",
+            "request" : "launch",
+            "program" : "##EDITOR_FULL_PATH##",
+            "args" : [
+                "-Project=##PROJECT_FULL_PATH##",
+                "-ExecCmds=automation RunTests ##TEST_CASE_NAME##; SoftQuit",
+                "-Unattended",
+                "-NoPause",
+                "-NoSplash",
+                "-nullrhi",
+                "-NoSound"
+            ],
+            "preRunCommands" : [ "command source ##LLDB_INIT_FULL_PATH##" ],
+            "cwd" : "${workspaceFolder}",
+            "terminal" : "external",
+            "stopOnEntry" : false
+        },
+        {
+            "name" : "lldb|Launch ##PROJECT_BASENAME##",
+            "type" : "lldb",
+            "request" : "launch",
+            "program" : "##EDITOR_FULL_PATH##",
+            "args" : [
+                "-Project=##PROJECT_FULL_PATH##",
+                "-StdOut",
+                "-FullStdOutLogOutput"
+            ],
+            "cwd" : "${workspaceFolder}",
+            "terminal" : "external",
+            "stopOnEntry" : false
+        },
+        {
+            "name" : "gdb|Launch ##PROJECT_BASENAME##",
+            "type" : "gdb",
+            "request" : "launch",
+            "program" : "##EDITOR_FULL_PATH##",
+            "args" : [
+                "-project=##PROJECT_FULL_PATH##",
+                "-stdout",
+                "-FullStdOutLogOutput",
+                "-Log=ue.log"
+            ],
+            "cwd" : "${workspaceFolder}",
+            "runInTerminal" : false,
+            "stopOnEntry" : false
+        }
+    ]
+}
