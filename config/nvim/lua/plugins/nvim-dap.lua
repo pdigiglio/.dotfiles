@@ -59,8 +59,7 @@ local adapters = {
     },
     ['lldb'] = {
         type = 'executable',
-        -- command = 'lldb-dap',
-        command = '/usr/share/rider/plugins/cidr-debugger-plugin/bin/lldb/linux/x64/bin/lldb-dap',
+        command = 'lldb-dap',
     },
     -- @requires@ codelldb (>= 1.11.0)
     ['codelldb'] = {
