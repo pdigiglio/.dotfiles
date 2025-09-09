@@ -2,6 +2,9 @@
 // 
 // Whole-line comments (like this) will be removed.
 //
+// For a reference on the available variables, see:
+// https://code.visualstudio.com/docs/reference/variables-reference
+//
 // Available placeholders:
 //  ##PROJECT_BASENAME##
 //  ##PROJECT_FULL_PATH##
