@@ -1,0 +1,17 @@
+# More about this file:
+# https://clangd.llvm.org/config.html
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+
+InlayHints:
+  BlockEnd: true
+  Designators: true
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+  DefaultArguments: true
+  TypeNameLimit: 24
+
+Documentation:
+  CommentFormat: Doxygen

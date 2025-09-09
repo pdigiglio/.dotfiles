@@ -14,6 +14,7 @@
       relink: true
 
 - link:
+    ~/.config/clangd: config/clangd
     ~/.config/dunst: config/dunst
     ~/.config/editline: config/editline
     ~/.config/gdb: config/gdb
