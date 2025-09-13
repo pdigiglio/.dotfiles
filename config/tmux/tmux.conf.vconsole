@@ -1,0 +1,30 @@
+# To fix the <Esc> key in vim.
+set -sg escape-time 0
+
+# Ctrl-Space is not mapped in Vim: I use it as a prefix.
+set-option -g prefix C-b
+
+# Vim-like pane switching.
+#
+# NOTE: for <m> in {h,j,k,l}, I use C-<m> instead of <m> because I need these
+# motion keys on the command line (as I use vim bindings).
+#
+bind -r C-k select-pane -U
+unbind Up
+
+bind -r C-j select-pane -D
+unbind Down
+
+bind -r C-h select-pane -L
+unbind Left
+
+bind -r C-l select-pane -R
+unbind Right
+
+# Enable mouse
+set -g mouse on
+
+# Open new pane in the same directory as the pane that was split.
+bind '"' split-window    -c "#{pane_current_path}"
+bind '%' split-window -h -c "#{pane_current_path}"
+#bind 'c' split-window -c "#{pane_current_path}"
