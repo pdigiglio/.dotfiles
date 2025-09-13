@@ -1,9 +1,10 @@
 # More about this file:
 # https://clangd.llvm.org/config.html
+Hover:
+  ShowAKA: Yes
 Diagnostics:
   UnusedIncludes: Strict
   MissingIncludes: Strict
-
 InlayHints:
   BlockEnd: true
   Designators: true
@@ -12,6 +13,5 @@ InlayHints:
   DeducedTypes: true
   DefaultArguments: true
   TypeNameLimit: 24
-
 Documentation:
   CommentFormat: Doxygen
