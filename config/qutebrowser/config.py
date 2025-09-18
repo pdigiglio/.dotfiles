@@ -33,6 +33,10 @@ def set_bindings():
     # and when I need it. (Which is rare).
     config.unbind('co')
 
+    # I keep hitting "<Ctrl+h>" by mistake. Unbind it and explicity use :home
+    # if and when I need it. (Which is rare).
+    config.unbind('<Ctrl+h>')
+
     # Play a video with mpv.
     play_video_userscript = 'play_video_externally'
     config.bind(f'{cmd_leader}v', f'spawn --userscript {play_video_userscript}')
