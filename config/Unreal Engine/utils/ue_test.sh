@@ -52,6 +52,7 @@ function run_test()
             -ExecCmds="automation RunTests ${test_name}; SoftQuit" \
             -Unattended \
             -NoPause \
+            -NoSplash \
             -NoSound
     else
         # NOTE: Remove "-NullRhi" to instanciate the GUI.
