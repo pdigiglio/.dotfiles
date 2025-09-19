@@ -1,5 +1,9 @@
 ## `git`
 
+### Tools
+
+ - [`serie`](https://github.com/lusingander/serie) for pretty display of logs
+
 ### List all tags matching a pattern
 
 ```sh
