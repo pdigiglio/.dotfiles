@@ -138,6 +138,13 @@ in:    $target_dir
 EOF
 )
     notify "$title" "$body" > /dev/null
+
+    feh "$target_file" \
+        --scale-down \
+        --action1="[Copy to clipboard]cat \"$target_file\" | wl-copy" \
+        --action2="[Detect text with tesseract]tesseract \"$target_file\" stdout | wl-copy" \
+        --action3="[Open folder with yazi]kitty yazi \"$target_dir\"" \
+        --draw-actions
 }
 
 # Display the help notification for the screenshot mode.
@@ -174,6 +181,24 @@ function hide_help_notification()
     fi
 }
 
+function screenshot_selected_area()
+{
+    # NOTE: if I declare and assign `geometry` on the same line, the error code
+    # of `slurp` gets overridden. I don't know why.
+    local geometry
+    geometry="$(slurp 2> /dev/null)"
+
+    typeset -ir err_code=$?
+    if [ $err_code -ne 0 ] 
+    then
+        typeset -r title="Screenshot acquisition aborted." 
+        notify "$title" "" > /dev/null
+        return $err_code
+    fi
+
+    take_screenshot "$geometry"
+}
+
 # Show the help for this script.
 function usage()
 {
@@ -200,7 +225,7 @@ do
             ;;
 
         s)
-            take_screenshot "$(slurp)"
+            screenshot_selected_area
             exit $?
             ;;
 
