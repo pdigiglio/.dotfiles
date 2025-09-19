@@ -36,6 +36,7 @@
     ~/.config/readline: config/readline
     ~/.config/sioyek: config/sioyek
     ~/.config/task: config/task
+    ~/.config/tmux: config/tmux
     ~/.config/vim:
         path: config/vim
         create: true
