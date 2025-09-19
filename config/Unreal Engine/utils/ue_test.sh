@@ -28,28 +28,43 @@ function list_tests()
         -project="$project_full_path" \
         -ExecCmds="Automation List"\
         -TestExit="Automation Test Queue Empty" \
-        -unattended \
-        -nopause \
-        -nullrhi \
-        -nosound 
+        -Unattended \
+        -NoPause \
+        -NoSplash \
+        -NullRhi \
+        -NoSound 
 }
 
 # @brief Run a test.
 # @param 1 The project full path.
 # @param 2 The test name.
+# @param 3 The "Rhi" mode (set it to 'rhi-on' to instanciate the GUI)
 function run_test()
 {
     typeset -r proj_full_path="$1"
     typeset -r test_name="$2"
+    typeset -r rhi_mode="$3"
 
-    UnrealEditor-Linux-DebugGame \
-        -project="$proj_full_path" \
-        -ExecCmds="automation RunTests ${test_name}; SoftQuit" \
-        -unattended \
-        -nopause \
-        -nosplash \
-        -nullrhi \
-        -nosound
+    if [ "$rhi_mode" == rhi-on ]
+    then
+        UnrealEditor-Linux-DebugGame \
+            -Project="$proj_full_path" \
+            -ExecCmds="automation RunTests ${test_name}; SoftQuit" \
+            -Unattended \
+            -NoPause \
+            -NoSplash \
+            -NoSound
+    else
+        # NOTE: Remove "-NullRhi" to instanciate the GUI.
+        UnrealEditor-Linux-DebugGame \
+            -Project="$proj_full_path" \
+            -ExecCmds="automation RunTests ${test_name}; SoftQuit" \
+            -Unattended \
+            -NoPause \
+            -NoSplash \
+            -NullRhi \
+            -NoSound
+    fi
 }
 
 # @brief Print the usage of this command.
@@ -63,6 +78,9 @@ OPTIONS:
                 If omitted, the script looks for a *.uproject in the CWD.
  
   -l            List tests and exit (default action).
+
+  -g            Instanciate the GUI. If not given, the editor will run
+                in '-NullRhi' mode.
  
   -r <test>     Run the given test.
  
@@ -80,9 +98,10 @@ function main()
     typeset -i list=1
     typeset -i usage=0
     typeset -i error=0
+    typeset -i rhi_on=0
 
     local OPTIND
-    while getopts "p:lr:h" opt
+    while getopts "p:lr:gh" opt
     do
         case $opt in
             p)
@@ -95,6 +114,10 @@ function main()
 
             h)
                 usage=1
+                ;;
+
+            g)
+                rhi_on=1
                 ;;
 
             r)
@@ -134,7 +157,13 @@ function main()
         list_tests "$project_full_path" 2>/dev/null | filter_test_names
     elif [[ -n "$test_name" ]]
     then
-        run_test "$project_full_path" "$test_name"
+        typeset rhi_mode="rhi-off"
+        if (( rhi_on == 1 ))
+        then
+            rhi_mode="rhi-on"
+        fi
+
+        run_test "$project_full_path" "$test_name" "$rhi_mode"
     fi
 }
 
