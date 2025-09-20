@@ -29,23 +29,60 @@ EOF
         sort --unique
 }
 
-# Browse the installed packages with `fzf`
-# See: https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
-function browse_installed_packages() {
-    typeset -r preview_cmd='pacman --query --info --list {}'
-    pacman --query --quiet |
-        fzf \
-        --preview "$preview_cmd" \
-        --layout=reverse \
-        --bind "enter:execute( $preview_cmd | less )"
-}
+# # Browse the installed packages with `fzf`
+# # See: https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
+# function browse_installed_packages() {
+#     typeset -r preview_cmd='pacman --query --info --list {}'
+#     pacman --query --quiet |
+#         fzf \
+#         --multi \
+#         --preview "$preview_cmd" \
+#         --layout=reverse
+#
+#         # Let user decide what to do with selection.
+#         # --bind "enter:execute( $preview_cmd | less )"
+# }
+#
+# # Browse all the packages (even uninstalled) with `fzf`
+# # See: https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
+# function browse_all_packages() {
+#     typeset -r preview_cmd="yay --sync --info {}"
+#     yay --sync --list --quiet |
+#         fzf \
+#         --multi \
+#         --preview "$preview_cmd" \
+#         --layout=reverse
+# }
 
-# Browse all the packages (even uninstalled) with `fzf`
-# See: https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
-function browse_all_packages() {
-    typeset -r preview_cmd="yay --sync --info {}"
-    yay --sync --list --quiet |
-        fzf \
+# Given a list of packages on stdin, use fzf to filter and show package info.
+#
+# NOTE:
+#
+#   To browse installed packages: pacman -Qq  | pacman_fzf
+#
+#   To browse all packages:       pacman -Slq | pacman_fzf
+#          (including AUR)"       yay    -Slq | pacman_fzf
+#
+# See also:
+# https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
+function pacman_fzf() {
+    typeset -r pacman=$(utility_exists "yay" && echo "yay" || echo "pacman")
+
+    # The grep regex is:
+    #  - At beginning of line
+    #  - Not a space
+    #  - Zero or more non-colons
+    #  - A colon
+    #  OR
+    #  - The EOL (i.e. every line)
+    # typeset -r preview_installed_pkg="$pacman --query --info {} | grep --color=always '^\S[^:]*:\|$' "
+    typeset -r preview_installed_pkg="$pacman --query --info {} | grep --color=always '^\<Install\>[^:]*\|$' "
+    typeset -r preview_uninstalled_pkg="$pacman --sync --info {} "
+    typeset -r preview_cmd="$pacman -Qq {} &> /dev/null && ($preview_installed_pkg) || ($preview_uninstalled_pkg)"
+
+    typeset -r green='ms=00;32'
+    GREP_COLORS="$green" fzf \
+        --multi \
         --preview "$preview_cmd" \
         --layout=reverse
 }
