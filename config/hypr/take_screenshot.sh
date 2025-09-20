@@ -18,6 +18,13 @@
 #  * split help and screenshot-taken notification.
 #  * Open preview when screenshot-taken notif clicked (e.g. with feh -.)
 
+# Get $XDG_STATE_HOME, if the variable is set, or the default value.
+function get_xdg_state_home()
+{
+    [[ -v XDG_STATE_HOME ]] &&
+        echo "$XDG_STATE_HOME" ||
+        echo "$HOME/.local/state"
+}
 
 # Get the file where the notification ID (NID) gets stored.
 #
@@ -25,10 +32,7 @@
 #  (none)
 function get_nid_file()
 {
-    typeset -r state_home="$([[ -v XDG_STATE_HOME ]] \
-            && echo "$XDG_STATE_HOME" \
-            || echo "$HOME/.local/state")"
-
+    typeset -r state_home="$(get_xdg_state_home)"
     typeset -r state_dir="$state_home/take_screenshot"
 
     # Make sure directory exist
@@ -78,10 +82,10 @@ function get_active_window_property()
     typeset -r active_window_info="$1"
     typeset -r param="$2"
 
-    echo "$active_window_info" \
-        | grep --extended-regexp "${param}:[[:space:]]+[-+0-9]+,[-+0-9]+" \
-        | cut --fields=2 --delimiter=':' \
-        | tr --delete "[:blank:]"
+    echo "$active_window_info" |
+        grep --extended-regexp "${param}:[[:space:]]+[-+0-9]+,[-+0-9]+" |
+        cut --fields=2 --delimiter=':' |
+        tr --delete "[:blank:]"
 }
 
 # Get the geometry of the currently active window.
@@ -101,13 +105,16 @@ function get_active_window_geometry()
 # Params:
 #  $1 (title) The notification title
 #  $2 (body)  The notification body
+#
+# Returns:
+#  Notification ID on stdout.
 function notify()
 {
     typeset -r screen_notif_tag="wayland-screenshot"
-    typeset -r hint="string:x-canonical-private-synchronous:$screen_notif_tag"
+    typeset -r screen_notif_hint="string:x-canonical-private-synchronous:$screen_notif_tag"
     typeset -r title="$1"
     typeset -r body="$2"
-    dunstify "$title" "$body" -h "$hint" --printid
+    dunstify "$title" "$body" -h "$screen_notif_hint" --printid
 }
 
 # Take a screenshot.
@@ -123,27 +130,37 @@ function take_screenshot()
 
     typeset -r target_dir="$HOME/Pictures/screens"
     typeset -r target_filename="${basename}.${extension}"
+
+    # Take screenshot and store it in the clipboard.
+    grim -g "$geometry" -t "$extension" - | wl-copy
+
+    # Hide the help notification. Not needed, at this point.
+    hide_help_notification 
+
+    # Open the screenshot with `feh` and present some user actions.
     typeset -r target_file="$target_dir/$target_filename"
+    typeset -Ar actions=(
+        # --
+        [copy_desc]="Copy to clipboard"
+        [copy]="cat %F|wl-copy"
+        # --
+        [extract_desc]="Extract text (tesseract)"
+        [extract]="tesseract %F stdout|wl-copy"
+        # --
+        [save_desc]="Save screenshot"
+        [save]="mkdir -p '$target_dir' && cat %F > '$target_file'"
+        # --
+        [open_desc]="Open screenshot folder (yazi)"
+        [open]="kitty yazi '$target_file'"
+    )
 
-    mkdir -p "$target_dir"
-    grim -g "$geometry" -t "$extension" - \
-        | tee "$target_file" \
-        | wl-copy
-
-    typeset -r title="Screenshot taken" 
-    typeset -r body=$(
-cat <<EOF
-Image: $target_filename
-in:    $target_dir
-EOF
-)
-    notify "$title" "$body" > /dev/null
-
-    feh "$target_file" \
+    wl-paste --type image/${extension} |
+        feh - \
         --scale-down \
-        --action1="[Copy to clipboard]cat \"$target_file\" | wl-copy" \
-        --action2="[Detect text with tesseract]tesseract \"$target_file\" stdout | wl-copy" \
-        --action3="[Open folder with yazi]kitty yazi \"$target_dir\"" \
+        --action1="[${actions[copy_desc]}]${actions[copy]}" \
+        --action2="[${actions[extract_desc]}]${actions[extract]}" \
+        --action3="[${actions[save_desc]}]${actions[save]}" \
+        --action4="[${actions[open_desc]}]${actions[open]}" \
         --draw-actions
 }
 
