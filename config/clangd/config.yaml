@@ -4,7 +4,8 @@ Hover:
   ShowAKA: Yes
 Diagnostics:
   UnusedIncludes: Strict
-  MissingIncludes: Strict
+  # This is just too noisy.
+  # MissingIncludes: Strict
 InlayHints:
   BlockEnd: true
   Designators: true
