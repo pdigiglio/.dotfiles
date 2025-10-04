@@ -79,7 +79,7 @@ But I'm not able to verify the signature locally.  To do this, use
 
 Here you are the Windows-specific layout:
 
-![](https://en.wikipedia.org/wiki/QWERTY#/media/File:KB_US-International.svg)
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/KB_US-International.svg/1920px-KB_US-International.svg.png)
 
 It seems to work correctly on Linux as well.  More details can be found on
 [Wikipedia](https://en.wikipedia.org/wiki/QWERTY#US-International).  I couldn't
