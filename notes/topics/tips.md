@@ -62,3 +62,26 @@ unbuffer ls --color=auto | less -R
 
 On Arch, install `extra/expect`. Also note that `alias`es won't be executed by
 `unbuffer`. See [here](https://superuser.com/a/751809).
+
+### Open and verify `.p7m` files
+
+Sometimes AEcI sends me `.p7m` files.  I can extract them with:
+
+```sh
+openssl smime -verify -noverify -binary -in file.pdf.p7m -inform DER -out file.pdf
+```
+
+But I'm not able to verify the signature locally.  To do this, use
+<https://vol.ca.notariato.it/it>.
+
+
+### Dead keys on `us-int` keyboard
+
+Here you are the Windows-specific layout:
+
+![](https://en.wikipedia.org/wiki/QWERTY#/media/File:KB_US-International.svg)
+
+It seems to work correctly on Linux as well.  More details can be found on
+[Wikipedia](https://en.wikipedia.org/wiki/QWERTY#US-International).  I couldn't
+find anything Linux specific, i.e. any map of the so-called _international_ (or
+_exended_) keyboard, which should extend the layout map above.
