@@ -111,6 +111,12 @@ id="toc-enable-network-time-protocol-ntp">Enable Network Time Protocol
 <li><a href="#preserve-colors-when-redirecting-program-output"
 id="toc-preserve-colors-when-redirecting-program-output">Preserve colors
 when redirecting program output</a></li>
+<li><a href="#open-and-verify-.p7m-files"
+id="toc-open-and-verify-.p7m-files">Open and verify <code>.p7m</code>
+files</a></li>
+<li><a href="#dead-keys-on-us-int-keyboard"
+id="toc-dead-keys-on-us-int-keyboard">Dead keys on <code>us-int</code>
+keyboard</a></li>
 </ul></li>
 <li><a href="#git" id="toc-git"><code>git</code></a>
 <ul>
@@ -233,6 +239,25 @@ e.g. <code>ls --color=always</code>. Otherwise, prepend
 <p>On Arch, install <code>extra/expect</code>. Also note that
 <code>alias</code>es won’t be executed by <code>unbuffer</code>. See <a
 href="https://superuser.com/a/751809">here</a>.</p>
+<h3 id="open-and-verify-.p7m-files">Open and verify <code>.p7m</code>
+files</h3>
+<p>Sometimes AEcI sends me <code>.p7m</code> files. I can extract them
+with:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> smime <span class="at">-verify</span> <span class="at">-noverify</span> <span class="at">-binary</span> <span class="at">-in</span> file.pdf.p7m <span class="at">-inform</span> DER <span class="at">-out</span> file.pdf</span></code></pre></div>
+<p>But I’m not able to verify the signature locally. To do this, use <a
+href="https://vol.ca.notariato.it/it"
+class="uri">https://vol.ca.notariato.it/it</a>.</p>
+<h3 id="dead-keys-on-us-int-keyboard">Dead keys on <code>us-int</code>
+keyboard</h3>
+<p>Here you are the Windows-specific layout:</p>
+<p><img
+src="https://en.wikipedia.org/wiki/QWERTY#/media/File:KB_US-International.svg" /></p>
+<p>It seems to work correctly on Linux as well. More details can be
+found on <a
+href="https://en.wikipedia.org/wiki/QWERTY#US-International">Wikipedia</a>.
+I couldn’t find anything Linux specific, i.e. any map of the so-called
+<em>international</em> (or <em>exended</em>) keyboard, which should
+extend the layout map above.</p>
 <h2 id="git"><code>git</code></h2>
 <h3 id="tools">Tools</h3>
 <ul>
@@ -242,12 +267,12 @@ pretty display of logs</li>
 </ul>
 <h3 id="list-all-tags-matching-a-pattern">List all tags matching a
 pattern</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
 <h3 id="update-submodules-after-every-branch-switch">Update submodules
 after every branch switch</h3>
 <p>Append this to <code>.git/hooks/post-checkout</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
 <h3 id="multiple-accounts">Multiple accounts</h3>
 <p>If you want to use a specific account for a repository, set it like
 this:</p>
@@ -260,10 +285,11 @@ this:</p>
 <h3 id="check-if-remote-branch-has-been-deleted">Check if remote branch
 has been deleted</h3>
 <p>First, update the remote refs:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
-<p>Then get info about the branches:</p>
 <div class="sourceCode" id="cb10"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
+<p>Then get info about the branches:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
 <p>The output will look like this:</p>
 <pre><code>* master        abcdebf3d17 [behind 581] some commit message
   topic-branch  fghilb32370 [gone] Some other commit message
@@ -276,8 +302,8 @@ blog post.</p>
 <h3 id="check-key-password">Check key password</h3>
 <p>To check if a password unlocks the private key, try and change it
 with:</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
 <p>This will ask the current password, first. When promped for the new
 password, type two mismatching ones so that it doesn’t get changed.</p>
 <h2 id="top"><code>top</code></h2>
@@ -542,9 +568,9 @@ href="https://alogus.com/g5script/content_index">here</a>.</p>
 href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
 post suggests using <em>here files</em> or env vars for this purpose.
 The flow with env vars is the following:</p>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
 <p>You then access those vars within the script via a call to <a
 href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
 <pre class="plt"><code># File: script.plt
@@ -619,9 +645,9 @@ exists for the device:</p>
 <pre><code># fstab
 UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
 <p>You have to mount the disk and give it user permissions:</p>
-<div class="sourceCode" id="cb32"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
 <p>Note that mount option <code>users</code> allows every user to mount
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
@@ -630,15 +656,15 @@ href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with
 <code>irq/9-acpi</code></h3>
 <p>Check the interrupts in
 <code>/sys/firmware/acpi/interrupts</code>:</p>
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
-<p>And look for a big number. Then mask it:</p>
 <div class="sourceCode" id="cb34"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
+<p>And look for a big number. Then mask it:</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
 <p>I found the solution <a
 href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">here</a>.</p>
 <p><strong><em>Questions:</em></strong></p>
