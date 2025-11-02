@@ -24,6 +24,7 @@
         create: true
     ~/.config/kitty: config/kitty
     ~/.config/lldb: config/lldb
+    ~/.config/nb: config/nb
     ~/.config/nvim:
         path: config/nvim
         create: true

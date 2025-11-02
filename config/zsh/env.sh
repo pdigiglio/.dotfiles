@@ -26,3 +26,7 @@ export EDITRC="$XDG_CONFIG_HOME/editline/editrc"
 #  - How to check if clangd is using them?
 #
 export CLANGD_FLAGS="$CLANGD_FLAGS -j=8 --malloc-trim --background-index --pch-storage=memory"
+
+# -- nb
+# Change the default config path.
+export NBRC_PATH="$XDG_CONFIG_HOME"/nb/nbrc

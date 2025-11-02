@@ -1,0 +1,17 @@
+# vim: set filetype=sh:
+
+. "$XDG_CONFIG_HOME"/zsh/utils.sh
+
+# I specify a list of browser, in order of priority.  The most preferred ones
+# come first.  For each browser, if it's installed use it.  If none is
+# installed, let `nb` decide.
+typeset -ar nb_browser_list=(qutebrowser chromium)
+for browser in "$nb_browser_list[@]"
+do
+    if utility_exists "$browser"
+    then
+        export NB_GUI_BROWSER="$browser"
+        break
+    fi
+done
+
