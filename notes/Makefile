@@ -25,6 +25,7 @@ topics= \
 	topics/gnuplot.md \
 	topics/getting_rid_of_xwayland.md \
 	topics/troubleshooting.md \
+	topics/misc.md \
 
 $(html): $(topics) $(css) Makefile
 	mkdir -p $(target_dir)
