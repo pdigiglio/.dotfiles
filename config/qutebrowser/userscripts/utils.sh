@@ -1,7 +1,7 @@
 # Ask qutebrowser to close the current tab, by writing the commands in
 # `$QUTE_FIFO`.
 function close_tab() {
-    if ![ -p "$QUTE_FIFO"]
+    if ![ -p "$QUTE_FIFO" ]
     then
         echo "\$QUTE_FIFO (i.e. '$QUTE_FIFO') is not a named pipe (FIFO)." > /dev/stderr
         return 1
