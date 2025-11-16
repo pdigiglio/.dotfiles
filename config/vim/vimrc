@@ -160,7 +160,7 @@ set clipboard=unnamedplus
 " Provides tab-completion for all file-related tasks.
 set path+=**
 
-" Highlight the current line
+" Highlight the current line.
 set cursorline
 
 " If I have folds, { and } jump over them, rather then opening them.
@@ -309,6 +309,17 @@ if !has('gui_running')
 else
     colorscheme desert
 endif
+
+" NOTE: I don't a different background on the whole line.  This sometimes
+" makes it difficult to read text (e.g. comments in "torte" colorscheme).
+" Since I have 'number' and 'relativenumber', it's already enough if the
+" corrent line number has a different color.
+"
+" I clear the colors for 'CursorLine' and the background for 'CursorLineNr'.
+highlight clear CursorLine
+
+" Remove background on the number column.
+highlight CursorLineNr ctermbg=None guibg=None 
 
 " Keep undo/redo history for a file across sessions.
 set undofile
