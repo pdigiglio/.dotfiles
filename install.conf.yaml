@@ -48,6 +48,7 @@
     ~/.haskeline:
     ~/.lldbinit: config/lldb/lldbinit
     ~/.zshenv: config/zsh/zshenv
+    ~/.local/bin/mr_diff_from_master: local/bin/mr_diff_from_master.sh
     ~/.local/bin/tw: local/bin/tw.sh
 
 - create:
