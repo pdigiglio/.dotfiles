@@ -1,32 +1,47 @@
-export EDITOR=nvim
+# NOTE: this file should be self-contained!
 
-# -- man
-export MANWIDTH=80
-export MANPAGER='nvim +Man!'
+#
+# Set XDG Base dirs.
+# See https://wiki.archlinux.org/title/XDG_Base_Directory
+#
+
+## -- User dirs.
+
+# Where user-specific configurations should be written (analogous to /etc).
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Where user-specific non-essential (cached) data should be written (analogous
+# to /var/cache).
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Where user-specific data files should be written (analogous to /usr/share).
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# Where user-specific state files should be written (analogous to /var/lib).
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# This is set by pam_systemd(8)
+# export XDG_RUNTIME_DIR
+
+# Make sure the base ans zsh-specific directories are there.
+[ -d "$XDG_CACHE_HOME/zsh" ] || mkdir --parents "$XDG_CACHE_HOME/zsh"
+[ -d "$XDG_DATA_HOME/zsh" ]  || mkdir --parents "$XDG_DATA_HOME/zsh"
+[ -d "$XDG_STATE_HOME/zsh" ] || mkdir --parents "$XDG_STATE_HOME/zsh"
+
+
+## -- System dirs.
+
+# List of directories separated by ':'.
+# Should default to /usr/local/share:/usr/share.
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+
+# List of directories separated by ':'.
+# Should default to /etc/xdg.
+export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
+
+
+## -- Non XDG.
 
 # -- Add path where pipx will make its binaries available to me.
 PATH="$PATH:$HOME/.local/bin"
 export PATH
-
-# -- Python REPL
-# Keep using ~/.inputrc.
-# See: https://github.com/python/cpython/issues/118840
-export PYTHON_BASIC_REPL=1
-
-export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export EDITRC="$XDG_CONFIG_HOME/editline/editrc"
-
-# -- clangd
-#
-# The following flags are taken from: 
-# https://www.reddit.com/r/cpp/comments/ucz051/how_to_speed_up_clangd_on_big_project
-#
-# NOTE:
-#  - Should they be comma separated or is it fine?
-#  - How to check if clangd is using them?
-#
-export CLANGD_FLAGS="$CLANGD_FLAGS -j=8 --malloc-trim --background-index --pch-storage=memory"
-
-# -- nb
-# Change the default config path.
-export NBRC_PATH="$XDG_CONFIG_HOME"/nb/nbrc

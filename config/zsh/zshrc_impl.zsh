@@ -111,7 +111,7 @@ setopt NO_HUP
 
 # --
 
-. "$ZDOTDIR/env.sh"
+. "$ZDOTDIR/env.after.sh"
 . "$ZDOTDIR/utils.sh"
 
 . "$ZDOTDIR/aliases.sh"
