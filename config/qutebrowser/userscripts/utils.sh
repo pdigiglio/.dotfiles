@@ -1,3 +1,6 @@
+# Source env.sh to make sure PATH is properly set.
+. "$ZDOTDIR/env.sh"
+
 # Ask qutebrowser to close the current tab, by writing the commands in
 # `$QUTE_FIFO`.
 function close_tab() {

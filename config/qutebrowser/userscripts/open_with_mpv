@@ -20,7 +20,10 @@
 #
 #  * Start kitty with split window on alsamixer in audio mode.
 
-. $XDG_CONFIG_HOME/qutebrowser/userscripts/utils.sh
+. "$XDG_CONFIG_HOME/qutebrowser/userscripts/utils.sh"
+
+typeset -r yt_dlp_path="$(which yt-dlp)"
+typeset -r script_opts="ytdl_hook-try_ytdl_first=yes,ytdl_hook-ytdl_path=${yt_dlp_path}"
 
 # The maximum video resolution.
 typeset -r max_video_height="720"
@@ -33,12 +36,17 @@ typeset -i close_tab=0
 
 function play_video_with_mpv() {
     typeset -r url="$1"
-    mpv --ytdl-format="bestvideo[ext=mp4][height<=?${max_video_height}]+bestaudio[ext=m4a]" "$url"
+    mpv \
+        --script-opts="$script_opts" \
+        --ytdl-format="bestvideo[ext=mp4][height<=?${max_video_height}]+bestaudio[ext=m4a]" \
+        "$url"
 }
 
 function play_audio_with_mpv() {
     typeset -r url="$1"
-    kitty mpv --ytdl-format="bestaudio" "$url"
+
+    # In case of error, pass `--hold` to kitty.
+    kitty mpv -v --script-opts="$script_opts" --ytdl-format="bestaudio" "$url"
 }
 
 # Parse the cmd line args and populate global vars `ytdl_format` and
