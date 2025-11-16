@@ -30,20 +30,23 @@ local set_keymaps = function()
     vim.keymap.set({'n', 'v'}, '<Leader>dh', widgets.hover)
     vim.keymap.set({'n', 'v'}, '<Leader>dp', widgets.preview)
 
-    vim.keymap.set('n', '<Leader>df', function()
-        -- local widgets = require('dap.ui.widgets')
-        widgets.centered_float(widgets.frames)
-    end)
-    vim.keymap.set('n', '<Leader>ds', function()
-        -- local widgets = require('dap.ui.widgets')
-        -- widgets.centered_float(widgets.scopes)
-        widgets.sidebar(widgets.scopes)
-    end)
+    vim.keymap.set('n', '<Leader>dc', widgets.sidebar(widgets.frames).toggle)
+    vim.keymap.set('n', '<Leader>ds', widgets.sidebar(widgets.scopes).toggle)
 
-    local plugin = 'dap'
-    dap.listeners.after.event_initialized[plugin] = function() dap.repl.open() end
-    dap.listeners.before.event_terminated[plugin] = function() dap.repl.close() end
-    dap.listeners.before.event_exited[plugin]     = function() dap.repl.close() end
+    -- local setup_ui = function()
+    --     -- widgets.sidebar(widgets.scopes).open()
+    --     dap.repl.open()
+    -- end
+    --
+    -- local teardown_ui = function()
+    --     dap.repl.close()
+    --     -- widgets.sidebar(widgets.scopes).close()
+    -- end
+    --
+    -- local plugin = 'dap'
+    -- dap.listeners.after.event_initialized[plugin] = setup_ui
+    -- dap.listeners.before.event_terminated[plugin] = teardown_ui
+    -- dap.listeners.before.event_exited[plugin]     = teardown_ui
 end
 
 local adapters = {
@@ -85,62 +88,63 @@ local setup_gdb = function()
         return require("dap.utils").pick_process({ filter = name })
     end
 
-    local dap_configs = {
-        {
-            name = "[gdb] launch",
-            type = "gdb",
-            request = "launch",
-            program = program,
-            cwd = "${workspaceFolder}",
-            stopAtBeginningOfMainSubprogram = false,
-            externalConsole = true,
-        },
-        {
-            name = "[gdb] attach",
-            type = "gdb",
-            request = "attach",
-            program = program,
-            pid = pid,
-            cwd = '${workspaceFolder}',
-            externalConsole = true,
-        },
-        -- {
-        --     name = 'Attach to gdbserver :1234',
-        --     type = 'gdb',
-        --     request = 'attach',
-        --     target = 'localhost:1234',
-        --     program = program,
-        --     cwd = '${workspaceFolder}',
-        --     externalConsole = true
-        -- },
-        {
-            name = '[lldb] launch',
-            type = 'lldb',
-            request = 'launch',
-            program = program,
-            cwd = '${workspaceFolder}',
-            runInTerminal = true,
-            stopOnEntry = false,
-            args = {}
-        },
-        {
-            name = '[lldb] attach',
-            type = 'lldb',
-            request = "attach",
-            -- program = program,
-            pid = pid,
-            cwd = '${workspaceFolder}',
-            runInTerminal = true,
-            stopOnEntry = false,
-            args = {}
-        },
-    }
+    -- local dap_configs = {
+    --     {
+    --         name = "[gdb] launch",
+    --         type = "gdb",
+    --         request = "launch",
+    --         program = program,
+    --         cwd = "${workspaceFolder}",
+    --         stopAtBeginningOfMainSubprogram = false,
+    --         externalConsole = true,
+    --     },
+    --     {
+    --         name = "[gdb] attach",
+    --         type = "gdb",
+    --         request = "attach",
+    --         program = program,
+    --         pid = pid,
+    --         cwd = '${workspaceFolder}',
+    --         externalConsole = true,
+    --     },
+    --     -- {
+    --     --     name = 'Attach to gdbserver :1234',
+    --     --     type = 'gdb',
+    --     --     request = 'attach',
+    --     --     target = 'localhost:1234',
+    --     --     program = program,
+    --     --     cwd = '${workspaceFolder}',
+    --     --     externalConsole = true
+    --     -- },
+    --     {
+    --         name = '[lldb] launch',
+    --         type = 'lldb',
+    --         request = 'launch',
+    --         program = program,
+    --         cwd = '${workspaceFolder}',
+    --         runInTerminal = true,
+    --         stopOnEntry = false,
+    --         args = {}
+    --     },
+    --     {
+    --         name = '[lldb] attach',
+    --         type = 'lldb',
+    --         request = "attach",
+    --         -- program = program,
+    --         pid = pid,
+    --         cwd = '${workspaceFolder}',
+    --         runInTerminal = true,
+    --         stopOnEntry = false,
+    --         args = {}
+    --     },
+    -- }
 
-    dap.configurations.c = dap_configs
-    dap.configurations.cpp = dap_configs
+    -- dap.configurations.c = dap_configs
+    -- dap.configurations.cpp = dap_configs
     dap.defaults.fallback.external_terminal = {
-        command = "/usr/bin/kitty",
-        args = { "-e" },
+        command = '/usr/bin/kitty',
+        args = { '-e' },
+        -- args = { '--hold' },
     }
 
     -- dap.defaults.fallback.force_external_terminal = true
@@ -196,15 +200,20 @@ return {
         nvim_dap,
         config = config
     },
+    {
+        "rcarriga/nvim-dap-ui",
+        -- lazy = false,
+        dependencies = {
+            nvim_dap,
+            "nvim-neotest/nvim-nio"
+        },
+        config = ui_config,
+    },
     -- {
-    --     "rcarriga/nvim-dap-ui",
-    --     -- lazy = false,
-    --     dependencies = {
-    --         nvim_dap,
-    --         "nvim-neotest/nvim-nio"
-    --     },
-    --     config = ui_config,
+    --     "igorlfs/nvim-dap-view",
+    --     dependencies = { nvim_dap, }
     -- },
+    
     -- {
     --     "Weissle/persistent-breakpoints.nvim",
     --     config = persistent_bp_config,

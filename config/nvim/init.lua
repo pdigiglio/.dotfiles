@@ -40,7 +40,7 @@ require("config.lazy")
 --
 --  * Figure out who provides the actual LSPs (i.e. which packages in Arch
 --  provide the executuables)
-local lsp = require("lspconfig")
+-- local lsp = require("lspconfig")
 
 local lsp_servers = {
     'hls', -- @requires@ haskell-language-server
@@ -108,7 +108,8 @@ local config_lsp = function()
     -- print("lsp")
 end
 
-config_lsp()
+vim.lsp.enable('clangd')
+-- config_lsp()
 
 -- Use LSP-based semantic analysis.
 -- Move the cursor on an identifier and use `:Inspect` to check its tokens.
