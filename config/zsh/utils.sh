@@ -7,6 +7,41 @@ function utility_exists() {
     which "$1" > /dev/null
 }
 
+# This function should be called with a list of command names.  It will go
+# though the list and return (on stdout) the first command that's installed.
+#
+# @param $@ The list of command to check.
+#
+# @return The name of the first installed utility (on stdout) or a non-zero
+# error code.
+#
+# @remark For some reason the following will discard the error code of the
+# shell-substituted command:
+#
+# ```sh
+# local a=$(f)
+# ```
+# (Probably `local a` resets $?).  Use this, instead:
+#
+# ```sh
+# local a
+# a=$(f)
+# ```
+function find_if_utility_exists()
+{
+    for utility in "${@}"
+    do
+        if utility_exists "$utility"
+        then
+            echo "$utility"
+            return $?
+        fi
+    done
+
+    # Nothing found.
+    return 1
+}
+
 # Check which package(s) provides a given file. Similar to `pacman -Qo <file>`
 # but you don't need to specify a file path (a posix BRE is fine).
 #
