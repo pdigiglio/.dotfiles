@@ -1,5 +1,50 @@
-# Change ZDOTDIR to keep zsh config files in ~/.config/zsh
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# NOTE: this file should be self-contained!
 
-# Make env vars available to non-interactive shells as well.
-. "$ZDOTDIR/env.sh"
+#
+# Set XDG Base dirs.
+# See https://wiki.archlinux.org/title/XDG_Base_Directory
+#
+
+## -- User dirs.
+
+# Where user-specific configurations should be written (analogous to /etc).
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Where user-specific non-essential (cached) data should be written (analogous
+# to /var/cache).
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Where user-specific data files should be written (analogous to /usr/share).
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# Where user-specific state files should be written (analogous to /var/lib).
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# This is set by pam_systemd(8)
+# export XDG_RUNTIME_DIR
+
+# Make sure the base ans zsh-specific directories are there.
+[ -d "$XDG_CACHE_HOME/zsh" ] || mkdir --parents "$XDG_CACHE_HOME/zsh"
+[ -d "$XDG_DATA_HOME/zsh" ]  || mkdir --parents "$XDG_DATA_HOME/zsh"
+[ -d "$XDG_STATE_HOME/zsh" ] || mkdir --parents "$XDG_STATE_HOME/zsh"
+
+
+## -- System dirs.
+
+# List of directories separated by ':'.
+# Should default to /usr/local/share:/usr/share.
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+
+# List of directories separated by ':'.
+# Should default to /etc/xdg.
+export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
+
+
+## -- Non XDG.
+
+# -- Add path where pipx will make its binaries available to me.
+PATH="$PATH:$HOME/.local/bin"
+export PATH
+
+# -- Change ZDOTDIR to keep zsh config files in ~/.config/zsh.
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
