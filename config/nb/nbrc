@@ -1,17 +1,18 @@
 # vim: set filetype=sh:
 
-. "$XDG_CONFIG_HOME"/zsh/utils.sh
+. "$XDG_CONFIG_HOME/zsh/utils.sh"
 
-# I specify a list of browser, in order of priority.  The most preferred ones
-# come first.  For each browser, if it's installed use it.  If none is
-# installed, let `nb` decide.
-typeset -ar nb_browser_list=(qutebrowser chromium)
-for browser in "$nb_browser_list[@]"
-do
-    if utility_exists "$browser"
-    then
-        export NB_GUI_BROWSER="$browser"
-        break
-    fi
-done
+function main()
+{
+    local utility
 
+    utility="$(find_if_utility_exists qutebrowser chromium)" &&
+        export NB_GUI_BROWSER="$utility"
+
+    # # 1. I don't understand what's the use of this variable;
+    # # 2. If I set it, completion no longer works.
+    # utility="$(find_if_utility_exists yazi)" &&
+    #     export NB_DIRECTORY_TOOL="$utility"
+}
+
+main
