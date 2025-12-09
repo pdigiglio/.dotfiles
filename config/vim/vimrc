@@ -125,6 +125,18 @@ nmap Y y$
 " because I set 'unnamedplus'.
 nmap y% :let @+ = expand("%:p")<CR>
 
+" Similar mapping to `gt`.
+" NOTE: This may interfere with netrw.
+nmap gb :bnext<CR>
+
+" Similar mapping to `gT`.
+nmap gB :bprevious<CR>
+
+" TODO: think about similar mappings for arg list.
+" ga is already used
+" gl is not
+
+
 " Allow mouse, if available.
 if has('mouse')
     set mouse=a
