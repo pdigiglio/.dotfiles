@@ -32,6 +32,23 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd 'V' edit-command-line
 
+# When searching in the history with 'k', only commands matching the current
+# line up to the current cursor position will be shown.
+#
+# NOTE: The "current" cursor position is the one _before_ the cursor.  This
+# means you'll lose a char in normal mode; i.e. you won't be able to use the
+# last char for filtering as well.
+#
+# If you don't want that, use the arrows (both in normal and insert mode)
+#
+# See: https://wiki.archlinux.org/title/Zsh#History_search
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey -M vicmd 'k'   up-line-or-beginning-search
+bindkey -M vicmd 'j' down-line-or-beginning-search
+
 # Set <Esc> delay to 0.01s. See zshparam(1).
 export KEYTIMEOUT=1
 # --
