@@ -3,6 +3,17 @@
 Hover:
   ShowAKA: Yes
 Diagnostics:
+  ClangTidy:
+    Add:
+      - bugprone-*
+      - cppcoreguidelines-*
+      - modernize-*
+      - performance-*
+      - portability-*
+      - readability-*
+    Remove:
+      - readability-identifier-length
+      - modernize-use-trailing-return-type
   UnusedIncludes: Strict
   # This is just too noisy.
   # MissingIncludes: Strict
@@ -16,3 +27,5 @@ InlayHints:
   TypeNameLimit: 24
 Documentation:
   CommentFormat: Doxygen
+CompileFlags:
+  Add: [-Wmismatched-tags]
