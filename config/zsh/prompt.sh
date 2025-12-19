@@ -13,5 +13,6 @@ function last_error_code() {
     [[ "$error" == "0" ]] || echo "%F{red}${error}%f|"
 }
 
-PROMPT='$(last_error_code)%F{#009070}%~%f ${vcs_info_msg_0_}%# '
+typeset -r machine_symbol="$([[ "$HOST" == pi ]] && echo "%F{blue}π%f ")"
+PROMPT='$(last_error_code)%F{#009070}%~%f ${machine_symbol}${vcs_info_msg_0_}%# '
 #RPROMPT='[%F{yellow}%?%f]'
