@@ -117,6 +117,7 @@ files</a></li>
 <li><a href="#dead-keys-on-us-int-keyboard"
 id="toc-dead-keys-on-us-int-keyboard">Dead keys on <code>us-int</code>
 keyboard</a></li>
+<li><a href="#grep" id="toc-grep"><code>grep</code></a></li>
 </ul></li>
 <li><a href="#git" id="toc-git"><code>git</code></a>
 <ul>
@@ -264,6 +265,35 @@ href="https://en.wikipedia.org/wiki/QWERTY#US-International">Wikipedia</a>.
 I couldn’t find anything Linux specific, i.e. any map of the so-called
 <em>international</em> (or <em>exended</em>) keyboard, which should
 extend the layout map above.</p>
+<h3 id="grep"><code>grep</code></h3>
+<p>To search recursively:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-R</span> <span class="st">&quot;pattern&quot;</span> /some/path</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You may want to use:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  --exclude=&lt;glob&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    Skip subfiles whose base name matches &lt;glob&gt;.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  --exclude-dir=&lt;glob&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    Skip dirs whose name suffix match &lt;glob&gt;.</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  --include=&lt;glob&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    Search files whose basename match &lt;glob&gt;.</span></span></code></pre></div>
+<p>From <code>man grep(1)</code>:</p>
+<ul>
+<li><p><em>Name suffix</em> is either:</p>
+<ul>
+<li><p>The whole name, or</p></li>
+<li><p>A trailing part that starts with a non-slash character
+immediately after a slash (/) in the name.</p></li>
+</ul></li>
+<li><p><em>Base name</em> is the part after the last slash.</p></li>
+</ul>
+<p>To get only the name of the files that contain a match, use
+<code>-l</code> (or <code>--files-with-matches</code>).</p>
+<p>This may be useful to get a list of possibly interesting files to be
+checked by a text editor; e.g.:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span> <span class="va">$(</span><span class="fu">grep</span> <span class="at">-l</span> <span class="at">-R</span> <span class="st">&quot;pattern&quot;</span> .<span class="va">)</span></span></code></pre></div>
 <h2 id="git"><code>git</code></h2>
 <h3 id="tools">Tools</h3>
 <ul>
@@ -273,12 +303,13 @@ pretty display of logs</li>
 </ul>
 <h3 id="list-all-tags-matching-a-pattern">List all tags matching a
 pattern</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
 <h3 id="update-submodules-after-every-branch-switch">Update submodules
 after every branch switch</h3>
 <p>Append this to <code>.git/hooks/post-checkout</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
 <h3 id="multiple-accounts">Multiple accounts</h3>
 <p>If you want to use a specific account for a repository, set it like
 this:</p>
@@ -291,11 +322,11 @@ this:</p>
 <h3 id="check-if-remote-branch-has-been-deleted">Check if remote branch
 has been deleted</h3>
 <p>First, update the remote refs:</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
 <p>Then get info about the branches:</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
 <p>The output will look like this:</p>
 <pre><code>* master        abcdebf3d17 [behind 581] some commit message
   topic-branch  fghilb32370 [gone] Some other commit message
@@ -308,8 +339,8 @@ blog post.</p>
 <h3 id="check-key-password">Check key password</h3>
 <p>To check if a password unlocks the private key, try and change it
 with:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
 <p>This will ask the current password, first. When promped for the new
 password, type two mismatching ones so that it doesn’t get changed.</p>
 <h2 id="top"><code>top</code></h2>
@@ -574,9 +605,9 @@ href="https://alogus.com/g5script/content_index">here</a>.</p>
 href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
 post suggests using <em>here files</em> or env vars for this purpose.
 The flow with env vars is the following:</p>
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
 <p>You then access those vars within the script via a call to <a
 href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
 <pre class="plt"><code># File: script.plt
@@ -651,9 +682,9 @@ exists for the device:</p>
 <pre><code># fstab
 UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
 <p>You have to mount the disk and give it user permissions:</p>
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
 <p>Note that mount option <code>users</code> allows every user to mount
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
@@ -662,15 +693,15 @@ href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with
 <code>irq/9-acpi</code></h3>
 <p>Check the interrupts in
 <code>/sys/firmware/acpi/interrupts</code>:</p>
-<div class="sourceCode" id="cb34"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
 <p>And look for a big number. Then mask it:</p>
-<div class="sourceCode" id="cb35"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
 <p>I found the solution <a
 href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">here</a>.</p>
 <p><strong><em>Questions:</em></strong></p>
