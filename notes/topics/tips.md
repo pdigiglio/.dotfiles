@@ -85,3 +85,44 @@ It seems to work correctly on Linux as well.  More details can be found on
 [Wikipedia](https://en.wikipedia.org/wiki/QWERTY#US-International).  I couldn't
 find anything Linux specific, i.e. any map of the so-called _international_ (or
 _exended_) keyboard, which should extend the layout map above.
+
+
+### `grep`
+
+To search recursively:
+
+```sh
+grep -R "pattern" /some/path
+
+# You may want to use:
+#  --exclude=<glob>
+#    Skip subfiles whose base name matches <glob>.
+#
+#  --exclude-dir=<glob>
+#    Skip dirs whose name suffix match <glob>.
+#
+#  --include=<glob>
+#    Search files whose basename match <glob>.
+```
+
+From `man grep(1)`:
+
+  - _Name suffix_ is either:
+
+    - The whole name, or
+
+    - A trailing part that starts with a non-slash character immediately after
+    a slash (/) in the name. 
+
+  - _Base name_ is the part after the last slash.
+
+To get only the name of the files that contain a match, use `-l` (or
+`--files-with-matches`).
+
+This may be useful to get a list of possibly interesting files to be checked by
+a text editor; e.g.:
+
+```bash
+nvim $(grep -l -R "pattern" .)
+```
+
