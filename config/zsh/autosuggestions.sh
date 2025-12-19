@@ -1,11 +1,13 @@
-typeset -r zsh_autosuggestions="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-if [[ -f "$zsh_autosuggestions" ]]
-then
-	. "$zsh_autosuggestions"
+# Different OSs put zsh plugins in different folders.  Look in more than one
+# folder and load the first one that's found.
+for zsh_autosuggestions in /usr/share/{zsh/plugins/,}zsh-autosuggestions/zsh-autosuggestions.zsh
+do
+    [[ -f "$zsh_autosuggestions" ]] || continue
 
-	# <C-Space> accepts suggestion.
-	bindkey '^ ' autosuggest-accept
+    . "$zsh_autosuggestions"
 
-	# Set comment style to gray
-	#ZSH_HIGHLIGHT_STYLES[comment]="fg=#a0a0a0"
-fi
+    # <C-Space> accepts suggestion.
+    # (I also use <C-Space> as kitty prefix)
+    # bindkey '^ ' autosuggest-accept
+    break
+done
