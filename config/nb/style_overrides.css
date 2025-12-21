@@ -1,0 +1,15 @@
+html {
+    font-family: sans;
+    font-size:   16px;
+}
+
+code {
+    background-color: #27272c;
+    border-radius: 5px;
+    padding: 0.1em 0.2em;
+}
+
+pre {
+    background-color: #27272c;
+}
+

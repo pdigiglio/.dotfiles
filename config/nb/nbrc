@@ -13,6 +13,16 @@ function main()
     # # 2. If I set it, completion no longer works.
     # utility="$(find_if_utility_exists yazi)" &&
     #     export NB_DIRECTORY_TOOL="$utility"
+
+    # Adjust some rendering details.  For some reasons, I can't make it work by
+    # using NB_CUSTOM_CSS_URL.
+    typeset -r custom_css="$XDG_CONFIG_HOME/nb/style_overrides.css"
+    if [ -f "$custom_css" ]
+    then
+        export NB_CUSTOM_CSS="$(cat "$custom_css")"
+    fi
+
+    # echo "ciao"
 }
 
 main
