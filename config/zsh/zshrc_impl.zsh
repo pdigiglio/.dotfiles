@@ -143,6 +143,8 @@ setopt NO_HUP
 
 . "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
 
+source_if_exists "$XDG_CONFIG_HOME/zsh/private/init.zsh"
+
 # This file sources and sets up "zsh-syntax-highlighting". Source it last, as
 # explained in:
 # https://github.com/zsh-users/zsh-syntax-highlighting?tab=readme-ov-file#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file
