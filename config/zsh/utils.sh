@@ -7,6 +7,14 @@ function utility_exists() {
     which "$1" > /dev/null
 }
 
+# Source a file, if it exists.
+#
+# @param $1 The utility name
+function source_if_exists() {
+    typeset -r file="$1"
+    [ -f "$file" ] && . "$file"
+}
+
 # This function should be called with a list of command names.  It will go
 # though the list and return (on stdout) the first command that's installed.
 #
