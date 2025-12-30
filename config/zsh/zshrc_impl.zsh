@@ -138,6 +138,7 @@ setopt NO_HUP
 . "$ZDOTDIR/fzf.zsh"
 . "$ZDOTDIR/gpg.zsh"
 . "$ZDOTDIR/run_help.sh"
+. "$ZDOTDIR/uv.zsh"
 
 
 . "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
