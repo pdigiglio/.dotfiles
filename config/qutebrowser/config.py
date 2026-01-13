@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from shutil import which
+
 #
 # Configuration file for qutebrowser.
 #
@@ -15,7 +17,6 @@
 #  
 #  * Check if file picker installed, otherwise use default.
 #  * Check if mpv installed, otherwise display a message on ',v' and ',a'
-#  * Fetch login data from `pass`
 #
 
 cmd_leader = ','
@@ -45,7 +46,7 @@ def set_bindings():
 
     # Play audio-only with mpv. 
     play_audio_userscript = 'play_audio_externally'
-    config.bind(f'{cmd_leader}a', f'spawn --userscript {play_audio_userscript}')
+    config.bind(f'{cmd_leader}a',  f'spawn --userscript {play_audio_userscript}')
     config.bind(f'{hint_leader}a', f'hint links userscript {play_audio_userscript}')
     config.bind(f'{hint_leader}A', f'hint links userscript {play_audio_userscript}_and_close_tab')
 
@@ -53,6 +54,13 @@ def set_bindings():
     display_in_pager_userscript = 'display_in_pager'
     config.bind(f'{cmd_leader}l', f'spawn --userscript {display_in_pager_userscript}')
     # config.bind(f'{hint_leader}l', f'hint links userscript {display_in_pager_userscript}')
+
+    # TODO How to ensure that pinentry is displayed as a GUI dialog here?
+    qute_pass = "qute-pass --unfiltered"
+    qute_pass += " --mode gopass" if which("gopass") is not None else ""
+    config.bind(f'{cmd_leader}p', f'spawn --userscript {qute_pass}')
+    config.bind(f'{cmd_leader}u', f'spawn --userscript {qute_pass} --username-only')
+    config.bind(f'{cmd_leader}P', f'spawn --userscript {qute_pass} --password-only')
 
 
 def set_config_py_opts():
