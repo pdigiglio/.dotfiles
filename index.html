@@ -192,6 +192,9 @@ id="toc-mount-btrfs-disk-and-give-it-user-permissions">Mount
 <li><a href="#high-cpu-usage-from-irq9-acpi"
 id="toc-high-cpu-usage-from-irq9-acpi">High CPU usage from
 <code>irq/9-acpi</code></a></li>
+<li><a href="#cant-download-github-release-via-curl"
+id="toc-cant-download-github-release-via-curl">Can’t download GitHub
+release via <code>curl</code></a></li>
 </ul></li>
 <li><a href="#misc" id="toc-misc">Misc</a>
 <ul>
@@ -710,6 +713,36 @@ href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">her
 <li><p>How can I know <code>gpe17</code> is related to
 <code>irq/9-acpi</code>?</p></li>
 </ul>
+<h3 id="cant-download-github-release-via-curl">Can’t download GitHub
+release via <code>curl</code></h3>
+<p>When I try to download a release from GitHub, I get an empty
+file:</p>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
+<p>However, browsers download fine. If I look at the HTTP code:</p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
+<p>I get code <a
+href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/302"><code>302 Found</code></a>,
+which is a <em>redirection message</em>.</p>
+<p>Also, if I look at the headers, I get <code>Location</code> (which
+indicates a redirect):</p>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
+<pre class="plain"><code>HTTP/2 302 
+content-type: text/html; charset=utf-8
+content-length: 0
+location: ...
+[-- snip --]</code></pre>
+<p>To download the file, I have to follow the redirects with option
+<code>--location</code> (long for <code>-L</code>).</p>
 <h2 id="misc">Misc</h2>
 <h3 id="change-country-in-google-play">Change country in Google
 Play</h3>
