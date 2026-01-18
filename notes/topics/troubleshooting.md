@@ -63,3 +63,44 @@ I found the solution [here](https://forum.manjaro.org/t/irq-9-acpi-is-killing-my
 
  * How can I know `gpe17` is related to `irq/9-acpi`?
 
+
+### Can't download GitHub release via `curl`
+
+When I try to download a release from GitHub, I get an empty file:
+
+```sh
+url=https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb
+# NOTE: --remote-name is long for -O
+curl --remote-name $url
+
+file yazi-aarch64-unknown-linux-gnu.deb 
+# Output: yazi-aarch64-unknown-linux-gnu.deb: empty
+```
+
+However, browsers download fine.  If I look at the HTTP code:
+
+```sh
+# NOTE: --write-out is long for -w
+curl --write-out '%{http_code}\n' $url
+```
+
+I get code [`302
+Found`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/302),
+which is a _redirection message_.
+
+Also, if I look at the headers, I get `Location` (which indicates a redirect):
+
+```sh
+# NOTE: --show-headers is long for -i
+curl --show-headers  $url
+```
+```plain
+HTTP/2 302 
+content-type: text/html; charset=utf-8
+content-length: 0
+location: ...
+[-- snip --]
+```
+
+To download the file, I have to follow the redirects with option `--location`
+(long for `-L`).
