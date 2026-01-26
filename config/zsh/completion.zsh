@@ -2,7 +2,13 @@
 zstyle ':completion:*' menu select
 
 # Case-insensitive path completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Try and simulate vim 'smartcase'.  Note that small letters will still be
+# matched in a case-insensitive way.
+#
+# See: https://stackoverflow.com/a/14350512
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 autoload -Uz compinit
 
