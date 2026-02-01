@@ -1,0 +1,41 @@
+#!/bin/env bash
+
+# Select a window with fzf and return its address or an error code, if the
+# operation is aborted.
+function select_window()
+{
+    typeset -r sep='\t'
+    local jq_filter=""
+    jq_filter="sort_by(.focusHistoryID)"
+    jq_filter="${jq_filter} | .[]"
+    jq_filter="${jq_filter} | select(.workspace.id >= 0)"
+    jq_filter="${jq_filter} | \"\(.address)\t\(.workspace.name):\(.class) | \(.title)\""
+
+    typeset -r previewer="$XDG_CONFIG_HOME/hypr/scripts/preview_focus_window"
+    hyprctl -j clients |
+        jq --raw-output "$jq_filter" |
+        tail --lines +2 |
+        fzf \
+        --cycle \
+        --sync \
+        --preview-window=down:80% \
+        --delimiter=$sep \
+        --with-nth=2 \
+        --accept-nth=1 \
+        --preview="$previewer {}" \
+        --layout=reverse
+}
+
+# Interactively select a window and focus it.
+function main()
+{
+    local selected_addr=""
+    selected_addr=$(select_window)
+    if [[ $? == 0 ]]
+    then
+        # echo "$selected_addr"
+        hyprctl dispatch focuswindow "address:$selected_addr" > /dev/null
+    fi
+}
+
+main "$@"

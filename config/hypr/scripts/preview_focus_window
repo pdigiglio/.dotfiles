@@ -1,0 +1,21 @@
+#!/bin/env bash
+
+function preview_for()
+{
+    typeset -r address="$1"
+    typeset -r preview='{ "title": .title, "class": .class, "monitor": .monitor, "workspace": .workspace.id, "xwayland": .xwayland }'
+    # echo ".[] | select(.address == \"$address\") | $preview"
+    hyprctl -j clients |
+        jq --raw-output --color-output ".[] | select(.address == \"$address\") | $preview"
+}
+
+function main()
+{
+    typeset -r line="$1"
+    local addr=""
+    local _
+    IFS=$'\t' read -r address _ <<< "$line"
+    preview_for "$address"
+}
+
+main "$@"
