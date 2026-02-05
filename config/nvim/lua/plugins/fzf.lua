@@ -4,6 +4,7 @@ local fzf_lua_config = function()
 
     vim.keymap.set('n', '<Leader>ff', fzf_lua.files)
     vim.keymap.set('n', '<Leader>fb', fzf_lua.buffers)
+    vim.keymap.set('n', '<Leader>fj', fzf_lua.jumps)
     vim.keymap.set('n', '<Leader>fo', fzf_lua.oldfiles)
     vim.keymap.set('n', '<Leader>fh', fzf_lua.helptags)
     vim.keymap.set('n', '<Leader>fm', fzf_lua.marks)
