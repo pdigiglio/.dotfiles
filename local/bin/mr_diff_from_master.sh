@@ -1,16 +1,14 @@
-#!/bin/bash
-
-
-typeset -r base_branch="origin/master"
+#!/bin/env bash
 
 function get_diff_files()
 {
+    typeset -r base_branch="$1"
     git diff --name-status "$base_branch"...
 }
 
 function get_prompt_question()
 {
-    typeset -r file_status="$1"
+    # typeset -r file_status="$1"
     typeset -r file0="$2"
     typeset -r file1="${3:=${file0}}"
 
@@ -30,18 +28,20 @@ function get_prompt_question()
 }
 
 
-function main()
+function interactive_difftool()
 {
-    typeset -ri file_count="$(get_diff_files | wc -l)"
+    typeset -r base_branch="$1"
+    typeset -ri file_count="$(get_diff_files "$base_branch" | wc -l)"
     typeset -i file_idx=1
 
     typeset status=""
     typeset file0=""
     typeset file1=""
+    typeset question=""
     while read status file0 file1 
     do
         file1="${file1:=${file0}}"
-        typeset question="$(get_prompt_question "$status" "$file0" "$file1")"
+        question="$(get_prompt_question "$status" "$file0" "$file1")"
 
         typeset choice
         read -e -p " > ($file_idx / $file_count) $question? [y/n] " choice < /dev/tty
@@ -57,8 +57,30 @@ function main()
         fi
 
         file_idx=$((file_idx+1))
-    done < <(get_diff_files)
+    done < <(get_diff_files "$base_branch")
 }
 
-main
+function main()
+{
+    typeset base_branch="origin/master"
+
+    typeset OPTIND
+    typeset OPTARG
+    while getopts "b:" opt
+    do
+        case "$opt" in
+            b)
+                base_branch="$OPTARG"
+                ;;
+            *)
+                echo "Unknown option" > /dev/stderr
+                exit 1
+                ;;
+        esac
+    done
+
+    interactive_difftool "$base_branch"
+}
+
+main "$@"
 
