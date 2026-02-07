@@ -9,28 +9,3 @@
 # Note that setting either no limit or a very large limit can make completion
 # slow.
 set max-completions 20
-
-# Import pretty printers for Unreal
-python 
-
-import os
-home_dir           = os.environ['HOME']
-epic_printers_path = f'{home_dir}/.config/Epic/GDBPrinters/'
-if not os.path.isdir(epic_printers_path):
-    print('No printers for UE classes found')
-else:
-    # NOTE: I import gdb.printing so that I don't get the following error:
-    # Python Exception <class 'AttributeError'>: module 'gdb' has no attribute 'printing'
-    import gdb
-    import gdb.printing
-
-    # The printers come from $unreal/Engine/Extras. You may find printers for
-    # LLDB there as well.
-    import sys
-    sys.path.append(epic_printers_path)
-    from UEPrinters import register_ue_printers
-
-end
-
-
-#source /home/pdigiglio/.local/share/pipx/venvs/voltron/lib/python3.13/site-packages/voltron/entry.py
