@@ -75,9 +75,5 @@ settings set symbols.load-on-demand true
 # If true, blank lines will be printed between between REPL submissions.
 settings set interpreter.space-repl-prompts true
 
-command script import ~/AUR/ue5-zuru/src/unreal-engine-dc/Engine/Extras/LLDBDataFormatters/UEDataFormatters.py
-command script import ~/.config/lldb/formatters/vector_formatter.py
-
-# Remember to prefix lldb with PYTHONPATH 
-# Still does not work.
-# command script import ~/.local/share/pipx/venvs/voltron/lib/python3.13/site-packages/voltron/entry.py
+# Add hook for private config file(s).
+command script import "~/.config/lldb/source_private_if_exists.py"
