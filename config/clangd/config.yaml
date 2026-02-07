@@ -28,4 +28,4 @@ InlayHints:
 Documentation:
   CommentFormat: Doxygen
 CompileFlags:
-  Add: [-Wmismatched-tags]
+  Add: [ -Wmismatched-tags, -Wconversion ]
