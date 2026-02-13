@@ -1,4 +1,3 @@
-
 ## Tips 
 
 ### How to tell which distro you're running
@@ -126,3 +125,41 @@ a text editor; e.g.:
 nvim $(grep -l -R "pattern" .)
 ```
 
+
+### `ly` display manager
+
+After an update of [Ly](https://github.com/fairyglade/ly), at least since
+`1.3.0`, the display manger would not start---or maybe  it doesn't start in a
+deterministic way; I can't say.
+
+The [`README.md`](https://github.com/fairyglade/ly?tab=readme-ov-file#systemd),
+says that `ly` conflicts with `getty@tty?.service`.  Both are active and
+running:
+  
+
+```bash
+systemctl list-units "*tty[[:digit:]]*"
+```
+```txt
+  UNIT               LOAD   ACTIVE SUB     DESCRIPTION
+  getty@tty1.service loaded active running Getty on tty1
+  ly@tty1.service    loaded active running TUI display manager
+```
+
+So I do:
+
+```bash
+systemctl disable getty@tty1.service
+```
+
+> **Note:**
+>
+> By listing units that match `"*logind*"` I see `systemd-logind.service`
+> running.  It will spawn instances of `getty@tty?.service` on demand when
+> switching to a different v-console.  I don't want to start `ly` on other
+> v-consoles so I don't need to do anything else.
+> 
+> Anyway `man 5 logind.conf`, entry for _ReserveVT_, says `tty6` will _always_
+> be reserved for `getty` login.
+>
+> I also see `systemd-logind-varlink.socket`.  Varlink is a protocol for IPC.
