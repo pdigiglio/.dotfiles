@@ -1,10 +1,16 @@
 #!/bin/env bash
 
+function shift_up_by()
+{
+    typeset -r shift_n="$1"
+    typeset -r script='NR <= n { buf[NR] = $0; next } { print } END { for (i = 1; i <= n; i++) print buf[i] }'
+    awk -v n="$shift_n" "$script"
+}
+
 # Select a window with fzf and return its address or an error code, if the
 # operation is aborted.
 function select_window()
 {
-    typeset -r sep='\t'
     local jq_filter=""
     jq_filter="sort_by(.focusHistoryID)"
     jq_filter="${jq_filter} | .[]"
@@ -15,11 +21,13 @@ function select_window()
     hyprctl -j clients |
         jq --raw-output "$jq_filter" |
         tail --lines +2 |
+        shift_up_by 1 |
         fzf \
         --cycle \
         --sync \
+        --bind tab:down,shift-tab:up \
         --preview-window=down:80% \
-        --delimiter=$sep \
+        --delimiter=$'\t' \
         --with-nth=2 \
         --accept-nth=1 \
         --preview="$previewer {}" \
