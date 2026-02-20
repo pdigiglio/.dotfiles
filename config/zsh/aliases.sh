@@ -9,6 +9,11 @@ alias ls='LS_COLORS="or=31" ls --color=auto --hyperlink=auto '
 alias grep="grep --color=auto "
 #alias vim="nvim "
 
+if utility_exists rsync
+then
+    alias dirsync='rsync --recursive --itemize-changes --include="*/" --exclude "*" '
+fi
+
 utility_exists ip && alias ip='ip --color=auto '
 
 if utility_exists yazi
