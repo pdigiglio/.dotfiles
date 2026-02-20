@@ -120,6 +120,9 @@ keyboard</a></li>
 <li><a href="#grep" id="toc-grep"><code>grep</code></a></li>
 <li><a href="#ly-display-manager"
 id="toc-ly-display-manager"><code>ly</code> display manager</a></li>
+<li><a href="#enable-vi-bindings-on-bash"
+id="toc-enable-vi-bindings-on-bash">Enable <code>vi</code> bindings on
+bash</a></li>
 </ul></li>
 <li><a href="#git" id="toc-git"><code>git</code></a>
 <ul>
@@ -329,6 +332,16 @@ says <code>tty6</code> will <em>always</em> be reserved for
 <p>I also see <code>systemd-logind-varlink.socket</code>. Varlink is a
 protocol for IPC.</p>
 </blockquote>
+<h3 id="enable-vi-bindings-on-bash">Enable <code>vi</code> bindings on
+bash</h3>
+<p>One way is to add these settings to <code>.inputrc</code>.</p>
+<p>The quick way from the terminal is:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> vi</span></code></pre></div>
+<p>To also get an indication of the mode:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bind &#39;set editing-mode vi&#39;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">bind</span> <span class="st">&#39;set show-mode-in-prompt on&#39;</span></span></code></pre></div>
 <h2 id="git"><code>git</code></h2>
 <h3 id="tools">Tools</h3>
 <ul>
@@ -338,14 +351,14 @@ pretty display of logs</li>
 </ul>
 <h3 id="list-all-tags-matching-a-pattern">List all tags matching a
 pattern</h3>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
 <h3 id="update-submodules-after-every-branch-switch">Update submodules
 after every branch switch</h3>
 <p>Append this to <code>.git/hooks/post-checkout</code>:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
 <h3 id="multiple-accounts">Multiple accounts</h3>
 <p>If you want to use a specific account for a repository, set it like
 this:</p>
@@ -358,11 +371,11 @@ this:</p>
 <h3 id="check-if-remote-branch-has-been-deleted">Check if remote branch
 has been deleted</h3>
 <p>First, update the remote refs:</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
 <p>Then get info about the branches:</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
 <p>The output will look like this:</p>
 <pre><code>* master        abcdebf3d17 [behind 581] some commit message
   topic-branch  fghilb32370 [gone] Some other commit message
@@ -375,8 +388,8 @@ blog post.</p>
 <h3 id="check-key-password">Check key password</h3>
 <p>To check if a password unlocks the private key, try and change it
 with:</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
 <p>This will ask the current password, first. When promped for the new
 password, type two mismatching ones so that it doesn’t get changed.</p>
 <h2 id="top"><code>top</code></h2>
@@ -641,9 +654,9 @@ href="https://alogus.com/g5script/content_index">here</a>.</p>
 href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
 post suggests using <em>here files</em> or env vars for this purpose.
 The flow with env vars is the following:</p>
-<div class="sourceCode" id="cb29"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
 <p>You then access those vars within the script via a call to <a
 href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
 <pre class="plt"><code># File: script.plt
@@ -718,9 +731,9 @@ exists for the device:</p>
 <pre><code># fstab
 UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
 <p>You have to mount the disk and give it user permissions:</p>
-<div class="sourceCode" id="cb38"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
 <p>Note that mount option <code>users</code> allows every user to mount
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
@@ -729,15 +742,15 @@ href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with
 <code>irq/9-acpi</code></h3>
 <p>Check the interrupts in
 <code>/sys/firmware/acpi/interrupts</code>:</p>
-<div class="sourceCode" id="cb39"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
 <p>And look for a big number. Then mask it:</p>
-<div class="sourceCode" id="cb40"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
 <p>I found the solution <a
 href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">here</a>.</p>
 <p><strong><em>Questions:</em></strong></p>
@@ -750,25 +763,25 @@ href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">her
 release via <code>curl</code></h3>
 <p>When I try to download a release from GitHub, I get an empty
 file:</p>
-<div class="sourceCode" id="cb41"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
 <p>However, browsers download fine. If I look at the HTTP code:</p>
-<div class="sourceCode" id="cb42"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
 <p>I get code <a
 href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/302"><code>302 Found</code></a>,
 which is a <em>redirection message</em>.</p>
 <p>Also, if I look at the headers, I get <code>Location</code> (which
 indicates a redirect):</p>
-<div class="sourceCode" id="cb43"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
 <pre class="plain"><code>HTTP/2 302 
 content-type: text/html; charset=utf-8
 content-length: 0
