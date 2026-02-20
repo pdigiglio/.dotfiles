@@ -125,7 +125,6 @@ a text editor; e.g.:
 nvim $(grep -l -R "pattern" .)
 ```
 
-
 ### `ly` display manager
 
 After an update of [Ly](https://github.com/fairyglade/ly), at least since
@@ -163,3 +162,23 @@ systemctl disable getty@tty1.service
 > be reserved for `getty` login.
 >
 > I also see `systemd-logind-varlink.socket`.  Varlink is a protocol for IPC.
+
+
+### Enable `vi` bindings on bash
+
+One way is to add these settings to `.inputrc`.
+
+
+The quick way from the terminal is:
+
+```bash
+set -o vi
+```
+
+To also get an indication of the mode:
+
+```bash
+# bind 'set editing-mode vi'
+bind 'set show-mode-in-prompt on'
+```
+
