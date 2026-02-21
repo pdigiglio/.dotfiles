@@ -51,6 +51,7 @@
     ~/.local/bin/mr_diff_from_master: local/bin/mr_diff_from_master.sh
     ~/.local/bin/tw: local/bin/tw.sh
     ~/.local/bin/sst: local/bin/sst.sh
+    ~/.local/bin/ddns: local/bin/ddns.sh
 
 - create:
     # Ensure directories for vim exist. See vimrc.
