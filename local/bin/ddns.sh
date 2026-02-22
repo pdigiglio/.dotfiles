@@ -3,7 +3,7 @@
 # Author: Paolo Di Giglio
 
 #
-# Help aobut freemyip DDNS can be found at:
+# Help about freemyip DDNS can be found at:
 #
 # https://freemyip.com/help?domain=${domain}&token=${token}
 #
