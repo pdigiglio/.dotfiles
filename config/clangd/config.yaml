@@ -1,9 +1,15 @@
 # More about this file:
 # https://clangd.llvm.org/config.html
+#
+# To verify clangd is actually picking-up this file:
+#
+# $ clangd --log=verbose
+#
 Hover:
   ShowAKA: Yes
 Diagnostics:
   ClangTidy:
+    # List of checks: https://clang.llvm.org/extra/clang-tidy/checks/list.html
     Add:
       - bugprone-*
       - cppcoreguidelines-*
@@ -11,9 +17,12 @@ Diagnostics:
       - performance-*
       - portability-*
       - readability-*
+      - misc-*
     Remove:
       - readability-identifier-length
       - modernize-use-trailing-return-type
+  # Run checks unless they're known to be slow. (Default: Strict)
+  FastCheckFilter: Loose
   UnusedIncludes: Strict
   # This is just too noisy.
   # MissingIncludes: Strict
