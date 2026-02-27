@@ -21,6 +21,10 @@ function get_prompt_question()
             echo "Show new file '$file0'"
             ;;
 
+        "D")
+            echo "Show deleted file '$file0'"
+            ;;
+
         *)
             echo "Diff file '$file0'"
             ;;
@@ -50,6 +54,9 @@ function interactive_difftool()
             if [ "$status" == "A" ]
             then
                 nvim "$file1"
+            elif [ "$status" == "D" ]
+            then
+                nvim <(git show "$base_branch":"$file0")
             else
                 nvim -d "$file1" <(git show "$base_branch":"$file0")
             fi
