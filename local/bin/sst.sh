@@ -17,13 +17,16 @@ function tmux_conf_to_cmd_line() {
 # Generate the 'RemoteCommand' for `ssh`.
 function ssh_remote_command() {
 	typeset -r session_name="$USER"
-	typeset -r term="tmux-256color"
+
 	typeset -r tmux_config_file="$XDG_CONFIG_HOME/tmux/tmux.conf"
 	typeset -r tmux_config="$(tmux_conf_to_cmd_line "$tmux_config_file")"
 
 	# NOTE: If something does not work, generate tmux logs with -v or -vv.
 	typeset -r tmux_remote_command="tmux new-session -A -s '$session_name' $tmux_config \; set-option -g prefix C-b"
-	echo "TERM=$term; $tmux_remote_command"
+
+	# Try and use something that should be common like "xterm".
+	typeset -r term="xterm-256color"
+	echo "TERM=$term $tmux_remote_command"
 }
 
 # Open a `ssh` connection and create (or connect to) a tmux instance.
