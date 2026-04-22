@@ -1,0 +1,18 @@
+# Resources:
+#
+#  - http://web.archive.org/web/20111024014512/http://tutorials.papamike.ca/pub/lftp.html
+#
+# Tips:
+#
+#  - Connect to a server with:
+#    
+#    lftp -u <user>[,<pass>] <site>
+#
+
+# Allow csh-like history expansion.
+set cmd:csh-history on
+
+# Use colors when output is a terminal.
+set color:use-color auto
+
+# vim: set filetype=lftp:

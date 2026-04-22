@@ -23,6 +23,7 @@
         path: config/hypr
         create: true
     ~/.config/kitty: config/kitty
+    ~/.config/lftp: config/lftp
     ~/.config/lldb: config/lldb
     ~/.config/nb: config/nb
     ~/.config/nvim:
