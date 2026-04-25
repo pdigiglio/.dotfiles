@@ -137,11 +137,16 @@ accounts</a></li>
 <li><a href="#check-if-remote-branch-has-been-deleted"
 id="toc-check-if-remote-branch-has-been-deleted">Check if remote branch
 has been deleted</a></li>
+<li><a href="#search-through-the-logs"
+id="toc-search-through-the-logs">Search through the logs</a></li>
 </ul></li>
 <li><a href="#ssh" id="toc-ssh">ssh</a>
 <ul>
 <li><a href="#check-key-password" id="toc-check-key-password">Check key
 password</a></li>
+<li><a href="#exit-from-a-hung-connection"
+id="toc-exit-from-a-hung-connection">Exit from a hung
+connection</a></li>
 </ul></li>
 <li><a href="#top" id="toc-top"><code>top</code></a>
 <ul>
@@ -159,10 +164,14 @@ id="toc-unity-vs-non-unity-builds">unity vs non-unity builds</a></li>
 <ul>
 <li><a href="#dump-memory-layout" id="toc-dump-memory-layout">Dump
 memory layout</a></li>
+<li><a href="#clang-format"
+id="toc-clang-format"><code>clang-format</code></a></li>
 </ul></li>
 <li><a href="#lldb" id="toc-lldb"><code>lldb</code></a>
 <ul>
-<li><a href="#skip-code" id="toc-skip-code">Skip code</a></li>
+<li><a href="#remote-debugging" id="toc-remote-debugging">Remote
+debugging</a></li>
+<li><a href="#cheatsheet" id="toc-cheatsheet">Cheatsheet</a></li>
 <li><a href="#show-actual-pointer-type"
 id="toc-show-actual-pointer-type">Show actual pointer type</a></li>
 <li><a href="#print-pointer-as-array"
@@ -383,14 +392,41 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#
 See also <a
 href="https://www.erikschierboom.com/2020/02/17/cleaning-up-local-git-branches-deleted-on-a-remote/">this</a>
 blog post.</p>
+<h3 id="search-through-the-logs">Search through the logs</h3>
+<p>To find commits whose message contains pattern <em>pattern</em>:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--grep</span><span class="op">=</span>pattern</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
+<p>To find commits whose patch contains pattern <em>pattern</em>:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-Gpattern</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
+<p>To find commits where the number of occurrences of <em>word</em>
+changed:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-Sword</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --pickaxe-regex         to interpret &quot;word&quot; as a regex</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
+<p>See <a href="https://stackoverflow.com/a/1340245">this</a>
+StackOverflow answer.</p>
 <h2 id="ssh">ssh</h2>
 <h3 id="check-key-password">Check key password</h3>
 <p>To check if a password unlocks the private key, try and change it
 with:</p>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
 <p>This will ask the current password, first. When promped for the new
 password, type two mismatching ones so that it doesn’t get changed.</p>
+<h3 id="exit-from-a-hung-connection">Exit from a hung connection</h3>
+<p>Use the following sequence to force a connection to be closed:</p>
+<pre><code>&lt;Enter&gt;~.</code></pre>
+<p>List the supported escape sequences with:</p>
+<pre><code>&lt;Enter&gt;~?</code></pre>
+<p>See <a href="https://serverfault.com/a/283130">this</a> StackOverflow
+answer.</p>
 <h2 id="top"><code>top</code></h2>
 <p>The config file for <code>top</code> is stored in:</p>
 <pre><code>~/.config/procps/toprc</code></pre>
@@ -558,7 +594,55 @@ class="uri">https://www.intel.com/content/www/us/en/developer/articles/technical
 <p><a
 href="https://eli.thegreenplace.net/2012/12/17/dumping-a-c-objects-memory-layout-with-clang"
 class="uri">https://eli.thegreenplace.net/2012/12/17/dumping-a-c-objects-memory-layout-with-clang</a></p>
+<h3 id="clang-format"><code>clang-format</code></h3>
+<p>The full set of options is described <a
+href="https://clang.llvm.org/docs/ClangFormatStyleOptions.html">here</a>.</p>
+<ul>
+<li><p>Placement of <code>cv</code> qualifiers:</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">QualifierAlignment</span><span class="kw">:</span><span class="at"> Right</span></span></code></pre></div></li>
+</ul>
 <h2 id="lldb"><code>lldb</code></h2>
+<h3 id="remote-debugging">Remote debugging</h3>
+<h4 id="environment-variables">Environment variables</h4>
+<p>It’s a known bug that env vars are not inherited by the remote
+process. A workaround can be found here:</p>
+<ul>
+<li><a href="https://github.com/llvm/llvm-project/issues/61357"
+class="uri">https://github.com/llvm/llvm-project/issues/61357</a></li>
+</ul>
+<h3 id="cheatsheet">Cheatsheet</h3>
+<h4 id="breakpoints">Breakpoints</h4>
+<ul>
+<li><p>List:</p>
+<pre><code>breakpoint list
+br l</code></pre></li>
+<li><p>Delete:</p>
+<pre><code>breakpoint delete
+br l</code></pre></li>
+<li><p>Enable:</p>
+<pre><code>breakpoint enable 1
+br e 1
+# Omit breakpoint ID to enable all</code></pre></li>
+<li><p>Disable:</p>
+<pre><code>breakpoint disable 1
+br di 1
+# Omit breakpoint ID to disable all</code></pre></li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a href="https://gist.github.com/ryanchang/a2f738f0c3cc6fbd71fa"
+class="uri">https://gist.github.com/ryanchang/a2f738f0c3cc6fbd71fa</a></li>
+</ul>
+<h4 id="skip-code">Skip code</h4>
+<pre><code>thread jump --by &lt;line-count&gt;
+th j -b &lt;line-count&gt;</code></pre>
+<p>or</p>
+<pre><code>thread jump --line &lt;line-count&gt;</code></pre>
+<p>See: <a
+href="https://blog.eidinger.info/skip-code-during-debugging-in-xcode"
+class="uri">https://blog.eidinger.info/skip-code-during-debugging-in-xcode</a></p>
+<hr />
 <p>Expression evaluator with support for NatVis: <a
 href="https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb"
 class="uri">https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb</a>
@@ -607,14 +691,6 @@ class="uri">https://stackoverflow.com/questions/70421258/how-to-print-actualderi
 <p>Logpoints in <code>nvim-dap</code>: <a
 href="https://www.reddit.com/r/neovim/comments/uerye3/dap_log_messages_and_conditional_break_points"
 class="uri">https://www.reddit.com/r/neovim/comments/uerye3/dap_log_messages_and_conditional_break_points</a></p>
-<h3 id="skip-code">Skip code</h3>
-<pre><code>thread jump --by &lt;line-count&gt;
-th j -b &lt;line-count&gt;</code></pre>
-<p>or</p>
-<pre><code>thread jump --line &lt;line-count&gt;</code></pre>
-<p>See: <a
-href="https://blog.eidinger.info/skip-code-during-debugging-in-xcode"
-class="uri">https://blog.eidinger.info/skip-code-during-debugging-in-xcode</a></p>
 <h3 id="show-actual-pointer-type">Show actual pointer type</h3>
 <pre><code>frame variable -d run-target pObject</code></pre>
 <p>or</p>
@@ -653,9 +729,9 @@ href="https://alogus.com/g5script/content_index">here</a>.</p>
 href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
 post suggests using <em>here files</em> or env vars for this purpose.
 The flow with env vars is the following:</p>
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
 <p>You then access those vars within the script via a call to <a
 href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
 <pre class="plt"><code># File: script.plt
@@ -730,9 +806,9 @@ exists for the device:</p>
 <pre><code># fstab
 UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
 <p>You have to mount the disk and give it user permissions:</p>
-<div class="sourceCode" id="cb40"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
 <p>Note that mount option <code>users</code> allows every user to mount
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
@@ -741,15 +817,15 @@ href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with
 <code>irq/9-acpi</code></h3>
 <p>Check the interrupts in
 <code>/sys/firmware/acpi/interrupts</code>:</p>
-<div class="sourceCode" id="cb41"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
 <p>And look for a big number. Then mask it:</p>
-<div class="sourceCode" id="cb42"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
 <p>I found the solution <a
 href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">here</a>.</p>
 <p><strong><em>Questions:</em></strong></p>
@@ -762,25 +838,25 @@ href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">her
 release via <code>curl</code></h3>
 <p>When I try to download a release from GitHub, I get an empty
 file:</p>
-<div class="sourceCode" id="cb43"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
 <p>However, browsers download fine. If I look at the HTTP code:</p>
-<div class="sourceCode" id="cb44"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
 <p>I get code <a
 href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/302"><code>302 Found</code></a>,
 which is a <em>redirection message</em>.</p>
 <p>Also, if I look at the headers, I get <code>Location</code> (which
 indicates a redirect):</p>
-<div class="sourceCode" id="cb45"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
 <pre class="plain"><code>HTTP/2 302 
 content-type: text/html; charset=utf-8
 content-length: 0
