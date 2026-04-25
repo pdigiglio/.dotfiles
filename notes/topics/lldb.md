@@ -1,5 +1,14 @@
 ## `lldb`
 
+### Remote debugging
+
+#### Environment variables
+
+It's a known bug that env vars are not inherited by the remote process.  A
+workaround can be found here:
+
+ - <https://github.com/llvm/llvm-project/issues/61357>
+
 ### Cheatsheet
 
 #### Breakpoints
