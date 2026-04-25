@@ -8,11 +8,30 @@
 #    
 #    lftp -u <user>[,<pass>] <site>
 #
+#  - Check current settings:
+#
+#    lftp -c set
+#
+#    Pass:
+#     -a to see "all"
+#     -d to see "defaults"
 
 # Allow csh-like history expansion.
 set cmd:csh-history on
 
 # Use colors when output is a terminal.
 set color:use-color auto
+
+
+# Change prompt.
+#
+# Colors:
+#  1;37m = bold
+#  0;32m = green
+#  0;36m = light cyan
+#  0;33m = yellow
+set cmd:prompt "\[\e[1;37m\]lftp\[\e[0m\] \\S\\? \\u\[\e[0;33m\]\\@\[\e[0m\]\\h \[\e[0;36m\]\\w\[\e[0m\] \[\e[1;37m\]>\[\e[0m\] "
+# Default prompt:
+# set cmd:prompt "lftp \\S\\? \\u\\@\\h:\\w> "
 
 # vim: set filetype=lftp:
