@@ -27,3 +27,8 @@ then
         rm -f -- "$tmp"
     }
 fi
+
+if utility_exists lftp
+then
+    alias lftp='eval $(dircolors); lftp '
+fi
