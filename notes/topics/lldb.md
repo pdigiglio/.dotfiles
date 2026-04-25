@@ -1,5 +1,62 @@
 ## `lldb`
 
+### Cheatsheet
+
+#### Breakpoints
+
+ - List:
+
+   ```
+   breakpoint list
+   br l
+   ```
+
+ - Delete:
+
+   ```
+   breakpoint delete
+   br l
+   ```
+
+ - Enable:
+
+   ```
+   breakpoint enable 1
+   br e 1
+   # Omit breakpoint ID to enable all
+   ```
+
+ - Disable:
+
+   ```
+   breakpoint disable 1
+   br di 1
+   # Omit breakpoint ID to disable all
+   ```
+
+See:
+
+ - <https://gist.github.com/ryanchang/a2f738f0c3cc6fbd71fa>
+
+#### Skip code
+
+```
+thread jump --by <line-count>
+th j -b <line-count>
+```
+
+or 
+
+```
+thread jump --line <line-count>
+```
+
+See: <https://blog.eidinger.info/skip-code-during-debugging-in-xcode>
+
+---
+
+
+
 Expression evaluator with support for NatVis: <https://werat.dev/blog/blazing-fast-expression-evaluation-for-c-in-lldb>
 <https://llvm.org/devmtg/2021-11/slides/2021-Buildingafaster-expression-evaluatorforLLDB.pdf>
 
@@ -33,20 +90,6 @@ How to print actual(derived) object properties in LLDB ?
 Logpoints in `nvim-dap`: <https://www.reddit.com/r/neovim/comments/uerye3/dap_log_messages_and_conditional_break_points>
 
 
-### Skip code
-
-```
-thread jump --by <line-count>
-th j -b <line-count>
-```
-
-or 
-
-```
-thread jump --line <line-count>
-```
-
-See: <https://blog.eidinger.info/skip-code-during-debugging-in-xcode>
 
 
 ### Show actual pointer type
