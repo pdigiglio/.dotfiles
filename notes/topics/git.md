@@ -60,3 +60,33 @@ The output will look like this:
 You see the remote `topic-branch` was tracking has gone. See also
 [this](https://www.erikschierboom.com/2020/02/17/cleaning-up-local-git-branches-deleted-on-a-remote/)
 blog post.
+
+
+### Search through the logs
+
+To find commits whose message contains pattern _pattern_:
+
+```sh
+git log --grep=pattern
+# Options:
+#  --regexp-ignore-case,-i to make case insensitive
+```
+
+To find commits whose patch contains pattern _pattern_:
+
+```sh
+git log -Gpattern
+# Options:
+#  --regexp-ignore-case,-i to make case insensitive
+```
+
+To find commits where the number of occurrences of _word_ changed:
+
+```sh
+git log -Sword
+# Options:
+#  --pickaxe-regex         to interpret "word" as a regex
+#  --regexp-ignore-case,-i to make case insensitive
+```
+
+See [this](https://stackoverflow.com/a/1340245) StackOverflow answer.
