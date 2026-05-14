@@ -129,7 +129,8 @@ local config = function()
     vim.api.nvim_create_autocmd(au_name, { group = au_group, callback = on_attach })
 
     -- Disable loggins. Prevent ~/.local/sate/nvim/lsp.log becoming too large.
-    vim.lsp.set_log_level('off')
+    -- Possible values: off, trace, debug, ... (more?)
+    vim.lsp.log.set_level('debug')
 end
 
 return {
