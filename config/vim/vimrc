@@ -331,7 +331,11 @@ endif
 highlight clear CursorLine
 
 " Remove background on the number column.
-highlight CursorLineNr ctermbg=None guibg=None 
+highlight CursorLineNr ctermbg=None  
+if has('nvim')
+    " Somehow, in neovim I need to set this.  The above isn't enough.
+    highlight CursorLineNr guibg=None  
+endif
 
 " Keep undo/redo history for a file across sessions.
 set undofile
