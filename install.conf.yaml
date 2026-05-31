@@ -38,6 +38,7 @@
     ~/.config/readline: config/readline
     ~/.config/sioyek: config/sioyek
     ~/.config/task: config/task
+    ~/.config/terminal-colors.d: config/terminal-colors.d
     ~/.config/tmux: config/tmux
     ~/.config/vim:
         path: config/vim
