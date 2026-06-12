@@ -32,6 +32,16 @@ local fzf_lua_config = function()
 
     vim.keymap.set('n', '<Leader>fu', fzf_lua.undotree)
 
+    -- Replace built-in filename completion in insert mode.
+    -- See:
+    --  * |compl-filename|
+    --  * |fzf-lua-insert-mode-completion|
+    vim.keymap.set('i', '<C-x><C-f>',  FzfLua.complete_path,
+        {
+            silent = true,
+            desc = 'Fuzzy complete path',
+        })
+
 end
 
 return {
