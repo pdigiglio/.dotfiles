@@ -6,6 +6,10 @@ utility_exists fzf || return
 # Set up fzf key bindings and fuzzy completion
 . <(fzf --zsh)
 
+# Print tree structure in the preview window.
+# See: https://junegunn.github.io/fzf/shell-integration/#alt-c
+export FZF_ALT_C_OPTS="--preview 'tree -L 1 -C {}'"
+
 # Make history search with '/' and '?' interactive. Unlike the built-in binds,
 # they'll search in the same direaction.
 bindkey -M vicmd '/' fzf-history-widget
