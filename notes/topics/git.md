@@ -11,6 +11,15 @@ git tag --list 'v1.*'
 ```
 
 
+### Get latest tag on current branch
+
+```sh
+git describe --tags --abbrev=0
+```
+
+See [this](https://stackoverflow.com/a/7261049) answer.
+
+
 ### Update submodules after every branch switch
 
 Append this to `.git/hooks/post-checkout`:
