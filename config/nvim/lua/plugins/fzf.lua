@@ -29,6 +29,9 @@ local fzf_lua_config = function()
                 -- debug = true,
             })
         end)
+
+    vim.keymap.set('n', '<Leader>fu', fzf_lua.undotree)
+
 end
 
 return {
