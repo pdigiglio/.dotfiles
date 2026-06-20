@@ -42,8 +42,19 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 
 ## -- Non XDG.
 
-# -- Add path where pipx will make its binaries available to me.
-PATH="$PATH:$HOME/.local/bin"
+# -- Setup paths for `go`.
+export GOPATH="$XDG_DATA_HOME/go"
+
+## -- Set PATH.
+
+# I set $PATH in such a way that users can override system packages.  User
+# paths will come before system paths.  See below to have a look at the
+# priorities.
+
+# Path where `go` will install its executables.
+PATH="$GOPATH/bin:$PATH"
+# Path where `pipx` will install its executables.
+PATH="$HOME/.local/bin:$PATH"
 export PATH
 
 # -- Change ZDOTDIR to keep zsh config files in ~/.config/zsh.
