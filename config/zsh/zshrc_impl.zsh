@@ -136,6 +136,7 @@ setopt NO_HUP
 . "$ZDOTDIR/autosuggestions.sh"
 . "$ZDOTDIR/cdr.sh"
 . "$ZDOTDIR/fzf.zsh"
+. "$ZDOTDIR/git-lfs.zsh"
 . "$ZDOTDIR/gpg.zsh"
 . "$ZDOTDIR/rumdl.zsh"
 . "$ZDOTDIR/run_help.sh"
