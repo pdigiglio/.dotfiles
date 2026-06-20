@@ -130,17 +130,16 @@ setopt NO_HUP
 
 . "$ZDOTDIR/env.after.sh"
 . "$ZDOTDIR/utils.sh"
+. "$ZDOTDIR/completion.zsh"
 
 . "$ZDOTDIR/aliases.sh"
 . "$ZDOTDIR/autosuggestions.sh"
 . "$ZDOTDIR/cdr.sh"
-. "$ZDOTDIR/completion.zsh"
 . "$ZDOTDIR/fzf.zsh"
 . "$ZDOTDIR/gpg.zsh"
 . "$ZDOTDIR/rumdl.zsh"
 . "$ZDOTDIR/run_help.sh"
 . "$ZDOTDIR/uv.zsh"
-
 
 . "$XDG_CONFIG_HOME/Unreal Engine/aliases.sh"
 
