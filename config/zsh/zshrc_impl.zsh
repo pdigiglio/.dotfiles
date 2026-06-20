@@ -137,6 +137,7 @@ setopt NO_HUP
 . "$ZDOTDIR/completion.zsh"
 . "$ZDOTDIR/fzf.zsh"
 . "$ZDOTDIR/gpg.zsh"
+. "$ZDOTDIR/rumdl.zsh"
 . "$ZDOTDIR/run_help.sh"
 . "$ZDOTDIR/uv.zsh"
 
