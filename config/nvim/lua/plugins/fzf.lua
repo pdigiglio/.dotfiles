@@ -1,6 +1,6 @@
 local fzf_lua_config = function()
     local fzf_lua = require('fzf-lua')
-    fzf_lua.setup({ grep = { rg_glob = true } })
+    fzf_lua.setup({ grep = { rg_glob = true }, ui_select = true })
 
     vim.keymap.set('n', '<Leader>ff', fzf_lua.files)
     vim.keymap.set('n', '<Leader>fb', fzf_lua.buffers)
