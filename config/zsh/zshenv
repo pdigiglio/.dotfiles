@@ -51,9 +51,17 @@ export GOPATH="$XDG_DATA_HOME/go"
 # paths will come before system paths.  See below to have a look at the
 # priorities.
 
-# Path where `go` will install its executables.
+# Go
 PATH="$GOPATH/bin:$PATH"
-# Path where `pipx` will install its executables.
+
+# Rust
+PATH="$HOME/.cargo/bin:$PATH"
+
+# Haskell
+PATH="$HOME/.ghcup/bin:$PATH"
+PATH="$HOME/.cabal/bin:$PATH"
+
+# Override
 PATH="$HOME/.local/bin:$PATH"
 export PATH
 
