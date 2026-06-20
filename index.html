@@ -129,24 +129,28 @@ bash</a></li>
 </ul></li>
 <li><a href="#git" id="toc-git"><code>git</code></a>
 <ul>
-<li><a href="#tools" id="toc-tools">Tools</a></li>
+<li><a href="#tips-1" id="toc-tips-1">Tips</a>
+<ul>
 <li><a href="#list-all-tags-matching-a-pattern"
 id="toc-list-all-tags-matching-a-pattern">List all tags matching a
 pattern</a></li>
 <li><a href="#get-latest-tag-on-current-branch"
 id="toc-get-latest-tag-on-current-branch">Get latest tag on current
 branch</a></li>
-<li><a href="#update-submodules-after-every-branch-switch"
-id="toc-update-submodules-after-every-branch-switch">Update submodules
-after every branch switch</a></li>
-<li><a href="#multiple-accounts" id="toc-multiple-accounts">Multiple
-accounts</a></li>
 <li><a href="#check-if-remote-branch-has-been-deleted"
 id="toc-check-if-remote-branch-has-been-deleted">Check if remote branch
 has been deleted</a></li>
 <li><a href="#search-through-the-logs"
 id="toc-search-through-the-logs">Search through the logs</a></li>
+<li><a href="#multiple-accounts" id="toc-multiple-accounts">Multiple
+accounts</a></li>
+<li><a href="#update-submodules-after-every-branch-switch"
+id="toc-update-submodules-after-every-branch-switch">Update submodules
+after every branch switch</a></li>
+<li><a href="#large-file-storage" id="toc-large-file-storage">Large file
+storage</a></li>
 </ul></li>
+<li><a href="#tools" id="toc-tools">Tools</a></li>
 <li><a href="#ssh" id="toc-ssh">ssh</a>
 <ul>
 <li><a href="#check-key-password" id="toc-check-key-password">Check key
@@ -221,6 +225,7 @@ release via <code>curl</code></a></li>
 <li><a href="#change-country-in-google-play"
 id="toc-change-country-in-google-play">Change country in Google
 Play</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -357,80 +362,154 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href=
 <div class="sourceCode" id="cb13"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bind &#39;set editing-mode vi&#39;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">bind</span> <span class="st">&#39;set show-mode-in-prompt on&#39;</span></span></code></pre></div>
-<h2 id="git"><code>git</code></h2>
-<h3 id="tools">Tools</h3>
-<ul>
-<li><a
-href="https://github.com/lusingander/serie"><code>serie</code></a> for
-pretty display of logs</li>
-</ul>
+<h1 id="git"><code>git</code></h1>
+<h2 id="tips-1">Tips</h2>
 <h3 id="list-all-tags-matching-a-pattern">List all tags matching a
 pattern</h3>
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">--list</span> <span class="st">&#39;v1.*&#39;</span></span></code></pre></div>
 <h3 id="get-latest-tag-on-current-branch">Get latest tag on current
 branch</h3>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0</span></code></pre></div>
 <p>See <a href="https://stackoverflow.com/a/7261049">this</a>
 answer.</p>
-<h3 id="update-submodules-after-every-branch-switch">Update submodules
-after every branch switch</h3>
-<p>Append this to <code>.git/hooks/post-checkout</code>:</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
-<h3 id="multiple-accounts">Multiple accounts</h3>
-<p>If you want to use a specific account for a repository, set it like
-this:</p>
-<pre class="gitconfig"><code># In &lt;repo_path&gt;/.git/config
-[user]
-    name  = &lt;name&gt;
-    email = &lt;email&gt;
-
-# ...</code></pre>
 <h3 id="check-if-remote-branch-has-been-deleted">Check if remote branch
 has been deleted</h3>
 <p>First, update the remote refs:</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> <span class="at">--all</span></span></code></pre></div>
 <p>Then get info about the branches:</p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-v</span></span></code></pre></div>
 <p>The output will look like this:</p>
-<pre><code>* master        abcdebf3d17 [behind 581] some commit message
-  topic-branch  fghilb32370 [gone] Some other commit message
-  [...]</code></pre>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode txt"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>* master        abcdebf3d17 [behind 581] some commit message</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  topic-branch  fghilb32370 [gone] Some other commit message</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  [...]</span></code></pre></div>
 <p>You see the remote <code>topic-branch</code> was tracking has gone.
 See also <a
 href="https://www.erikschierboom.com/2020/02/17/cleaning-up-local-git-branches-deleted-on-a-remote/">this</a>
 blog post.</p>
 <h3 id="search-through-the-logs">Search through the logs</h3>
 <p>To find commits whose message contains pattern <em>pattern</em>:</p>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--grep</span><span class="op">=</span>pattern</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--grep</span><span class="op">=</span>pattern</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
 <p>To find commits whose patch contains pattern <em>pattern</em>:</p>
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-Gpattern</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-Gpattern</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
 <p>To find commits where the number of occurrences of <em>word</em>
 changed:</p>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-Sword</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --pickaxe-regex         to interpret &quot;word&quot; as a regex</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-Sword</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Options:</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  --pickaxe-regex         to interpret &quot;word&quot; as a regex</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  --regexp-ignore-case,-i to make case insensitive</span></span></code></pre></div>
 <p>See <a href="https://stackoverflow.com/a/1340245">this</a>
 StackOverflow answer.</p>
+<h3 id="multiple-accounts">Multiple accounts</h3>
+<p>If you want to use a specific account for a repository, set it like
+this:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In &lt;repo_path&gt;/.git/config</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">[user]</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    name  </span><span class="ot">=</span><span class="st"> &lt;name&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="dt">    email </span><span class="ot">=</span><span class="st"> &lt;email&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span></code></pre></div>
+<h3 id="update-submodules-after-every-branch-switch">Update submodules
+after every branch switch</h3>
+<p>Append this to <code>.git/hooks/post-checkout</code>:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In .git/hooks/post-checkout</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
+<h3 id="large-file-storage">Large file storage</h3>
+<p>tags: #lfs</p>
+<p>Git <a href="https://git-lfs.com/">LFS</a> takes advantage of hooks
+and drivers to store large files in a separate repository and
+materialize them on demand<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a>. The repo only has to
+store <em>pointers</em> to files and their contents is downloaded if and
+when needed.</p>
+<p>The advantage is that you have faster clones at the expense of a
+(sometimes) slower checkout. The space on the server is the same but the
+space on the client is potentially less<a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>.</p>
+<h4 id="client">Client</h4>
+<ul>
+<li><p>To see which files are tracked via LFS:</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> lfs ls-files </span></code></pre></div>
+<p>You may want to see the <a
+href="https://github.com/git-lfs/git-lfs/wiki/Tutorial#lfs-pointer-files-advanced">LFS
+pointers</a> for any such file:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show HEAD:<span class="va">$file</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -- Example output --</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># version https://git-lfs.github.com/spec/v1</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># oid sha256:f05131d24da96daa6a6712c5b9d368c81eeaea5dc7d0b6c7bec7d03ccf021b4a</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># size 34</span></span></code></pre></div>
+<p>The file above will be stored in <code>.git/lfs/objects/f0/51</code>.
+To generate a pointer for a file:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> lfs pointer <span class="at">--file</span> <span class="va">$file</span></span></code></pre></div>
+<blockquote>
+<p>[!NOTE] The command above <em>won’t</em> create a file in
+<code>.git/lfs/objects</code> but the following will:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;hi&quot;</span> <span class="kw">|</span> <span class="fu">git</span> lfs clean</span></code></pre></div>
+</blockquote></li>
+<li><p>LFS supports <a
+href="https://github.com/git-lfs/git-lfs/wiki/File-Locking">file
+locking</a> to prevent multiple people to working on the same file (thus
+leading to merge conflicts).</p></li>
+<li><p>To get the <a
+href="https://github.com/git-lfs/git-lfs/wiki/Tutorial#lfs-url">endpoint
+URL</a> for LFS:</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> lfs env</span></code></pre></div></li>
+<li><p>Install completions with <code>git-lfs completion</code>.
+E.g.:</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="op">&lt;(</span><span class="fu">git</span> lfs completion zsh<span class="op">)</span></span></code></pre></div></li>
+</ul>
+<h4 id="server">Server</h4>
+<p>It’s enough for the server to have <code>git-lfs-transfer</code> in
+<code>$PATH</code>. There’s a <a
+href="https://github.com/git-lfs/git-lfs/wiki/Implementations">selection</a>
+of server-side implementations. Among those:</p>
+<ul>
+<li><p>One from <a
+href="https://github.com/charmbracelet/git-lfs-transfer"><em>charm</em></a>
+in <code>go</code>. The linked repo contains install instructions. I did
+not find it packaged in a <a href="https://repo.charm.sh">PPA</a><a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>.</p></li>
+<li><p>One from <a
+href="https://github.com/bk2204/scutiger"><em>bk2204</em></a> in
+<code>rust</code>. Install instructions are in <a
+href="https://alexanderschroeder.net/blog/2024/12/12/git-lfs-over-ssh/">this
+blog post</a>.</p></li>
+</ul>
+<h2 id="tools">Tools</h2>
+<ul>
+<li><a
+href="https://github.com/lusingander/serie"><code>serie</code></a> for
+pretty display of logs.</li>
+</ul>
+<!-- vim: set filetype=markdown: -->
 <h2 id="ssh">ssh</h2>
 <h3 id="check-key-password">Check key password</h3>
 <p>To check if a password unlocks the private key, try and change it
 with:</p>
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/id_rsa <span class="at">-p</span></span></code></pre></div>
 <p>This will ask the current password, first. When promped for the new
 password, type two mismatching ones so that it doesn’t get changed.</p>
 <h3 id="exit-from-a-hung-connection">Exit from a hung connection</h3>
@@ -474,8 +553,8 @@ status <code>R</code>)</td>
 <tr>
 <td style="text-align: left;"><code>&lt;</code></td>
 <td style="text-align: left;">Sort by column on the left to current
-column <a href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a></td>
+column <a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>&gt;</code></td>
@@ -612,8 +691,8 @@ class="uri">https://eli.thegreenplace.net/2012/12/17/dumping-a-c-objects-memory-
 href="https://clang.llvm.org/docs/ClangFormatStyleOptions.html">here</a>.</p>
 <ul>
 <li><p>Placement of <code>cv</code> qualifiers:</p>
-<div class="sourceCode" id="cb30"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">QualifierAlignment</span><span class="kw">:</span><span class="at"> Right</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">QualifierAlignment</span><span class="kw">:</span><span class="at"> Right</span></span></code></pre></div></li>
 </ul>
 <h2 id="lldb"><code>lldb</code></h2>
 <h3 id="remote-debugging">Remote debugging</h3>
@@ -742,9 +821,9 @@ href="https://alogus.com/g5script/content_index">here</a>.</p>
 href="https://gnuplot-info.narkive.com/h0AI295W/command-line-arguments-to-gnuplot-scripts#post2">This</a>
 post suggests using <em>here files</em> or env vars for this purpose.
 The flow with env vars is the following:</p>
-<div class="sourceCode" id="cb42"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GNUPLOT_TITLE</span><span class="op">=</span><span class="st">&quot;title&quot;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gnuplot</span> script.plt</span></code></pre></div>
 <p>You then access those vars within the script via a call to <a
 href="http://gnuplot.info/docs_5.5/loc2100.html"><code>system</code></a>:</p>
 <pre class="plt"><code># File: script.plt
@@ -819,9 +898,9 @@ exists for the device:</p>
 <pre><code># fstab
 UUID=&lt;uid&gt;  /mnt/extreme-ssd  btrfs  rw,relatime,ssd,discard=async,space_cache=v2,noauto  0  0</code></pre>
 <p>You have to mount the disk and give it user permissions:</p>
-<div class="sourceCode" id="cb51"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /mnt/extreme-ssd</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> <span class="va">$USER</span>:<span class="va">$USER</span> /mnt/extreme-ssd</span></code></pre></div>
 <p>Note that mount option <code>users</code> allows every user to mount
 the disk (not only <em>root</em>) but it <em>does not</em> give user
 permissions to the disk. See <a
@@ -830,15 +909,15 @@ href="https://www.reddit.com/r/btrfs/comments/j5jaby/how_to_automount_btrfs_with
 <code>irq/9-acpi</code></h3>
 <p>Check the interrupts in
 <code>/sys/firmware/acpi/interrupts</code>:</p>
-<div class="sourceCode" id="cb52"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /sys/firmware/acpi/interrupts <span class="at">-exec</span> echo <span class="at">-n</span> <span class="st">&quot;{}:&quot;</span> <span class="dt">\;</span> <span class="at">-exec</span> cat <span class="st">&quot;{}&quot;</span> <span class="dt">\;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> . <span class="at">-r</span> /sys/firmware/acpi/interrupts</span></code></pre></div>
 <p>And look for a big number. Then mask it:</p>
-<div class="sourceCode" id="cb53"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: GPE is &quot;general purpose event&quot; that ACPI handles.</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">&quot;mask&quot;</span> <span class="op">&gt;&gt;</span> /sys/firmware/acpi/interrupts/gpe17</span></code></pre></div>
 <p>I found the solution <a
 href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">here</a>.</p>
 <p><strong><em>Questions:</em></strong></p>
@@ -851,25 +930,25 @@ href="https://forum.manjaro.org/t/irq-9-acpi-is-killing-my-system/176107/13">her
 release via <code>curl</code></h3>
 <p>When I try to download a release from GitHub, I get an empty
 file:</p>
-<div class="sourceCode" id="cb54"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span>https://github.com/sxyazi/yazi/releases/download/v26.1.4/yazi-aarch64-unknown-linux-gnu.deb</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --remote-name is long for -O</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--remote-name</span> <span class="va">$url</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> yazi-aarch64-unknown-linux-gnu.deb </span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: yazi-aarch64-unknown-linux-gnu.deb: empty</span></span></code></pre></div>
 <p>However, browsers download fine. If I look at the HTTP code:</p>
-<div class="sourceCode" id="cb55"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --write-out is long for -w</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--write-out</span> <span class="st">&#39;%{http_code}\n&#39;</span> <span class="va">$url</span></span></code></pre></div>
 <p>I get code <a
 href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/302"><code>302 Found</code></a>,
 which is a <em>redirection message</em>.</p>
 <p>Also, if I look at the headers, I get <code>Location</code> (which
 indicates a redirect):</p>
-<div class="sourceCode" id="cb56"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: --show-headers is long for -i</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--show-headers</span>  <span class="va">$url</span></span></code></pre></div>
 <pre class="plain"><code>HTTP/2 302 
 content-type: text/html; charset=utf-8
 content-length: 0
@@ -898,8 +977,22 @@ continue.</p></li>
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><a href="https://superuser.com/a/398870"
-class="uri">https://superuser.com/a/398870</a><a href="#fnref1"
+<li id="fn1"><p>See <a
+href="https://www.kenmuse.com/blog/secret-life-of-git-lfs/#how-git-is-extended"><em>The
+Secret Life of Git Large File Storage</em></a>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See answers to <a
+href="https://stackoverflow.com/a/35578715"><em>What is the advantage of
+<code>git   lfs</code>?</em></a> and <a
+href="https://stackoverflow.com/a/68623227"><em>Do I need Git LFS for
+local repos?</em></a>.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>See also <a
+href="https://github.com/charmbracelet/soft-serve#installation"><code>soft-serve</code>’s
+repo</a>.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://superuser.com/a/398870"
+class="uri">https://superuser.com/a/398870</a><a href="#fnref4"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
