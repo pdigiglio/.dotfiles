@@ -42,8 +42,8 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 
 ## -- Non XDG.
 
-# -- Setup paths for `go`.
 export GOPATH="$XDG_DATA_HOME/go"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
 
 ## -- Set PATH.
 
@@ -55,7 +55,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 PATH="$GOPATH/bin:$PATH"
 
 # Rust
-PATH="$HOME/.cargo/bin:$PATH"
+PATH="$CARGO_HOME/bin:$PATH"
 
 # Haskell
 PATH="$HOME/.ghcup/bin:$PATH"
