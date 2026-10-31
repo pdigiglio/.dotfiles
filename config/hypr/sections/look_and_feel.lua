@@ -225,10 +225,60 @@ local animations = {
     enabled = true,
 }
 
+-- See https://wiki.hypr.land/configuring/core/config-options/#misc
+local misc = {
+    -- -- Set to 0 or 1 to disable the anime mascot wallpapers.
+    -- -- -1 : random
+    -- --  0 : hyprland logo
+    -- --  1 : blue diamonds
+    -- --  2 : anime girl
+    -- force_default_wallpaper = 1
+
+    -- Set to 0 or 1 to disable the anime mascot wallpapers.
+    -- -1 : random
+    --  0 : hyprland logo
+    --  1 : blue diamonds
+    --  2 : anime girl
+    force_default_wallpaper = 1,
+
+    -- I see no change in behavior
+    -- animate_manual_resizes = true,
+    -- animate_mouse_windowdragging = true,
+
+    -- If true disables the random hyprland logo / anime girl background
+    disable_hyprland_logo = false,
+
+    -- Disable the splash rendering. The splash is a text that's rendered on top
+    -- of the wallpaper, behind the windows.
+    disable_splash_rendering = true,
+
+    -- Don't reload this config when changed. To reload:
+    -- $ hyprctl reload
+    disable_autoreload = true,
+
+    -- If DPMS is set to off, wake up the monitors if the mouse moves
+    mouse_move_enables_dpms = true,
+
+    -- If DPMS is set to off, wake up the monitors if a key is pressed
+    key_press_enables_dpms = true,
+
+    -- If there's a fullscreen (or maximized) window, decide whether a new tiled
+    -- window should replace it, stay behind or disable the fullscreen
+    -- on_focus_under_fullscreen = 2
+
+    -- Whether closing a fullscreen window makes the next focused window
+    -- fullscreen.
+    exit_window_retains_fullscreen = 1,
+
+    --animate_manual_resizes = true,
+    --animate_mouse_windowdragging = true,
+}
+
 hl.config({
     general = general,
     decoration = decoration,
     animations = animations,
+    misc = misc,
     -- See https://wiki.hypr.land/configuring/layouts/dwindle-layout
     dwindle = {
         -- You probably want this
