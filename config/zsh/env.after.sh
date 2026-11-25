@@ -22,9 +22,10 @@ export EDITRC="$XDG_CONFIG_HOME/editline/editrc"
 #
 # NOTE:
 #  - Should they be comma separated or is it fine?
-#  - How to check if clangd is using them?
+#  - To check if clangd is using them, just run clangd and you should see them
+#  in the output.
 #
-export CLANGD_FLAGS="$CLANGD_FLAGS -j=8 --malloc-trim --background-index --pch-storage=memory"
+export CLANGD_FLAGS="$CLANGD_FLAGS -j=8 --malloc-trim --background-index --pch-storage=memory --completion-style=detailed"
 
 # -- nb
 # Change the default config path.
